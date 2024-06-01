@@ -75,7 +75,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Birthday <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="date" class="form-control" max="{{ $maxDate }}" required>
+                                <input wire:model='' type="date" class="form-control" max="{{ $maxDate }}"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="form-group">
                                 <label>Role <span class="text-danger font-weight-bolder text-md">*</span></label>
                                 <select wire:model.live="selectedRole" class="form-control" required>
@@ -112,7 +113,7 @@
                             </div>
                         </div>
                         @if ($showStatusOfAppointment)
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Status of Appointment <span
                                             class="text-danger font-weight-bolder text-md">*</span></label>
@@ -125,15 +126,47 @@
                                 </div>
                             </div>
                         @endif
-                        @if ($showSkill)
-                            <div class="col-4">
+                        @if ($showSkillCategory)
+                            <div class="col-3">
                                 <div class="form-group">
-                                    <label>Select Skill <span
+                                    <label>Skill Category <span
                                             class="text-danger font-weight-bolder text-md">*</span></label>
+                                    <select wire:model.live="selectedSkillCategory" class="form-control" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Skilled">Skilled</option>
+                                        <option value="Unskilled">Unskilled</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        {{-- (Skilled) --}}
+                        @if ($showSkilled)
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Skill <span class="text-danger font-weight-bolder text-md">*</span></label>
                                     <select class="form-control" required>
                                         <option value="">Select Skill</option>
-                                        <option value="Painter">Painter</option>
-                                        <option value="Cement Mixer">Cement Mixer</option>
+                                        <option value="Carpenter">Carpenter</option>
+                                        <option value="Mason">Mason</option>
+                                        <option value="Architect">Architect</option>
+                                        <option value="Plumber">Plumber</option>
+                                        <option value="Structural Engineer">Structural Engineer</option>
+                                        <option value="Electrical Engineer">Electrical Engineer</option>
+                                        <option value="Plumber">Plumber</option>
+                                        <option value="Heavy Equipment Operator">Heavy Equipment Operator</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        {{-- (Unskilled) --}}
+                        @if ($showUnskilled)
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Skill <span class="text-danger font-weight-bolder text-md">*</span></label>
+                                    <select class="form-control" required>
+                                        <option value="">Select Skill</option>
+                                        <option value="Laborer">Laborer</option>
+                                        <option value="Helper">Helper</option>
                                     </select>
                                 </div>
                             </div>
