@@ -46,6 +46,7 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'username'=> 'nina1616',
             'password'=> 'ulangkaya',
+            
 
         ])->afterCreating(function (User $user) {
             $user->addRole('admin'); 
