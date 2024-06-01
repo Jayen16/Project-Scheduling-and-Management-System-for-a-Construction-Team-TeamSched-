@@ -46,7 +46,6 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Age</th>
-                                <th>Skill</th>
                                 <th>Status of Appointment</th>
                                 <th>Role</th>
                                 <th class="text-center">Status</th>
@@ -58,7 +57,6 @@
                                 <td class="align-middle">1</td>
                                 <td class="align-middle">John Doe</td>
                                 <td class="align-middle">43</td>
-                                <td class="align-middle">Painter</span></td>
                                 <td class="align-middle">Available</td>
                                 <td class="align-middle">Manpower</td>
                                 <td class="text-center align-middle">

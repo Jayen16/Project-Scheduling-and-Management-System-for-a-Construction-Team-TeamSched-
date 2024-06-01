@@ -83,7 +83,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label>Role</label>
                             <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Manpower
@@ -91,7 +91,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label>Status of Appointment</label>
                             <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Available
@@ -99,8 +99,15 @@
                         </div>
                     </div>
 
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Skill Category </label>
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Skilled
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="form-group">
                             <label>Skill </label>
                             <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Painter
