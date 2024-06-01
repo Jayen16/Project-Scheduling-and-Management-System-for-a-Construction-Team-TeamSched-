@@ -79,7 +79,8 @@
                                 <td class="text-center align-middle">
                                     <button wire:click='redirectToProfile()' class="btn btn-sm btn-primary"
                                         type="button"><i class="nav-icon fas fa-user mr-2"></i>Profile</button>
-                                    <button wire:click='delete()' class="btn btn-sm btn-danger" type="button"><i
+                                    <button data-toggle="modal" data-target="#exampleModal"
+                                        class="btn btn-sm btn-danger" type="button"><i
                                             class="nav-icon fas fa-minus mr-2"></i> Delete</button>
                                 </td>
                             </tr>
@@ -87,6 +88,27 @@
                     </table>
                 </div>
 
+            </div>
+        </div>
+    </div>
+    {{-- confirmation modal --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this account?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button wire:click='deleteAccount()' class="btn btn-danger">Delete</button>
+                </div>
             </div>
         </div>
     </div>
