@@ -107,7 +107,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button wire:click='deleteAccount()' class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>
