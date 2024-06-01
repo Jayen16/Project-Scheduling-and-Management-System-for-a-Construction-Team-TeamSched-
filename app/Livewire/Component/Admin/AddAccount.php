@@ -2,10 +2,20 @@
 
 namespace App\Livewire\Component\Admin;
 
+use App\Livewire\Forms\FormEmployee;
+use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class AddAccount extends Component
 {
+
+    public FormEmployee $employee_form;
+
     public $maxDate;
     public $selectedRole;
     public $showStatusOfAppointment = false;
@@ -13,6 +23,14 @@ class AddAccount extends Component
     public $selectedSkillCategory;
     public $showSkilled = false;
     public $showUnskilled = false;
+
+
+    #[Validate('required|unique:roles,name')]
+    public $userName;
+    #[Validate('required', 'min:8')]
+    public $userPassword;
+
+
     public function redirectToAccountManagement()
     {
         return redirect()->route('account-management.index');
@@ -50,12 +68,36 @@ class AddAccount extends Component
         } else {
         }
     }
-    public function mount()
+
+    public function create()
     {
-        $this->maxDate = date('Y-m-d'); // Get the current date in 'YYYY-MM-DD' format
+
+        DB::transaction(function () {
+
+            $type = $this->employee_form->type;
+            $this->employee_form->store();
+
+            if ($this->userName !== null && $this->userPassword !== null) {
+            
+                $newAccount = new User();
+                $newAccount->username = $this->userName;
+                $newAccount->password = Hash::make($this->userPassword);
+                $newAccount->save();
+                $newAccount->addRole($type);
+
+            }
+
+            $this->dispatch('alert',type:'success', title:'New Added Employee', position:'center');
+        });
+
+
     }
+
     public function render()
     {
+
+        $this->maxDate = date('Y-m-d'); 
+
         return view('livewire.component.admin.add-account');
     }
 }

@@ -5,15 +5,15 @@
             <div class="row">
                 <div>
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('account-management.index') }}">Account
-                                Management</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('profile.index') }}">Profile</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('account-management.index') }}">Account Management</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('profile.index', ['member' => $member->id]) }}">Profile</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
         </div>
     </section>
+
     <div class="pl-3 pb-3">
 
         <div class="d-flex justify-content-between">
