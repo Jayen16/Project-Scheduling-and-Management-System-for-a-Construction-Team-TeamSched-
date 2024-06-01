@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->string('user_id')->nullable();
+            $table->string('firstName');
+            $table->string('middleName');
+            $table->string('lastName');
             $table->string('type');
-            $table->string('employment_status');
             $table->string('birthdate');
-            $table->string('skill');
-            $table->string('skill_category');
             $table->string('address');
             $table->string('contact_number');
+            $table->string('employment_status')->nullable();
+            $table->string('skill')->nullable();
+            $table->string('skill_category')->nullable();
+            $table->string('status')->default('Inactive');
             $table->timestamps();
         });
     }
