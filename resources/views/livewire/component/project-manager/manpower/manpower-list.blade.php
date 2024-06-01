@@ -52,8 +52,9 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Age</th>
-                                <th>Skill</th>
                                 <th>Status of Appointment</th>
+                                <th>Skill Category</th>
+                                <th>Skill</th>
                                 <th>Contact Number</th>
                             </tr>
                         </thead>
@@ -63,8 +64,9 @@
                                     <td class="align-middle">1</td>
                                     <td class="align-middle">John Doe</td>
                                     <td class="align-middle">43</td>
-                                    <td class="align-middle">Painter</span></td>
                                     <td class="align-middle">Available</td>
+                                    <td class="align-middle">Skilled</span></td>
+                                    <td class="align-middle">Carpenter</span></td>
                                     <td class="align-middle">09123456789</td>
                                 </tr>
                             @endfor

@@ -7,8 +7,8 @@ use App\Livewire\Component\Admin\AccountProfile;
 use App\Livewire\Component\Admin\AddAccount;
 use App\Livewire\Component\Admin\EditProfile;
 use App\Livewire\Component\Logbook;
-use App\Livewire\Component\Project;
 use App\Livewire\Component\ProjectManager\Manpower\ManpowerList;
+use App\Livewire\Component\ProjectManager\Project\Project;
 use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -44,12 +44,12 @@ Route::get('/account-management/profile/edit', EditProfile::class)->name('profil
 
 // Project Manager
 Route::get('/manpower', ManpowerList::class)->name('manpower.index');
+Route::get('/project', Project::class)->name('project.index');
 
 
 
 // sample only
 Route::get('/logbook', Logbook::class)->name('logbook.index');
-Route::get('/project', Project::class)->name('project.index');
 
 // Authentication routes
 Route::group(['prefix' => 'auth'], function () {
