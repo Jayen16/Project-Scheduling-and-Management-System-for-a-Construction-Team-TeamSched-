@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="https://www.youtube.com/@RonaldCodes23" target="_blank" class="brand-link">
+    <a href="#"class="brand-link">
         <img src="{{ asset('assets/images/RonaldCodesLogo.png') }}" alt="RonaldCodes Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
 
@@ -9,7 +9,7 @@
                 class="brand-image img-circle elevation-3 rounded-circle cursor-pointer" style="width: 50px" />
         </a> --}}
 
-        <span class="brand-text font-weight-light">Laravel AdminLTE v3</span>
+        <span class="brand-text font-weight-lighter">TEAMSCHED</span>
     </a>
 
     <div class="sidebar">
@@ -30,44 +30,33 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+
+                <li class="nav-item">
+                    <a href="{{ route('account-management.index') }}"
+                        class="nav-link {{ request()->is('account-management*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
 
                         <p>
-                            Dashboard
-                            <i class="right fas fa-angle-left"></i>
+                            Account Management
                         </p>
                     </a>
-
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            {{-- <a href="./index.html" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
-                            </a> --}}
-
-                            <a href="{{ route('dashboard.index') }}"  class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
-                                <i class="far nav-icon"></i>
-                                <p>Dashboard v1</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('logbook.index') }}"  class="nav-link {{ request()->is('logbook*') ? 'active' : '' }}">
+                    <a href="{{ route('logbook.index') }}"
+                        class="nav-link {{ request()->is('logbook*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-th"></i>
 
                         <p>
                             Logbook
-                            <span class="right badge badge-danger">New</span>
+
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                        <a href="{{ route('project.index') }}"  class="nav-link {{ request()->is('project*') ? 'active' : '' }}">
+                    <a href="{{ route('project.index') }}"
+                        class="nav-link {{ request()->is('project*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-copy"></i>
 
                         <p>
@@ -101,13 +90,6 @@
                 </li>
 
                 <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <p>Level 1</p>
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">

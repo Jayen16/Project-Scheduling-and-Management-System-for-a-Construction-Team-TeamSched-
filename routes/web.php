@@ -2,6 +2,10 @@
 
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Component\Admin\AccountManagement;
+use App\Livewire\Component\Admin\AccountProfile;
+use App\Livewire\Component\Admin\AddAccount;
+use App\Livewire\Component\Admin\EditProfile;
 use App\Livewire\Component\Logbook;
 use App\Livewire\Component\Project;
 use App\Livewire\Dashboard\Dashboard;
@@ -27,6 +31,17 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'dashboard'], fu
     Route::get('/', Dashboard::class)->name('dashboard.index');
 });
 
+// login
+Route::get('/login', \App\Livewire\Component\Login::class)->name('login.index');
+
+// admin
+// account management
+Route::get('/account-management', AccountManagement::class)->name('account-management.index');
+Route::get('/account-management/add', AddAccount::class)->name('account.create');
+Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
+Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+
+// sample only
 Route::get('/logbook', Logbook::class)->name('logbook.index');
 Route::get('/project', Project::class)->name('project.index');
 
