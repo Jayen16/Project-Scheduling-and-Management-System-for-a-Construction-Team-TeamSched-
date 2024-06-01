@@ -38,13 +38,20 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <livewire:navigation.top-navigation />
+    @if (View::hasSection('noSidebar'))
+        <section class="content">
+            <div class="container-fluid">
+                {{ $slot }}
+            </div>
+        </section>
+    @else
+        <div class="wrapper">
+            <livewire:navigation.top-navigation />
 
-        <livewire:navigation.side-navigation />
+            <livewire:navigation.side-navigation />
 
-        <div class="content-wrapper">
-            {{-- <div class="content-header">
+            <div class="content-wrapper">
+                {{-- <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -61,15 +68,14 @@
                 </div>
             </div> --}}
 
-            <section class="content">
-                <div class="container-fluid">
-                    {{ $slot }}
-                </div>
-            </section>
+                <section class="content">
+                    <div class="container-fluid">
+                        {{ $slot }}
+                    </div>
+                </section>
+            </div>
         </div>
-
-        <livewire:navigation.footer />
-    </div>
+    @endif
 
     {{-- jQuery --}}
     <script src="{{ asset('theme/plugins/jquery/jquery.min.js') }}"></script>
