@@ -140,8 +140,10 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 @endforeach
                             @endif
+
                         </tbody>
                     </table>
                 </div>
@@ -152,7 +154,4 @@
             </div>
         </div>
     </div>
-
-
-
 </div>

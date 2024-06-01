@@ -139,10 +139,9 @@
                                         <option value="">Select Skill</option>
                                         <option value="Carpenter">Carpenter</option>
                                         <option value="Mason">Mason</option>
-                                        <option value="Architect">Architect</option>
-                                        <option value="Plumber">Plumber</option>
-                                        <option value="Structural Engineer">Structural Engineer</option>
-                                        <option value="Electrical Engineer">Electrical Engineer</option>
+                                        <option value="Installer">Installer</option>
+                                        <option value="Painter">Painter</option>
+                                        <option value="Electrician">Electrician</option>
                                         <option value="Plumber">Plumber</option>
                                         <option value="Heavy Equipment Operator">Heavy Equipment Operator</option>
                                     </select>
@@ -194,7 +193,29 @@
                 <button wire:click='redirectToAccountManagement()' type="button" class="btn btn-default mr-2">
                     Cancel</button>
                 <button wire:click='create()' type="submit" class="btn btn-success float-right">Create Account</button>
+
             </div>
         </form>
+    </div>
+    {{-- confirmation modal --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure that the details you have entered are correct?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
