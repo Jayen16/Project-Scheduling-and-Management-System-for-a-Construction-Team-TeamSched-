@@ -79,8 +79,8 @@
                                 <td class="text-center align-middle">
                                     <button wire:click='redirectToProfile()' class="btn btn-sm btn-primary"
                                         type="button"><i class="nav-icon fas fa-user mr-2"></i>Profile</button>
-                                    <button wire:click='delete()' class="btn btn-sm btn-danger" type="button"><i
-                                            class="nav-icon fas fa-minus mr-2"></i> Delete</button>
+                                    <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#modal-default">
+                                        <i class="nav-icon fas fa-minus mr-2"></i> Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -90,4 +90,27 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Delete User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <p>Are you sure to delete this user?</p>
+        </div>
+        <div class="modal-footer justify-end">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button wire:click='delete()' type="button" class="btn btn-danger">Delete</button>
+        </div>
+        </div>
+        </div>
 </div>
+
+</div>
+
+

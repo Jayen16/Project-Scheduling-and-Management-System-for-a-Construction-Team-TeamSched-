@@ -22,6 +22,7 @@ class AccountManagement extends Component
     }
     public function delete()
     {
+        dd('sample');
     }
     public function render()
     {
