@@ -2,30 +2,56 @@
 
 namespace App\Livewire\Component\Admin;
 
+use App\Models\Employee;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class AccountManagement extends Component
 {
-    public bool $isActive = false;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public function toggleIsActive()
-    {
-        $this->isActive = !$this->isActive;
+    public $members;
+    public $isActive;
+
+    public function toggleUpdate($id){
+        
+        $employee = Employee::findOrFail($id);
+
+        $status = $employee->status === 'Active' ? 'Inactive' : 'Active';
+        
+        $employee->update(['status' => $status]);
+
+        $this->dispatch('alert',type:'success', title:'The status has been updated', position:'center');
+
     }
+
+
     public function redirectToAdd()
     {
         return redirect()->route('account.create');
     }
-    public function redirectToProfile()
+    
+    public function redirectToProfile($id)
     {
-        return redirect()->route('profile.index');
+        return redirect()->route('profile.index',['member'=>$id]);
     }
-    public function delete()
+
+    public function delete($id)
     {
-        dd('sample');
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
     }
+
+
     public function render()
     {
-        return view('livewire.component.admin.account-management');
+
+        $this->members = Employee::get();
+         
+        $paginate = Employee::paginate(10);
+
+        return view('livewire.component.admin.account-management', ['paginate' => $paginate]);
     }
 }
