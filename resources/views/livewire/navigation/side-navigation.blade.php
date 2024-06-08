@@ -53,12 +53,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('project.index') }}"
+                    <a href="{{ route('project-management.index') }}"
                         class="nav-link {{ request()->is('project*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
-                            Project
+                            Project Management
                         </p>
                     </a>
                 </li>
@@ -88,32 +88,26 @@
 
                 <li class="nav-header">MULTI LEVEL EXAMPLE</li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                {{-- <li class="nav-item {{ request()->routeIs('project.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('project.*') ? 'active' : '' }}">
                         <i class="fas fa-briefcase nav-icon"></i>
-
                         <p>
-                            Project
+                            Project Management
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('project.index') }}"
+                                class="nav-link {{ request()->routeIs('project.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Existing Project</p>
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Level 2</p>
-                            </a>
-                        </li>
                     </ul>
-                </li>
+                </li> --}}
+
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
