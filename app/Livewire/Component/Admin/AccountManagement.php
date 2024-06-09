@@ -3,6 +3,8 @@
 namespace App\Livewire\Component\Admin;
 
 use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -14,6 +16,8 @@ class AccountManagement extends Component
 
     public $members;
     public $isActive;
+    public $deleteId;
+    public $search = '';
 
     public function toggleUpdate($id){
         
@@ -40,8 +44,16 @@ class AccountManagement extends Component
 
     public function delete($id)
     {
-        $employee = Employee::findOrFail($id);
-        $employee->delete();
+        $this->deleteId = $id;
+        
+        DB::transaction(function () {
+            $employee = Employee::findOrFail($this->deleteId);
+            $employee->user->delete();
+            $employee->delete();
+    
+            $this->dispatch('alert',type:'success', title:'The user has been deleted', position:'center');
+        });
+      
     }
 
 
@@ -49,8 +61,17 @@ class AccountManagement extends Component
     {
 
         $this->members = Employee::get();
-         
-        $paginate = Employee::paginate(10);
+        
+        $query = Employee::query();
+
+        if (!empty($this->search)) {
+            $query->where(function ($subQuery) {
+                $subQuery->where('firstName', 'like', '%' . $this->search . '%')
+                            ->orWhere('lastName', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        $paginate = $query->paginate(10);
 
         return view('livewire.component.admin.account-management', ['paginate' => $paginate]);
     }
