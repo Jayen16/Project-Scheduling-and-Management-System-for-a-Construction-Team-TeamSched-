@@ -34,6 +34,7 @@ class FormEmployee extends Form
     #[Validate('required|string')]
     public $type;
 
+    public $user_id;
 
     public function setEmployee(Employee $employee_form)
     {
@@ -48,7 +49,7 @@ class FormEmployee extends Form
         $this->skill = $employee_form->skill;
         $this->skill_category = $employee_form->skill_category;
         $this->employment_status = $employee_form->employment_status;
-        
+        $this->user_id = $employee_form->user_id;
         $this->type = $employee_form->type;
 
     }
@@ -64,5 +65,19 @@ class FormEmployee extends Form
         $this->reset(); 
 
     }
+
+    public function update()
+    {
+        
+        $this->validate();
+
+        $data = collect($this->all())->except('employee_form')->toArray();
+
+        $this->employee_form->update($data);
+ 
+        $this->reset();
+
+    }
+
 
 }
