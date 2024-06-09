@@ -1,3 +1,0 @@
-<div>
-   bayot
-</div>

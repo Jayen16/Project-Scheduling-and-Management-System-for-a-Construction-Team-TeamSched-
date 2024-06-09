@@ -35,33 +35,30 @@
                     <a href="{{ route('account-management.index') }}"
                         class="nav-link {{ request()->is('account-management*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
-
                         <p>
                             Account Management
                         </p>
                     </a>
                 </li>
 
+                {{-- manpower --}}
                 <li class="nav-item">
-                    <a href="{{ route('logbook.index') }}"
-                        class="nav-link {{ request()->is('logbook*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
-
+                    <a href="{{ route('manpower.index') }}"
+                        class="nav-link {{ request()->is('manpower*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-hammer"></i>
                         <p>
-                            Logbook
-
+                            Manpower
                         </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('project.index') }}"
+                    <a href="{{ route('project-management.index') }}"
                         class="nav-link {{ request()->is('project*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
-                            Project
-
+                            Project Management
                         </p>
                     </a>
                 </li>
@@ -91,66 +88,26 @@
 
                 <li class="nav-header">MULTI LEVEL EXAMPLE</li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-circle"></i>
-
+                {{-- <li class="nav-item {{ request()->routeIs('project.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('project.*') ? 'active' : '' }}">
+                        <i class="fas fa-briefcase nav-icon"></i>
                         <p>
-                            Level 1
+                            Project Management
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('project.index') }}"
+                                class="nav-link {{ request()->routeIs('project.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Level 2</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-
-                                <p>
-                                    Level 2
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-dot-circle nav-icon"></i>
-                                        <p>Level 3</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-dot-circle nav-icon"></i>
-                                        <p>Level 3</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-dot-circle nav-icon"></i>
-                                        <p>Level 3</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Level 2</p>
+                                <p>Existing Project</p>
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
+
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
