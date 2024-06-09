@@ -45,10 +45,10 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Title</th>
-                                <th>Description</th>
                                 <th>Date Started</th>
                                 <th>Expected Completion Date</th>
-                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Percentage %</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -59,12 +59,15 @@
                             <tr>
                                 <td class="align-middle">1</td>
                                 <td class="align-middle">LMC IMUS - 6D BLOWERS</td>
-                                <td class="align-middle">
-                                    {{ Str::limit('Lorem ipsum dolor sit periores voluptates odit veniam cupiditate et enim dolor iusto ipsam rem iure!', 30, '...') }}
-                                </td>
                                 <td class="align-middle">02/13/2024</td>
                                 <td class="align-middle">02/20/2024</td>
-                                <td class="align-middle font-weight-bold">Active</td>
+                                <td class="align-middle font-weight-bold">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" style="width: 55%">
+                                        </div>
+                                    </div>
+                                <td class="font-weight-bold">55%</td>
+                                </td>
                                 <td class="text-center align-middle">
                                     <button wire:click='redirectToProfile()' class="btn btn-sm btn-primary"
                                         type="button"><i class="nav-icon fas fa-file mr-2"></i>View</button>

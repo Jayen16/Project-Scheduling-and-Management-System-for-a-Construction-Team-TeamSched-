@@ -14,7 +14,7 @@ class Project extends Component
     }
     public function redirectToProfile()
     {
-        return redirect()->route('project.index');
+        return redirect()->route('project-summary.index');
     }
     public function delete()
     {
