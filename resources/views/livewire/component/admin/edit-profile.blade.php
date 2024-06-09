@@ -148,10 +148,9 @@
                                         <option value="">Select Skill</option>
                                         <option value="Carpenter">Carpenter</option>
                                         <option value="Mason">Mason</option>
-                                        <option value="Architect">Architect</option>
-                                        <option value="Plumber">Plumber</option>
-                                        <option value="Structural Engineer">Structural Engineer</option>
-                                        <option value="Electrical Engineer">Electrical Engineer</option>
+                                        <option value="Installer">Installer</option>
+                                        <option value="Painter">Painter</option>
+                                        <option value="Electrician">Electrician</option>
                                         <option value="Plumber">Plumber</option>
                                         <option value="Heavy Equipment Operator">Heavy Equipment Operator</option>
                                     </select>
