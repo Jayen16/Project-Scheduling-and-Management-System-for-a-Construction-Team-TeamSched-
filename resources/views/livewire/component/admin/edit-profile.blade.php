@@ -44,21 +44,21 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Last Name <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="text" class="form-control"
+                                <input wire:model='employee_form.lastName' type="text" class="form-control"
                                     placeholder="Enter Last Name..." required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>First Name <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="text" class="form-control"
+                                <input wire:model='employee_form.firstName' type="text" class="form-control"
                                     placeholder="Enter First Name..." required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                <input wire:model='' type="text" class="form-control"
+                                <input wire:model='employee_form.middleName' type="text" class="form-control"
                                     placeholder="Enter Middle Name...">
                             </div>
                         </div>
@@ -68,14 +68,14 @@
                         <div class="col-8">
                             <div class="form-group">
                                 <label>Address <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="text" class="form-control" placeholder="Enter Address..."
+                                <input wire:model='employee_form.address' type="text" class="form-control" placeholder="Enter Address..."
                                     required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Birthday <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="date" class="form-control" max="{{ $maxDate }}"
+                                <input wire:model='employee_form.birthdate' type="date" class="form-control" max="{{ $maxDate }}"
                                     required>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label>Contact Number <span
                                         class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' class="form-control"
+                                <input wire:model='employee_form.contact_number' class="form-control"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text"
                                     maxlength="11" placeholder="Enter contact number..." required>
                             </div>
@@ -103,69 +103,70 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label>Role <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <select wire:model.live="selectedRole" class="form-control" required>
+                                <select wire:model.live="employee_form.type" class="form-control" required>
                                     <option value="">Select Role</option>
-                                    <option value="Manpower">Manpower</option>
-                                    <option value="Site Supervisor">Site Supervisor</option>
-                                    <option value="Project Manager">Project Manager</option>
-                                    <option value="Admin">Admin</option>
+                                    <option value="manpower">Manpower</option>
+                                    <option value="supervisor">Site Supervisor</option>
+                                    <option value="manager">Project Manager</option>
+                                    <option value="admin">Admin</option>
                                 </select>
                             </div>
                         </div>
-                        @if ($showStatusOfAppointment)
+                        @if ($employee_form->type == 'manpower')
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Status of Appointment <span
                                             class="text-danger font-weight-bolder text-md">*</span></label>
-                                    <select class="form-control" required>
+                                    <select wire:model.live="employee_form.employment_status" class="form-control" required>
                                         <option value="">Select Status of Appointment</option>
-                                        <option value="Available">Available</option>
-                                        <option value="Working">Working</option>
-                                        <option value="Overdue">Overdue</option>
+                                        <option value="available">Available</option>
+                                        <option value="working">Working</option>
+                                        <option value="overdue">Overdue</option>
                                     </select>
                                 </div>
                             </div>
                         @endif
-                        @if ($showSkillCategory)
+                        @if ($employee_form->employment_status)
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Skill Category <span
                                             class="text-danger font-weight-bolder text-md">*</span></label>
-                                    <select wire:model.live="selectedSkillCategory" class="form-control" required>
+                                    <select wire:model.live="employee_form.skill_category" class="form-control" required>
                                         <option value="">Select Category</option>
-                                        <option value="Skilled">Skilled</option>
-                                        <option value="Unskilled">Unskilled</option>
+                                        <option value="skilled">Skilled</option>
+                                        <option value="unskilled">Unskilled</option>
                                     </select>
                                 </div>
                             </div>
                         @endif
                         {{-- (Skilled) --}}
-                        @if ($showSkilled)
+                        @if ($employee_form->skill_category == 'skilled')
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Skill <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                    <select class="form-control" required>
+                                    <select wire:model="employee_form.skill" class="form-control" required>
                                         <option value="">Select Skill</option>
-                                        <option value="Carpenter">Carpenter</option>
-                                        <option value="Mason">Mason</option>
-                                        <option value="Installer">Installer</option>
-                                        <option value="Painter">Painter</option>
-                                        <option value="Electrician">Electrician</option>
-                                        <option value="Plumber">Plumber</option>
-                                        <option value="Heavy Equipment Operator">Heavy Equipment Operator</option>
+                                        <option value="carpenter">Carpenter</option>
+                                        <option value="mason">Mason</option>
+                                        <option value="installer">Installer</option>
+                                        <option value="painter">Painter</option>
+                                        <option value="cement Mixer">Cement Mixer</option>
+                                        <option value="electrician">Electrician</option>
+                                        <option value="plumber">Plumber</option>
+                                        <option value="operator">Heavy Equipment Operator</option>
                                     </select>
                                 </div>
                             </div>
                         @endif
                         {{-- (Unskilled) --}}
-                        @if ($showUnskilled)
+                        @if ($employee_form->skill_category == 'unskilled')
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Skill <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                    <select class="form-control" required>
+                                    <select wire:model="employee_form.skill" class="form-control" required>
                                         <option value="">Select Skill</option>
-                                        <option value="Laborer">Laborer</option>
-                                        <option value="Helper">Helper</option>
+                                        <option value="laborer">Laborer</option>
+                                        <option value="helper">Helper</option>
                                     </select>
                                 </div>
                             </div>
@@ -184,14 +185,14 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Username <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="text" class="form-control"
+                                <input wire:model='employee_userName' type="text" class="form-control"
                                     placeholder="Enter username..." required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Password <span class="text-danger font-weight-bolder text-md">*</span></label>
-                                <input wire:model='' type="text" class="form-control"
+                                <input wire:model='employee_password' type="password" class="form-control"
                                     placeholder="Enter password..." required>
                             </div>
                         </div>
@@ -201,7 +202,7 @@
             <div class="d-flex justify-content-end">
                 <button wire:click='redirectToProfile()' type="button" class="btn btn-default mr-2">
                     Cancel</button>
-                <button type="submit" class="btn btn-success float-right">Save</button>
+                <button wire:click='update()' type="submit" class="btn btn-success float-right">Save</button>
             </div>
         </form>
     </div>
