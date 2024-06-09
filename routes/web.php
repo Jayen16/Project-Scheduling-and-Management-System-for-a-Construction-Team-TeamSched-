@@ -40,10 +40,16 @@ Route::get('/login', \App\Livewire\Component\Login::class)->name('login.index');
 
 // admin
 // account management
-Route::get('/account-management', AccountManagement::class)->name('account-management.index');
-Route::get('/account-management/add', AddAccount::class)->name('account.create');
-Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
-Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+
+Route::group(['prefix' => 'account-management', 'middleware' => ['role:admin']], function() {
+   
+    Route::get('/', AccountManagement::class)->name('account-management.index');
+    Route::get('/add', AddAccount::class)->name('account.create');
+    Route::get('/profile/{member}', AccountProfile::class)->name('profile.index');
+    Route::get('/profile/edit/{member}', EditProfile::class)->name('profile.edit');
+    
+});
+
 
 // Project Manager
 Route::get('/manpower', ManpowerList::class)->name('manpower.index');

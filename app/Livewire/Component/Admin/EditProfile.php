@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\Admin;
 
+use App\Models\Employee;
 use Livewire\Component;
 
 class EditProfile extends Component
@@ -13,6 +14,15 @@ class EditProfile extends Component
     public $selectedSkillCategory;
     public $showSkilled = false;
     public $showUnskilled = false;
+
+    public $member;
+
+    public function mount(Employee $member){
+        
+        $this->member = $member;
+    }
+
+    
     public function redirectToAccountManagement()
     {
         return redirect()->route('account-management.index');
@@ -54,12 +64,12 @@ class EditProfile extends Component
         } else {
         }
     }
-    public function mount()
-    {
-        $this->maxDate = date('Y-m-d'); // Get the current date in 'YYYY-MM-DD' format
-    }
+
     public function render()
     {
+
+        $this->maxDate = date('Y-m-d');
+
         return view('livewire.component.admin.edit-profile');
     }
 }

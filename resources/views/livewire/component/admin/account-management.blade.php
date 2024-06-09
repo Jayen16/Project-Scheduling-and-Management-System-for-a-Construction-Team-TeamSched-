@@ -53,62 +53,104 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">1</td>
-                                <td class="align-middle">John Doe</td>
-                                <td class="align-middle">43</td>
-                                <td class="align-middle">Available</td>
-                                <td class="align-middle">Manpower</td>
-                                <td class="text-center align-middle">
-                                    <div class="form-group">
-                                        <div>
+                            @if (!$paginate->isEmpty())
+                                @foreach ($paginate as $member)
+                                    <tr>
+                                        <td class="align-middle">
+                                            {{ ($paginate->currentPage() - 1) * $paginate->perPage() + $loop->iteration }}
+                                        </td>
+                                        <td class="align-middle">{{ $member->firstName.' '.$member->middleName .' '.$member->lastName  }}</td>
+                                        <td class="align-middle">{{ \Carbon\Carbon::parse($member->birthdate)->age }}
+                                        </td>
+                                        <td class="align-middle">{{ $member->employment_status }}</td>
+                                        <td class="align-middle">{{ $member->type }}</td>
+                                        <td class="text-center align-middle">
+
                                             <div class="form-group">
-                                                <div
-                                                    class="custom-control custom-switch custom-switch-on-success custom-switch-off-">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="availability" wire:click="toggleIsActive">
-                                                    <label class="custom-control-label" for="availability">
-                                                        {{ $isActive ? 'Active' : 'Inactive' }}
-                                                    </label>
+                                                <div>
+                                                    <div class="form-group">
+
+                                                        @php
+                                                            $toggleProperty = 'isActive' . $member->id;
+                                                        @endphp
+
+                                                        @if ($member->status == 'Active')
+                                                            @php
+                                                                $this->isActive = true;
+                                                                $badgeClass = 'badge-success';
+                                                                $badgeValue = 'Active';
+                                                            @endphp
+                                                        @else
+                                                            @php
+                                                                $this->isActive = false;
+                                                                $badgeClass = 'badge-secondary';
+                                                                $badgeValue = 'Inactive';
+                                                            @endphp
+                                                        @endif
+
+                                                        {{--   --}}
+                                                        <div
+                                                            class="custom-control custom-switch custom-switch-on-success custom-switch-off-">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="{{ $toggleProperty }}"
+                                                                @if ($this->isActive) checked @endif
+                                                                wire:click="toggleUpdate({{ $member->id }})">
+                                                            <label class="custom-control-label"
+                                                                for="{{ $toggleProperty }}">
+                                                                {{ $badgeValue }}
+                                                            </label>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <button wire:click='redirectToProfile({{ $member->id }})'
+                                                class="btn btn-sm btn-primary" type="button"><i
+                                                    class="nav-icon fas fa-user mr-2"></i>Profile</button>
+                                            <button class="btn btn-sm btn-danger" type="button" data-toggle="modal"
+                                                data-target="#modal-default">
+                                                <i class="nav-icon fas fa-minus mr-2"></i> Delete</button>
+                                        </td>
+                                    </tr>
+
+
+                                    <div class="modal fade" id="modal-default">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete User</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure to delete this user?</p>
+                                                </div>
+                                                <div class="modal-footer justify-end">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button wire:click='delete({{ $member->id }})' type="button"
+                                                        class="btn btn-danger" data-dismiss="modal">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                </td>
-                                <td class="text-center align-middle">
-                                    <button wire:click='redirectToProfile()' class="btn btn-sm btn-primary"
-                                        type="button"><i class="nav-icon fas fa-user mr-2"></i>Profile</button>
-                                    <button data-toggle="modal" data-target="#exampleModal"
-                                        class="btn btn-sm btn-danger" type="button"><i
-                                            class="nav-icon fas fa-minus mr-2"></i> Delete</button>
-                                </td>
-                            </tr>
+
+                                @endforeach
+                            @endif
+
                         </tbody>
                     </table>
                 </div>
 
             </div>
-        </div>
-    </div>
-    {{-- confirmation modal --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this account?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button wire:click='deleteAccount()' class="btn btn-danger">Delete</button>
-                </div>
+            <div class="d-flex justify-content-end mt-2">
+                {{ $paginate->links() }}
             </div>
         </div>
     </div>
