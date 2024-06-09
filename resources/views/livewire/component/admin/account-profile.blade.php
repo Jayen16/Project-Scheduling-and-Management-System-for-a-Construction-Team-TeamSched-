@@ -91,10 +91,11 @@
                         </div>
                     </div>
 
+                    @if($member->type == 'manpower')
                     <div class="col-3">
                         <div class="form-group">
                             <label>Status of Appointment</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->employment_status }}
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->employment_status ?? '' }}
                             </div>
                         </div>
                     </div>
@@ -102,7 +103,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Skill Category </label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill_category }}
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill_category ?? '' }}
                             </div>
                         </div>
                     </div>
@@ -110,11 +111,11 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Skill </label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill }}
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill ?? '' }}
                             </div>
                         </div>
                     </div>
-
+                    @endif
                 </div>
             </div>
         </div>
@@ -130,14 +131,15 @@
                         <div class="form-group">
                             <label>Username</label>
                             <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">
-                                manpowerteamsched001
+                                {{ $member->user->username ?? '-' }}
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label>Password</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">hfe4713d
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">
+                                {{ $member->user->password ? '********' : '-' }}
                             </div>
                         </div>
                     </div>
