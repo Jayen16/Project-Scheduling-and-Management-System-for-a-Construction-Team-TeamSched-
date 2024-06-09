@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class AssignedMember extends Model
 {
     use HasFactory;
+    public $guarded = [];
+
+    public function employee(){
+        return $this->belongsTo(Employee::class, 'manpower_id', 'id');
+    }
+
 }
