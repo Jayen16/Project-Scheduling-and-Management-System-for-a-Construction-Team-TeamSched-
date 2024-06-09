@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('assigned_members', function (Blueprint $table) {
             $table->id();
+            $table->string('task_id');
+            $table->string('manpower_id');
             $table->timestamps();
         });
     }
