@@ -8,10 +8,10 @@
 
         <form>
             <div class="form-group mb-4">
-                <label for="email" class="text-sm font-weight-bold text-gray-700 mb-1">Username</label>
-                <input wire:model="email" placeholder="enter username" type="email" class="form-control">
+                <label for="text" class="text-sm font-weight-bold text-gray-700 mb-1">Username</label>
+                <input wire:model="username" placeholder="enter username" type="text" class="form-control">
 
-                @error('email')
+                @error('username')
                     <p class="text-sm text-danger mt-1">{{ $message }}</p>
                 @enderror
             </div>
