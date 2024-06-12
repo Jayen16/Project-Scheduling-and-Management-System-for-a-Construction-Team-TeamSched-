@@ -7,7 +7,7 @@ window.addEventListener('alert',(event) => {
         toast: true,
         position: "bottom-end",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 6000,
         timerProgressBar: false,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
@@ -15,7 +15,7 @@ window.addEventListener('alert',(event) => {
         }
       });
       Toast.fire({
-        icon: "success",
+        icon: data.type,
         title: data.title
       });
 });
