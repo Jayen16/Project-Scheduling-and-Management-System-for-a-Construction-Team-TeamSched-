@@ -11,7 +11,7 @@ class TopNavigation extends Component
     {
         Auth::logout();
 
-        return $this->redirect('/login', navigate: true);
+        return $this->redirect('/', navigate: true);
     }
 
     public function render()
