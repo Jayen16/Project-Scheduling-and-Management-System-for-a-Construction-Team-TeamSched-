@@ -1,12 +1,13 @@
 <?php
 
-use App\Livewire\Auth\Login;
+// use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Component\Admin\AccountManagement;
 use App\Livewire\Component\Admin\AccountProfile;
 use App\Livewire\Component\Admin\AddAccount;
 use App\Livewire\Component\Admin\EditProfile;
 use App\Livewire\Component\Logbook;
+use App\Livewire\Component\Login;
 use App\Livewire\Component\ProjectManager\Manpower\ManpowerList;
 use App\Livewire\Component\ProjectManager\ProjectManagement\AddProject;
 use App\Livewire\Component\ProjectManager\ProjectManagement\EditProject;
@@ -16,10 +17,14 @@ use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 
-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+//LOGIN
+Route::group(['middleware' => ['guest']], function() {
+    Route::get('/', Login::class)->name('login.index');
+});
 
 //AUTHENTICATED USER
 Route::group(['middleware' => ['auth']], function () {
@@ -49,10 +54,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-//LOGIN
-Route::group(['middleware' => ['guest']], function() {
-    Route::get('/login', \App\Livewire\Component\Login::class)->name('login.index');
-});
+
 
 
 
