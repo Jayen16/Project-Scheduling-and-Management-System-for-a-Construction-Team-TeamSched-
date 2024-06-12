@@ -2,13 +2,27 @@
 
 namespace App\Livewire\Component\ProjectManager\ProjectManagement;
 
+use App\Models\Project;
 use Livewire\Component;
 
 class ProjectSummary extends Component
 {
-    public function redirectToEdit()
+
+    public $project;
+    public $scopes;
+
+    public function mount(Project $project){
+        $this->project = $project;
+
+
+        if($project->scope){
+            $this->scopes = $project->scope;
+        }
+    }
+
+    public function redirectToEdit($id)
     {
-        return redirect()->route('project.edit');
+        return redirect()->route('project.edit',['project'=>$id]);
     }
     public function redirectToProjectManagement()
     {
