@@ -14,4 +14,9 @@ class Week extends Model
         return $this->hasMany(Task::class, 'week_id', 'id');
     }
 
+    public function assignedmember(){
+        return $this->hasMany(AssignedMember::class, 'week_id', 'id');
+    }
+
+
 }

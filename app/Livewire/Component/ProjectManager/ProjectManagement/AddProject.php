@@ -56,6 +56,7 @@ class AddProject extends Component
     public function create()
     {
 
+
         $this->validate();
 
         if (is_null($this->week_title) || is_null($this->project_name) || is_null($this->project_date_range) || is_null($this->project_description) || is_null($this->manpower) || is_null($this->task)) {
@@ -82,25 +83,27 @@ class AddProject extends Component
 
                     foreach($type['tasks'] as $taskName){
                         
-                        $task = Task::create([
+                         Task::create([
                             'week_id' => $this->week->id, 
                             'name' => $taskName,
                         ]);
 
+                        }
+
                         foreach($type['manpowers'] as $manpower){
 
                             AssignedMember::create([
-                                'task_id' => $task->id, 
+                                'week_id' => $this->week->id, 
                                 'manpower_id' => $manpower,
                             ]);
                         }
-                    }
                 }
             }
 
             });
     
             $this->resetInputFields();
+            // $this->displayScope = [];
             $this->dispatch('alert', type:'success', title:'The new project has been saved.', position:'center');
 
         }
