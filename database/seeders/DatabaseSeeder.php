@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call(LaratrustSeeder::class);
 
         // \App\Models\Employee::factory(10)->create();
-        \App\Models\User::factory()->hasEmployee(['type' => 'admin'])->asAdmin()->create();
+        // \App\Models\User::factory()->hasEmployee(['type' => 'admin'])->asAdmin()->create();
+        \App\Models\User::factory(2)->hasEmployee(['type' => 'manpower'])->asManpower()->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
