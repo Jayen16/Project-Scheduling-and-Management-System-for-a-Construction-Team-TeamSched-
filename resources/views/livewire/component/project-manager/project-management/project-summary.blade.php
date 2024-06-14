@@ -81,6 +81,14 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
+                                                <label>Site Supervisor</label>
+                                                <div style="background-color: rgb(232, 232, 232);"
+                                                    class="p-2 border rounded">Supervisor 1
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
                                                 <label>Date Started and Completion</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
                                                     class="p-2 border rounded">06/08/2024 -
