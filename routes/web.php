@@ -12,6 +12,7 @@ use App\Livewire\Component\ProjectManager\ProjectManagement\AddProject;
 use App\Livewire\Component\ProjectManager\ProjectManagement\EditProject;
 use App\Livewire\Component\ProjectManager\ProjectManagement\Project;
 use App\Livewire\Component\ProjectManager\ProjectManagement\ProjectSummary;
+use App\Livewire\Component\ProjectManager\ProjectManagement\TaskView;
 use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,7 @@ Route::get('/project-management', Project::class)->name('project-management.inde
 Route::get('/project-management/add', AddProject::class)->name('project.create');
 Route::get('/project/id', ProjectSummary::class)->name('project-summary.index');
 Route::get('/project/edit', EditProject::class)->name('project.edit');
+Route::get('/task/view', TaskView::class)->name('task.index');
 
 
 
