@@ -47,7 +47,16 @@
                                     required>
                             </div>
                         </div>
-
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label>Site Supervisor <span
+                                        class="text-danger font-weight-bolder text-md">*</span></label>
+                                <select wire:model='' class="form-control" required>
+                                    <option value="">Select Site Supervisor</option>
+                                    <option value="Supervisor 1">Supervisor 1</option>
+                                </select>
+                            </div>
+                        </div>
                         {{-- daterange picker --}}
                         <div class="col-3">
                             <div class="form-group">

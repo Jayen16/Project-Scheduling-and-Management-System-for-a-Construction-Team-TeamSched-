@@ -81,6 +81,14 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
+                                                <label>Site Supervisor</label>
+                                                <div style="background-color: rgb(232, 232, 232);"
+                                                    class="p-2 border rounded">Supervisor 1
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
                                                 <label>Date Started and Completion</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
                                                     class="p-2 border rounded">{{ $project->date_range ?? '-' }}
@@ -108,12 +116,22 @@
                                     <h3 class="card-title">Scope of Work</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
+                                    <div class="d-flex justify-content-between align-items-start">
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
                                                     class="p-2 border rounded">{{ ucwords($week->title) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div>
+                                                <div class="progress progress-lg progress-striped active">
+                                                    <div class="progress-bar bg-success" style="width: 10%"></div>
+                                                </div>
+                                                <div>
+                                                    <p class="text-right font-weight-bold">Progress: 10%</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,14 +143,15 @@
                                                 <h3 class="card-title font-weight-bold">Tasks</h3>
                                             </div>
 
-                                            <div>
+                                            <div class="table-responsive">
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 10px">#</th>
-                                                            <th>Task</th>
-                                                            <th>Progress</th>
-                                                            <th style="width: 150px">Percentage %</th>
+                                                            <th class="pl-lg-4" style="width: 10%">#</th>
+                                                            <th style="width: 60%">Task</th>
+                                                            <!-- Set the width to 50% or any value you prefer -->
+                                                            <th>Status</th>
+                                                            <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -140,14 +159,13 @@
                                                         <tr>
                                                             <td> {{ $loop->index +1 }}</td>
                                                             <td>{{ $task->name }}</td>
-                                                            <td class="align-middle">
-                                                                <div class="progress progress-xs">
-                                                                    <div class="progress-bar bg-success"
-                                                                        style="width: 55%">
-                                                                    </div>
-                                                                </div>
+                                                            <td>Ongoing</td>
+                                                            <td class="text-center">
+                                                                <button wire:click='redirectToViewTask()'
+                                                                    class="btn btn-sm btn-primary" type="button">
+                                                                    <i class="nav-icon fas fa-file mr-2"></i>View
+                                                                </button>
                                                             </td>
-                                                            <td><span class="badge bg-success">55%</span></td>
                                                         </tr>
                                                         @endforeach
 
@@ -185,16 +203,13 @@
 
                             {{-- end scope --}}
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"
+
+                        {{-- Calendar --}}
+                        <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                             aria-labelledby="custom-tabs-three-profile-tab">
-                            Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut
-                            ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur
-                            adipiscing
-                            elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                            Curae;
-                            Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus
-                            ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc
-                            euismod pellentesque diam.
+                            <div>
+                                <livewire:component.project-manager.project-management.calendar>
+                            </div>
                         </div>
                     </div>
                 </div>

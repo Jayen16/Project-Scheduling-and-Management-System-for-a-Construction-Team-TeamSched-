@@ -46,8 +46,8 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
     @if (View::hasSection('noSidebar'))
-        <section class="content">
-            <div class="container-fluid">
+        <section class="">
+            <div class="">
                 {{ $slot }}
             </div>
         </section>

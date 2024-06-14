@@ -16,6 +16,11 @@ class ManpowerList extends Component
     public $filter = 'all';
     public $search = '';
 
+    public function redirectToProfile()
+    {
+        return redirect()->route('manpower-profile.index');
+    }
+    
     public function render()
     {
         $this->manpowers = Employee::where('type','manpower')->get();

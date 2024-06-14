@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#"class="brand-link">
-        <img src="{{ asset('assets/images/RonaldCodesLogo.png') }}" alt="RonaldCodes Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{ asset('assets/images/teamsched_logo.png') }}" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
 
         {{-- <a href="https://www.youtube.com/@RonaldCodes23" target="_blank"><img
                 src="{{ asset('assets/images/RonaldCodesLogo.png') }}" alt="Ronald Codes Logo"

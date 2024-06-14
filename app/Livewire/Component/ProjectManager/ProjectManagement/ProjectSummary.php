@@ -28,6 +28,10 @@ class ProjectSummary extends Component
     {
         return redirect()->route('project-management.index');
     }
+    public function redirectToViewTask()
+    {
+        return redirect()->route('task.index');
+    }
 
     public function render()
     {

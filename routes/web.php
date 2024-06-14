@@ -11,8 +11,10 @@ use App\Livewire\Component\Login;
 use App\Livewire\Component\ProjectManager\Manpower\ManpowerList;
 use App\Livewire\Component\ProjectManager\ProjectManagement\AddProject;
 use App\Livewire\Component\ProjectManager\ProjectManagement\EditProject;
+use App\Livewire\Component\ProjectManager\ProjectManagement\ManpowerProfile;
 use App\Livewire\Component\ProjectManager\ProjectManagement\Project;
 use App\Livewire\Component\ProjectManager\ProjectManagement\ProjectSummary;
+use App\Livewire\Component\ProjectManager\ProjectManagement\TaskView;
 use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +43,12 @@ Route::group(['middleware' => ['auth']], function () {
     });
     
     
+    //account management
+    Route::get('/account-management', AccountManagement::class)->name('account-management.index');
+    Route::get('/account-management/add', AddAccount::class)->name('account.create');
+    Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
+    Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+
     // Project Manager
     Route::get('/manpower', ManpowerList::class)->name('manpower.index');
     Route::get('/project-management', Project::class)->name('project-management.index');

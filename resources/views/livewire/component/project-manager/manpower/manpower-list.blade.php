@@ -63,6 +63,7 @@
                                 <th>Skill Category</th>
                                 <th>Skill</th>
                                 <th>Contact Number</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
