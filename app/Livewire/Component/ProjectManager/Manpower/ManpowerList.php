@@ -16,9 +16,9 @@ class ManpowerList extends Component
     public $filter = 'all';
     public $search = '';
 
-    public function redirectToProfile()
+    public function redirectToProfile($id)
     {
-        return redirect()->route('manpower-profile.index');
+        return redirect()->route('manpower-profile.index',['employee'=>$id]);
     }
     
     public function render()

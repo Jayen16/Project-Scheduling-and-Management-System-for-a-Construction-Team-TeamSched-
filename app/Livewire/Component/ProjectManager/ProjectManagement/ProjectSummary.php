@@ -10,6 +10,7 @@ class ProjectSummary extends Component
 
     public $project;
     public $scopes;
+    public $supervisor;
 
     public function mount(Project $project){
         $this->project = $project;
@@ -17,6 +18,8 @@ class ProjectSummary extends Component
 
         if($project->scope){
             $this->scopes = $project->scope;
+            $employee = $project->assignedProject->employee;
+            $this->supervisor = $employee->firstName.' '.$employee->middleName.' '.$employee->lastName;
         }
     }
 
@@ -24,9 +27,9 @@ class ProjectSummary extends Component
     {
         return redirect()->route('project.edit',['project'=>$id]);
     }
-    public function redirectToProjectManagement()
+    public function redirectToProjectManagement($id)
     {
-        return redirect()->route('project-management.index');
+        return redirect()->route('project-management.index',['project'=>$id]);
     }
     public function redirectToViewTask()
     {

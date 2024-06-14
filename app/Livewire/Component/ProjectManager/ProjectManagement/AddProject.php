@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Component\ProjectManager\ProjectManagement;
 
+use App\Enums\Employee as EnumsEmployee;
 use App\Livewire\Forms\FormProject;
 use App\Models\AssignedMember;
+use App\Models\AssignedProject;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
@@ -24,6 +26,8 @@ class AddProject extends Component
 
  
     public $manpowerList;
+    public $supervisorList;
+
     public $week_title;
     public $task_id;
     public $week;
@@ -37,6 +41,8 @@ class AddProject extends Component
     public $project_date_range;
     #[Validate('required|string')]
     public $project_description;
+    #[Validate('required|string')]
+    public $assign_supervisor;
     
     public $project;
     public $displayScope = [];
@@ -56,7 +62,6 @@ class AddProject extends Component
     public function create()
     {
 
-
         $this->validate();
 
         if (is_null($this->week_title) || is_null($this->project_name) || is_null($this->project_date_range) || is_null($this->project_description) || is_null($this->manpower) || is_null($this->task)) {
@@ -72,6 +77,11 @@ class AddProject extends Component
                 'name' => $this->project_name, 
                 'date_range' => $this->project_date_range, 
                 'description' => $this->project_description
+            ]);
+
+            AssignedProject::create([
+                'supervisor_id'=>$this->assign_supervisor,
+                'project_id'=>$project->id
             ]);
 
             foreach($this->displayScope as $index => $scope){
@@ -135,8 +145,10 @@ class AddProject extends Component
 
     public function addManpower()
     {
+
+        $this->manpowers []= $this->manpower;
         $this->scopes[0]['manpowers'][] = $this->manpower;
-        $this->manpower = '';
+        
     }
 
     public function removeTask($taskIndex)
@@ -167,7 +179,8 @@ class AddProject extends Component
 
     public function render()
     {
-        $this->manpowerList = Employee::where('type','manpower')->get();
+        $this->manpowerList = Employee::where('type',EnumsEmployee::MANPOWER->value)->get();
+        $this->supervisorList = Employee::where('type',EnumsEmployee::SUPERVISOR->value)->get();
 
         return view('livewire.component.project-manager.project-management.add-project');
     }
