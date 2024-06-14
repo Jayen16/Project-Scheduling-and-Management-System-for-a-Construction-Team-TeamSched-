@@ -177,10 +177,10 @@
                         </div>
 
                         {{-- Calendar --}}
-                        <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"
+                        <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                             aria-labelledby="custom-tabs-three-profile-tab">
                             <div>
-
+                                <livewire:component.project-manager.project-management.calendar>
                             </div>
                         </div>
                     </div>
