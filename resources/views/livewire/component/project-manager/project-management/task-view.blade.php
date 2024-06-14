@@ -26,7 +26,8 @@
             </div>
         </div>
         <hr style="margin-top: px; border-width: 2px; border-color: #4a4a4a;">
-
+        <div class="my-lg-2"><span class="badge text-md rounded-pill bg-light border border-width-3 p-2">Timeline</span>
+        </div>
         <div>
             <div class="timeline">
                 {{-- start of timeline upload --}}
