@@ -37,7 +37,8 @@
                 <div>
                     <i class="fa fa-camera bg-purple"></i>
                     <div class="timeline-item">
-                        <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
+                        <span class="time"><span class="text-sm text-left mr-2"> 9:40 a.m. •</span><i class="fas fa-clock"></i> 2 days
+                            ago</span>
                         <h3 class="timeline-header font-weight-normal"><span class="font-weight-bolder">Mina Lee</span>
                             uploaded new photos</h3>
                         <div class="timeline-body">
