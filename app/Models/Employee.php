@@ -17,7 +17,7 @@ class Employee extends Model
 
     public function assignedManpower()
     {
-        return $this->belongsTo(AssignedMember::class, 'manpower_id', 'id');
+        return $this->hasOne(AssignedMember::class, 'manpower_id', 'id');
     }
     
 }

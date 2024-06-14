@@ -18,5 +18,9 @@ class Week extends Model
         return $this->hasMany(AssignedMember::class, 'week_id', 'id');
     }
 
+    public function project(){
+        return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+
 
 }
