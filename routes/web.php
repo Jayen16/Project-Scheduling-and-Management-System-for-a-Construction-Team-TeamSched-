@@ -43,19 +43,26 @@ Route::group(['middleware' => ['auth']], function () {
     });
     
     
-    //account management
-    Route::get('/account-management', AccountManagement::class)->name('account-management.index');
-    Route::get('/account-management/add', AddAccount::class)->name('account.create');
-    Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
-    Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+    // account management
+    // Route::get('/account-management', AccountManagement::class)->name('account-management.index');
+    // Route::get('/account-management/add', AddAccount::class)->name('account.create');
+    // Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
+    // Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+
+
 
     // Project Manager
     Route::get('/manpower', ManpowerList::class)->name('manpower.index');
+    Route::get('/manpower/profile/{employee}', ManpowerProfile::class)->name('manpower-profile.index');
+
+
+
     Route::get('/project-management', Project::class)->name('project-management.index');
     Route::get('/project-management/add', AddProject::class)->name('project.create');
     Route::get('/project/{project}', ProjectSummary::class)->name('project-summary.index');
     Route::get('/project/edit/{project}', EditProject::class)->name('project.edit');
-    
+
+    Route::get('/task/view', TaskView::class)->name('task.index');
     
     // sample only
     Route::get('/logbook', Logbook::class)->name('logbook.index');
