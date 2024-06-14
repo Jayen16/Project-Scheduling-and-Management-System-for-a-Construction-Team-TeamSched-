@@ -56,10 +56,11 @@
                                 <th>Skill Category</th>
                                 <th>Skill</th>
                                 <th>Contact Number</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 5; $i++)
+                            @for ($i = 0; $i < 1; $i++)
                                 <tr>
                                     <td class="align-middle">1</td>
                                     <td class="align-middle">John Doe</td>
@@ -68,6 +69,9 @@
                                     <td class="align-middle">Skilled</span></td>
                                     <td class="align-middle">Carpenter</span></td>
                                     <td class="align-middle">09123456789</td>
+                                    <td class="text-center"> <button wire:click='redirectToProfile()'
+                                            class="btn btn-sm btn-primary" type="button"><i
+                                                class="nav-icon fas fa-user mr-2"></i>Profile</button></td>
                                 </tr>
                             @endfor
                         </tbody>
