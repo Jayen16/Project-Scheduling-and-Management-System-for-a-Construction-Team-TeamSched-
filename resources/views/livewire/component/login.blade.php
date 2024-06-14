@@ -5,7 +5,7 @@
         src="{{ asset('assets/images/construction.jpg') }}" alt="Background Image">
     <div class="position-absolute w-100 h-100" style="background: rgba(0, 0, 0, 0.2);"></div> <!-- Dark overlay -->
     <div class="d-flex align-items-center justify-content-center position-relative" style="height: 100vh; width: 100vw;">
-        <div class="bg-white p-4 rounded-lg shadow-lg" style="width: 25rem;">
+        <div class="bg-white p-4 rounded-lg shadow-lg col-10 col-md-12 " style="max-width: 25rem;">
             <img src="{{ asset('assets/images/teamsched_logo.png') }}" alt="Ronald Codes Logo"
                 class="mx-auto d-block mb-2 rounded-circle cursor-pointer" style="width: 100px" />
 
