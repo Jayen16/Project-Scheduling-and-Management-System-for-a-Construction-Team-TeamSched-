@@ -59,7 +59,7 @@
                                                 <div class="form-group">
                                                     <label>Full Name</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">full name
+                                                        class="p-2 border rounded">{{ $manpower->firstName.' '.$manpower->middleName.' '.$manpower->lastName ?? '-'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,7 +67,7 @@
                                                 <div class="form-group">
                                                     <label>Birthday</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">birthday
+                                                        class="p-2 border rounded">{{ \Carbon\Carbon::parse($manpower->birthdate)->format('M d, Y') ?? '-'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,7 +75,7 @@
                                                 <div class="form-group">
                                                     <label>Age</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">43
+                                                        class="p-2 border rounded">{{ \Carbon\Carbon::parse($manpower->birthdate)->age ?? '-'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +85,7 @@
                                                 <div class="form-group">
                                                     <label>Address</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">address
+                                                        class="p-2 border rounded">{{ $manpower->address ?? '-'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,7 +93,7 @@
                                                 <div class="form-group">
                                                     <label>Contact Number</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">contact
+                                                        class="p-2 border rounded">{{ $manpower->contact_number ?? '-' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +112,15 @@
                                                 <div class="form-group">
                                                     <label>Role</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">Manpower
+                                                        class="p-2 border rounded">
+
+                                                        @php
+                                                            if($manpower->type == App\Enums\Employee::MANPOWER->value){
+                                                                $type = App\Enums\Employee::MANPOWER->label();
+                                                            }
+                                                        @endphp
+
+                                                        {{ $type ?? '-' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,7 +129,7 @@
                                                 <div class="form-group">
                                                     <label>Status of Appointment</label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">Available
+                                                        class="p-2 border rounded"> {{ $manpower->employment_status ?? '-' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,7 +138,7 @@
                                                 <div class="form-group">
                                                     <label>Skill Category </label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">Skilled
+                                                        class="p-2 border rounded">{{ $manpower->skill_category ?? '-' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,7 +147,7 @@
                                                 <div class="form-group">
                                                     <label>Skill </label>
                                                     <div style="background-color: rgb(232, 232, 232);"
-                                                        class="p-2 border rounded">Painter
+                                                        class="p-2 border rounded">{{ $manpower->skill ?? '-' }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,35 +162,6 @@
                         <div class="tab-pane fade" id="custom-tabs-three-attendance" role="tabpanel"
                             aria-labelledby="custom-tabs-three-attendance-tab">
                             <div>
-                                {{-- <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Attendance</h3>
-                                    </div>
-                                    <div class="card-body table-responsive p-0"
-                                        style="max-height: 400px; overflow-y: auto;">
-                                        <table class="table table-striped table-head-fixed text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 10px">#</th>
-                                                    <th style="width: 300px">Project</th>
-                                                    <th>Task</th>
-                                                    <th>Date</th>
-                                                    <th class="text-center">Time-in</th>
-                                                    <th class="text-center">Time-out</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1.</td>
-                                                    <td>LMC-IMUS-6D-BLOWERS</td>
-                                                    <td>Update software</td>
-                                                    <td>02/15/24</td>
-                                                    <td class="text-center">7:00 a.m.</td>
-                                                    <td class="text-center">5:00 p.m.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div> --}}
 
                                 <div class="col-md-12">
                                     {{-- <div class="card"> --}}
@@ -193,13 +172,15 @@
                                     <div class="card-body">
 
                                         {{-- start accordion --}}
+                                        @foreach ($projects as $project)
+                                            
                                         <div id="accordion">
                                             <div class="card card-secondary">
                                                 <div class="card-header">
                                                     <h4 class="card-title w-100">
                                                         <a class="d-block w-100 collapsed" data-toggle="collapse"
                                                             href="#collapseOne" aria-expanded="false">
-                                                            LMC-IMUS-6D-BLOWERS
+                                                            {{ ucwords($project->name) }}
                                                         </a>
                                                     </h4>
                                                 </div>
@@ -219,14 +200,12 @@
                                                                 </thead>
                                                                 <tbody>
 
-                                                                    @for ($i = 0; $i < 6; $i++)
                                                                         <tr>
-                                                                            <td>1.</td>
-                                                                            <td>02/15/24</td>
+                                                                            <td>{{ $loop->index+1 }}</td>
+                                                                            <td> DATE</td>
                                                                             <td class="text-center">7:00 a.m.</td>
                                                                             <td class="text-center">5:00 p.m.</td>
                                                                         </tr>
-                                                                    @endfor
 
                                                                 </tbody>
                                                             </table>
@@ -235,6 +214,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
+
                                         {{-- end accordion --}}
                                     </div>
 

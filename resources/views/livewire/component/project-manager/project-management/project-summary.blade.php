@@ -83,7 +83,7 @@
                                             <div class="form-group">
                                                 <label>Site Supervisor</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">Supervisor 1
+                                                    class="p-2 border rounded"> {{ $supervisor ?? '-' }}
                                                 </div>
                                             </div>
                                         </div>

@@ -77,6 +77,9 @@
                                         <td class="align-middle">{{ ucwords($manpower->skill_category) }}</td>
                                         <td class="align-middle">{{ ucwords($manpower->skill) }}</td>
                                         <td class="align-middle">{{ ucwords($manpower->contact_number) }}</td>
+                                        <td class="text-center"> <button wire:click="redirectToProfile('{{ $manpower->id }}')"
+                                            class="btn btn-sm btn-primary" type="button"><i
+                                                class="nav-icon fas fa-user mr-2"></i>Profile</button></td>
                                     </tr>
                                 @endforeach
                             @else

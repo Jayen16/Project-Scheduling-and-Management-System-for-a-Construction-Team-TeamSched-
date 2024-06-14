@@ -48,9 +48,11 @@
                             <div class="form-group">
                                 <label>Site Supervisor <span
                                         class="text-danger font-weight-bolder text-md">*</span></label>
-                                <select wire:model='' class="form-control" required>
-                                    <option value="">Select Site Supervisor</option>
-                                    <option value="Supervisor 1">Supervisor 1</option>
+                                <select wire:model='assign_supervisor' class="form-control" required>
+                                    <option value="">Assign Site Supervisor</option>
+                                    @foreach ($supervisorList as $supervisor)
+                                        <option value="{{ $supervisor->id }}">{{ $supervisor->firstName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -142,9 +144,10 @@
                                                     required>
                                                     <option value="">Select Manpower</option>
                                                     @foreach ($manpowerList as $manpower)
-                                                        <option value="{{ $manpower->id }}">{{ ucwords($manpower->firstName).' '.ucwords($manpower->middleName) .' '.ucwords($manpower->lastName)  }}</option>
+                                                        @unless(in_array($manpower->id, $manpowers))
+                                                            <option value="{{ $manpower->id }}">{{ ucwords($manpower->firstName) . ' ' . ucwords($manpower->middleName) . ' ' . ucwords($manpower->lastName) }}</option>
+                                                        @endunless
                                                     @endforeach
-                                               
                                                 </select>
                                             </div>
                                      
@@ -198,7 +201,11 @@
                                                         <div class="mr-2">
                                                             <div style="background-color: rgb(248, 248, 248); width:250px;"
                                                                 class="p-1 pl-2 border rounded text-uppercase">
-                                                                {{ $manpower }}
+
+                                                                @php
+                                                                    $manpowerDetail = App\Models\Employee::where('id',$manpower)->first();
+                                                                @endphp
+                                                                {{ $manpowerDetail->firstName.' '.$manpowerDetail->middleName.' '.$manpowerDetail->lastName }}
                                                             </div>
                                                         </div>
                                                         <button
