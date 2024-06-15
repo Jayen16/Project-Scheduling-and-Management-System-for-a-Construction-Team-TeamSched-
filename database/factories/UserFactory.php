@@ -44,9 +44,8 @@ class UserFactory extends Factory
     {
 
         return $this->state(fn (array $attributes) => [
-            'username'=> 'nina1616',
-            'password'=> 'ulangkaya',
-            
+            'username'=> 'admin',
+            'password'=> 'admin',
 
         ])->afterCreating(function (User $user) {
             $user->addRole('admin'); 
@@ -57,6 +56,9 @@ class UserFactory extends Factory
     {
 
         return $this->state(fn (array $attributes) => [
+            'username'=> 'manpower',
+            'password'=> 'manpower',
+
         ])->afterCreating(function (User $user) {
             $user->addRole('manpower'); 
         });
@@ -64,8 +66,11 @@ class UserFactory extends Factory
     
     public function asSuperVisor(): static
     {
-
         return $this->state(fn (array $attributes) => [
+
+            'username'=> 'supervisor',
+            'password'=> 'supervisor',
+
         ])->afterCreating(function (User $user) {
             $user->addRole('supervisor'); 
         });
@@ -75,6 +80,8 @@ class UserFactory extends Factory
     {
 
         return $this->state(fn (array $attributes) => [
+            'username'=> 'manager',
+            'password'=> 'manager',
         ])->afterCreating(function (User $user) {
             $user->addRole('manager'); 
         });

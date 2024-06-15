@@ -24,7 +24,6 @@ class AddAccount extends Component
     public $showSkilled = false;
     public $showUnskilled = false;
 
-
     #[Validate('required|unique:roles,name')]
     public $userName;
     #[Validate('required', 'min:8')]
@@ -75,18 +74,19 @@ class AddAccount extends Component
         DB::transaction(function () {
 
             $type = $this->employee_form->type;
+ 
+            $newAccount = new User();
+            $newAccount->username = $this->userName;
+            $newAccount->password = Hash::make($this->userPassword);
+            $newAccount->save();
+            $newAccount->addRole($type);
+
+            $this->employee_form->user_id = $newAccount->id;
             $this->employee_form->store();
 
-            if ($this->userName !== null && $this->userPassword !== null) {
+            $this->userName = '';
+            $this->userPassword= '';
             
-                $newAccount = new User();
-                $newAccount->username = $this->userName;
-                $newAccount->password = Hash::make($this->userPassword);
-                $newAccount->save();
-                $newAccount->addRole($type);
-
-            }
-
             $this->dispatch('alert',type:'success', title:'New Added Employee', position:'center');
         });
 

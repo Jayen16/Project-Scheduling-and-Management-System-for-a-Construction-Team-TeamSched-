@@ -12,29 +12,26 @@ use Livewire\Component;
 #[Layout('components.layouts.guest')]
 class Register extends Component
 {
-    public $name = "";
-    public $email = "";
+    public $username = "";
     public $password = "";
 
     public function register()
     {
         $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
+            'username' => 'required|string|max:255|unique:users,username',
             'password' => 'required|string|min:8',
         ]);
 
         // Create a new user
         $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
+            'username' => $this->username,
             'password' => Hash::make($this->password),
         ]);
 
         // Log the user in after registration
         Auth::login($user);
 
-        return $this->redirect('/', navigate: true);
+        return $this->redirect('/dashboard', navigate: true);
     }
 
 

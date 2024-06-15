@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('week_id');
             $table->string('name');
-            $table->string('description');
-            $table->string('status');
+            $table->string('description')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

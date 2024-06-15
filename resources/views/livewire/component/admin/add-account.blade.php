@@ -20,7 +20,7 @@
         </div>
         <hr style="margin-top: 0px; border-width: 2px; border-color: #4a4a4a;">
 
-        <form wire:submit="">
+        <form>
             <div class="text-right">
                 <p class="font-italic">Note: fields marked with <span
                         class="text-danger font-weight-bolder text-md">*</span> are required.
@@ -137,13 +137,14 @@
                                     <label>Skill <span class="text-danger font-weight-bolder text-md">*</span></label>
                                     <select wire:model.live="employee_form.skill" class="form-control" required>
                                         <option value="">Select Skill</option>
-                                        <option value="Carpenter">Carpenter</option>
-                                        <option value="Mason">Mason</option>
-                                        <option value="Installer">Installer</option>
-                                        <option value="Painter">Painter</option>
-                                        <option value="Electrician">Electrician</option>
-                                        <option value="Plumber">Plumber</option>
-                                        <option value="Heavy Equipment Operator">Heavy Equipment Operator</option>
+                                        <option value="carpenter">Carpenter</option>
+                                        <option value="mason">Mason</option>
+                                        <option value="installer">Installer</option>
+                                        <option value="painter">Painter</option>
+                                        <option value="cement Mixer">Cement Mixer</option>
+                                        <option value="electrician">Electrician</option>
+                                        <option value="plumber">Plumber</option>
+                                        <option value="operator">Heavy Equipment Operator</option>
                                     </select>
                                 </div>
                             </div>
@@ -192,18 +193,18 @@
             <div class="d-flex justify-content-end">
                 <button wire:click='redirectToAccountManagement()' type="button" class="btn btn-default mr-2">
                     Cancel</button>
-                <button wire:click='create()' type="submit" class="btn btn-success float-right">Create Account</button>
-
+                <button type="button" data-toggle="modal" data-target="#createAccountModal"
+                    class="btn btn-success float-right">Create Account</button>
             </div>
         </form>
     </div>
     {{-- confirmation modal --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="accountLabelModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                    <h5 class="modal-title" id="accountLabelModal">Create Account</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -213,7 +214,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button wire:click='create()' data-dismiss="modal" type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
         </div>

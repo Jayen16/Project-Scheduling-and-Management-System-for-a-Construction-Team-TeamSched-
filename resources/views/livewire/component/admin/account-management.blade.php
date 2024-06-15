@@ -28,7 +28,7 @@
                     <h3 class="card-title">Accounts</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 275px;">
-                            <input type="text" name="table_search" class="form-control float-right"
+                            <input type="text" wire:model.live="search" name="table_search" class="form-control float-right"
                                 placeholder="Search">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default">
@@ -53,17 +53,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!$paginate->isEmpty())
-                                @foreach ($paginate as $member)
-                                    <tr>
+                                <tr>
+                                    @if (!$paginate->isEmpty())
+                                        @foreach ($paginate as $member)
                                         <td class="align-middle">
                                             {{ ($paginate->currentPage() - 1) * $paginate->perPage() + $loop->iteration }}
                                         </td>
-                                        <td class="align-middle">{{ $member->firstName.' '.$member->middleName .' '.$member->lastName  }}</td>
-                                        <td class="align-middle">{{ \Carbon\Carbon::parse($member->birthdate)->age }}
-                                        </td>
-                                        <td class="align-middle">{{ $member->employment_status }}</td>
-                                        <td class="align-middle">{{ $member->type }}</td>
+                                        <td class="align-middle">{{ ucwords($member->firstName).' '.ucwords($member->middleName) .' '.ucwords($member->lastName)}}</td>
+                                        <td class="align-middle">{{ \Carbon\Carbon::parse($member->birthdate)->age }}</td>
+                                        <td class="align-middle">{{ ucwords($member->employment_status) }}</td>
+                                        <td class="align-middle">{{ ucwords($member->type) }}</td>
                                         <td class="text-center align-middle">
 
                                             <div class="form-group">
@@ -112,13 +111,13 @@
                                                 class="btn btn-sm btn-primary" type="button"><i
                                                     class="nav-icon fas fa-user mr-2"></i>Profile</button>
                                             <button class="btn btn-sm btn-danger" type="button" data-toggle="modal"
-                                                data-target="#modal-default">
+                                                data-target="#modal-{{ $member->id }}">
                                                 <i class="nav-icon fas fa-minus mr-2"></i> Delete</button>
                                         </td>
                                     </tr>
 
 
-                                    <div class="modal fade" id="modal-default">
+                                    <div class="modal fade"  id="modal-{{ $member->id }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -134,7 +133,7 @@
                                                 <div class="modal-footer justify-end">
                                                     <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Close</button>
-                                                    <button wire:click='delete({{ $member->id }})' type="button"
+                                                    <button wire:click="deletion('{{ $member->id }}')" type="button"
                                                         class="btn btn-danger" data-dismiss="modal">Delete</button>
                                                 </div>
                                             </div>
@@ -142,8 +141,13 @@
                                     </div>
 
                                 @endforeach
-                            @endif
 
+
+                            @else
+                                <td colspan="7" class="text-center"> No Available Search</td>
+                            @endif
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -154,4 +158,6 @@
             </div>
         </div>
     </div>
+
+
 </div>

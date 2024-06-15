@@ -18,14 +18,15 @@
 
             <h5 class="font-weight-bold mb-2 text-dark text-center">Login</h5>
 
-            <form>
-                <div class="form-group mb-4">
-                    <label for="email" class="text-sm font-weight-bold text-gray-700 mb-1">Username</label>
-                    <input wire:model="email" placeholder="enter username" type="email" class="form-control">
-                    @error('email')
-                        <p class="text-sm text-danger mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+        <form>
+            <div class="form-group mb-4">
+                <label for="text" class="text-sm font-weight-bold text-gray-700 mb-1">Username</label>
+                <input wire:model="username" placeholder="enter username" type="text" class="form-control">
+
+                @error('username')
+                    <p class="text-sm text-danger mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
                 <div class="form-group mb-4">
                     <label for="password" class="text-sm font-weight-bold text-gray-700 mb-1">Password</label>

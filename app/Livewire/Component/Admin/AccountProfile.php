@@ -13,6 +13,7 @@ class AccountProfile extends Component
     public function mount(Employee $member){
         
         $this->member = $member;
+
     }
 
     public function redirectToEdit($id)
