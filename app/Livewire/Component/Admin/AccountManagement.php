@@ -42,14 +42,19 @@ class AccountManagement extends Component
         return redirect()->route('profile.index',['member'=>$id]);
     }
 
-    public function delete($id)
+    public function deletion($id)
     {
+
         $this->deleteId = $id;
         
         DB::transaction(function () {
-            $employee = Employee::findOrFail($this->deleteId);
-            $employee->user->delete();
-            $employee->delete();
+            $employee = Employee::where('id',$this->deleteId)->first();
+
+            $employee->user()->update(['isDeleted'=>1]);
+            $employee->update(['status'=> 'Inactive']);
+            // $employee = Employee::findOrFail($this->deleteId);
+            // $employee->user->delete();
+            // $employee->delete();
     
             $this->dispatch('alert',type:'success', title:'The user has been deleted', position:'center');
         });
@@ -59,20 +64,20 @@ class AccountManagement extends Component
 
     public function render()
     {
-
-        $this->members = Employee::get();
-        
         $query = Employee::query();
+
+        $query->whereHas('user', function ($subQuery) {
+            $subQuery->where('isDeleted', 0);
+        });
 
         if (!empty($this->search)) {
             $query->where(function ($subQuery) {
                 $subQuery->where('firstName', 'like', '%' . $this->search . '%')
-                            ->orWhere('lastName', 'like', '%' . $this->search . '%');
+                        ->orWhere('lastName', 'like', '%' . $this->search . '%');
             });
         }
 
         $paginate = $query->paginate(10);
-
-        return view('livewire.component.admin.account-management', ['paginate' => $paginate]);
-    }
+            return view('livewire.component.admin.account-management', ['paginate' => $paginate]);
+        }
 }

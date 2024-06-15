@@ -51,7 +51,10 @@
                                 <select wire:model='assign_supervisor' class="form-control" required>
                                     <option value="">Assign Site Supervisor</option>
                                     @foreach ($supervisorList as $supervisor)
-                                        <option value="{{ $supervisor->id }}">{{ $supervisor->firstName }}</option>
+                                        @php
+                                            $name = ucwords($supervisor->firstName) . ' ' . ucwords($supervisor->middleName) . ' ' . ucwords($supervisor->lastName)
+                                        @endphp
+                                        <option value="{{ $supervisor->id }}">{{ $name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -142,7 +145,7 @@
                                                         class="text-danger font-weight-bolder text-md">*</span></label>
                                                 <select style="width: 250px;" wire:model="manpower" class="form-control"
                                                     required>
-                                                    <option value="">Select Manpower</option>
+                                                    <option selected>Select Manpower</option>
                                                     @foreach ($manpowerList as $manpower)
                                                         @unless(in_array($manpower->id, $manpowers))
                                                             <option value="{{ $manpower->id }}">{{ ucwords($manpower->firstName) . ' ' . ucwords($manpower->middleName) . ' ' . ucwords($manpower->lastName) }}</option>
@@ -204,8 +207,10 @@
 
                                                                 @php
                                                                     $manpowerDetail = App\Models\Employee::where('id',$manpower)->first();
+                                                                    $name = ucwords($manpowerDetail->firstName) . ' ' . ucwords($manpowerDetail->middleName) . ' ' . ucwords($manpowerDetail->lastName)
+                                                                    
                                                                 @endphp
-                                                                {{ $manpowerDetail->firstName.' '.$manpowerDetail->middleName.' '.$manpowerDetail->lastName }}
+                                                                {{ $name}}
                                                             </div>
                                                         </div>
                                                         <button
@@ -276,7 +281,15 @@
                                             <div class="mr-2">
                                                 <div style="background-color: rgb(248, 248, 248); width:250px;"
                                                     class="p-1 pl-2 border rounded text-uppercase">
-                                                    {{ $manpower }}
+
+                                                    @php
+                                                        $manpowerDetail = App\Models\Employee::where('id',$manpower)->first();
+                                                        $name = ucwords($manpowerDetail->firstName) . ' ' . ucwords($manpowerDetail->middleName) . ' ' . ucwords($manpowerDetail->lastName)
+                                                   
+                                                   @endphp
+
+                                                    {{ $name }}
+
                                                 </div>
                                             </div>
                                         </div>

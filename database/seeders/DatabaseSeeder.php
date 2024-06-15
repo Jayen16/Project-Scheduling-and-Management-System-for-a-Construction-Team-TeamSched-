@@ -14,12 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(LaratrustSeeder::class);
 
-        // \App\Models\Employee::factory(10)->create();
-        // \App\Models\User::factory()->hasEmployee(['type' => 'admin'])->asAdmin()->create();
-        \App\Models\User::factory(2)->hasEmployee(['type' => 'manpower'])->asManpower()->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'manpower'])->asManpower()->create();
+        \App\Models\User::factory(5)->hasEmployee(['type'=>'admin'])->asAdmin()->create();
+        \App\Models\User::factory(3)->hasEmployee(['type'=>'supervisor'])->asSuperVisor()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'manager'])->asManager()->create();
+        \App\Models\User::factory(5)->hasEmployee(['type'=>'manpower'])->create();
     }
 }

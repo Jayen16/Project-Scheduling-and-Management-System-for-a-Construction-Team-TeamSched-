@@ -161,7 +161,7 @@
                                                             <td>{{ $task->name }}</td>
                                                             <td>Ongoing</td>
                                                             <td class="text-center">
-                                                                <button wire:click='redirectToViewTask()'
+                                                                <button wire:click="redirectToViewTask('{{ $task->id }}')"
                                                                     class="btn btn-sm btn-primary" type="button">
                                                                     <i class="nav-icon fas fa-file mr-2"></i>View
                                                                 </button>

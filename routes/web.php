@@ -1,6 +1,8 @@
 <?php
 
 // use App\Livewire\Auth\Login;
+
+use App\Livewire\Auth\Login as AuthLogin;
 use App\Livewire\Auth\Register;
 use App\Livewire\Component\Admin\AccountManagement;
 use App\Livewire\Component\Admin\AccountProfile;
@@ -25,7 +27,12 @@ use Illuminate\Support\Facades\Route;
 
 //LOGIN
 Route::group(['middleware' => ['guest']], function() {
-    Route::get('/', Login::class)->name('login.index');
+    // Route::get('/login', Login::class)->name('login.index');
+    Route::get('/', function () {
+        return redirect('/login');
+    });
+    Route::get('/login', AuthLogin::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
 });
 
 //AUTHENTICATED USER
@@ -62,13 +69,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/project/{project}', ProjectSummary::class)->name('project-summary.index');
     Route::get('/project/edit/{project}', EditProject::class)->name('project.edit');
 
-    Route::get('/task/view', TaskView::class)->name('task.index');
+    Route::get('/task/view/{project}/{task}', TaskView::class)->name('task.index');
     
     // sample only
     Route::get('/logbook', Logbook::class)->name('logbook.index');
 
 });
-
 
 
 

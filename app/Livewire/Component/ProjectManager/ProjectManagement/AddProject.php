@@ -27,14 +27,12 @@ class AddProject extends Component
  
     public $manpowerList;
     public $supervisorList;
-
-    public $week_title;
+   
     public $task_id;
     public $week;
 
-    public $task;
-    public $manpower;
-
+    #[Validate('required|unique:weeks,title')]
+    public $week_title;
     #[Validate('required|unique:projects,name')]
     public $project_name;
     #[Validate('required')]
@@ -43,7 +41,13 @@ class AddProject extends Component
     public $project_description;
     #[Validate('required|string')]
     public $assign_supervisor;
-    
+
+    #[Validate('required|string')]
+    public $task;
+    #[Validate('required|string')]
+    public $manpower;
+
+
     public $project;
     public $displayScope = [];
     public $displayTitle = [];
@@ -62,10 +66,8 @@ class AddProject extends Component
     public function create()
     {
 
-        $this->validate();
-
         if (is_null($this->week_title) || is_null($this->project_name) || is_null($this->project_date_range) || is_null($this->project_description) || is_null($this->manpower) || is_null($this->task)) {
-
+            $this->validate();
             $this->dispatch('alert', type:'error', title:'There are incomplete inputs', position:'center');
 
         } else {
@@ -112,6 +114,8 @@ class AddProject extends Component
 
             });
     
+            $this->displayScope = [];
+            $this->displayTitle = [];
             $this->resetInputFields();
             // $this->displayScope = [];
             $this->dispatch('alert', type:'success', title:'The new project has been saved.', position:'center');
@@ -122,13 +126,17 @@ class AddProject extends Component
 
     public function addScopeOfWork()
     {
+
+        if(!$this->week_title || !$this->manpowers && !$this->task){
+            $this->validate();
+        }
         
         $this->displayScope []= $this->scopes;
         $this->displayTitle []= $this->week_title;
 
         $this->scopes = [];
         $this->week_title= '';
-
+        $this->manpowers= [];
     }
 
     public function removeScopeOfWork($index)
@@ -179,8 +187,17 @@ class AddProject extends Component
 
     public function render()
     {
-        $this->manpowerList = Employee::where('type',EnumsEmployee::MANPOWER->value)->get();
-        $this->supervisorList = Employee::where('type',EnumsEmployee::SUPERVISOR->value)->get();
+        $this->manpowerList = Employee::where('type', EnumsEmployee::MANPOWER->value) 
+        ->whereHas('user', function ($query) {
+            $query->where('isDeleted', 0);
+        })
+        ->get();
+
+        $this->supervisorList = Employee::where('type', EnumsEmployee::SUPERVISOR->value) 
+        ->whereHas('user', function ($query) {
+            $query->where('isDeleted', 0);
+        })
+        ->get();
 
         return view('livewire.component.project-manager.project-management.add-project');
     }

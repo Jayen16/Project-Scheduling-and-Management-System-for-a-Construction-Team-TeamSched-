@@ -172,50 +172,55 @@
                                     <div class="card-body">
 
                                         {{-- start accordion --}}
-                                        @foreach ($projects as $project)
-                                            
-                                        <div id="accordion">
-                                            <div class="card card-secondary">
-                                                <div class="card-header">
-                                                    <h4 class="card-title w-100">
-                                                        <a class="d-block w-100 collapsed" data-toggle="collapse"
-                                                            href="#collapseOne" aria-expanded="false">
-                                                            {{ ucwords($project->name) }}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseOne" class="collapse" data-parent="#accordion"
-                                                    style="">
-                                                    <div class="card-body">
-                                                        <div class="card-body table-responsive p-0"
-                                                            style="max-height: 200px; overflow-y: auto;">
-                                                            <table class="table table-head-fixed text-nowrap">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Date</th>
-                                                                        <th class="text-center">Time-in</th>
-                                                                        <th class="text-center">Time-out</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
 
+                                        @if($projects !==null)
+                                            @foreach ($projects as $project)
+                                                
+                                            <div id="accordion">
+                                                <div class="card card-secondary">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title w-100">
+                                                            <a class="d-block w-100 collapsed" data-toggle="collapse"
+                                                                href="#collapseOne" aria-expanded="false">
+                                                                {{ ucwords($project->name) }}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" data-parent="#accordion"
+                                                        style="">
+                                                        <div class="card-body">
+                                                            <div class="card-body table-responsive p-0"
+                                                                style="max-height: 200px; overflow-y: auto;">
+                                                                <table class="table table-head-fixed text-nowrap">
+                                                                    <thead>
                                                                         <tr>
-                                                                            <td>{{ $loop->index+1 }}</td>
-                                                                            <td> DATE</td>
-                                                                            <td class="text-center">7:00 a.m.</td>
-                                                                            <td class="text-center">5:00 p.m.</td>
+                                                                            <th style="width: 10px">#</th>
+                                                                            <th>Date</th>
+                                                                            <th class="text-center">Time-in</th>
+                                                                            <th class="text-center">Time-out</th>
                                                                         </tr>
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                                </tbody>
-                                                            </table>
+                                                                            <tr>
+                                                                                <td>{{ $loop->index+1 }}</td>
+                                                                                <td> DATE</td>
+                                                                                <td class="text-center">7:00 a.m.</td>
+                                                                                <td class="text-center">5:00 p.m.</td>
+                                                                            </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @endforeach
+                                            @endforeach
 
+                                        @else
+                                            <p class='text-center'> NO PROJECT YET</p>
+                                        @endif
                                         {{-- end accordion --}}
                                     </div>
 
