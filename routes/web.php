@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
         
     });
     
-    Route::group(['prefix' => 'manpower','middleware' => ['role:supervisor']], function() {
+    Route::group(['prefix' => 'manpower','middleware' => ['role:manager']], function() {
         Route::get('/', ManpowerList::class)->name('manpower.index');
         Route::get('/profile/{employee}', ManpowerProfile::class)->name('manpower-profile.index');
     });

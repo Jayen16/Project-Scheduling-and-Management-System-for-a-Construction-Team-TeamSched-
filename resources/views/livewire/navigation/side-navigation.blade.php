@@ -43,7 +43,7 @@
                     </li>
                 @endif
 
-                @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                @if (auth()->user()->hasRole(App\Enums\Employee::MANAGER->value))
                 {{-- manpower --}}
                 <li class="nav-item">
                     <a href="{{ route('manpower.index') }}"

@@ -18,4 +18,8 @@ class Project extends Model
         return $this->hasOne(AssignedProject::class, 'project_id', 'id');
     }
 
+    public function attendance(){
+        return $this->hasMany(Attendance::class, 'project_id', 'id');
+    }
+
 }

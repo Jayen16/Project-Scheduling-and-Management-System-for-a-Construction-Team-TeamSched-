@@ -100,10 +100,10 @@
                                         <td class="align-middle">{{ isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('F d, Y') : '-'}}</td>
                                         <td class="align-middle font-weight-bold">
                                             <div class="progress progress-xs">
-                                                <div class="progress-bar bg-success" style="width: {{ $finalPercent }}%;">
+                                                <div class="progress-bar bg-success" style="width: {{ $finalPercent ?? 0}}%;">
                                                 </div>
                                             </div>
-                                        <td class="font-weight-bold">{{ $finalPercent }}%</td>
+                                        <td class="font-weight-bold">{{ $finalPercent ?? 0}}%</td>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button wire:click="redirectToProject({{ $project->id }})" class="btn btn-sm btn-primary"

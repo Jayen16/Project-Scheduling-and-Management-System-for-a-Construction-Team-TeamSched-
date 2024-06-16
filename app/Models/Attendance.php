@@ -10,6 +10,14 @@ class Attendance extends Model
     use HasFactory;
     public $guarded = [];
 
+    public function week()
+    {
+        return $this->belongsTo(Week::class, 'week_id', 'id');
+    }
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+    }
 
 }

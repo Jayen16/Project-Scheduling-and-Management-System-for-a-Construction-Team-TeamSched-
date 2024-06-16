@@ -19,12 +19,27 @@
                 <i class="nav-icon fas fa-arrow-left mr-2"></i>
                 Back
             </button> --}}
-            <button wire:click='' type="button" class="btn btn-sm btn-success mr-1">
-                Time-in
-            </button>
-            <button wire:click='' type="button" class="btn btn-sm btn-secondary mr-1">
-                Time-out
-            </button>
+            @if($project->status !== App\Enums\Status::COMPLETED->value)
+
+                @php
+                $checkAttendance = App\Models\Attendance::where('employee_id', auth()->user()->id)
+                    ->where('project_id', $project->id)
+                    ->whereDate('created_at', Carbon\Carbon::today('Asia/Manila'))
+                    ->whereNotNull('time_in')
+                    ->first();
+                @endphp
+                {{-- if not yet existing --}}
+                @if (!$checkAttendance) 
+                    <button wire:click="timeIn({{ $project->id }})" type="button" class="btn btn-sm btn-success mr-1">
+                        Time-in
+                    </button>
+                @elseif($checkAttendance->time_out == null)
+                    <button wire:click="timeOut({{ $project->id }})" type="button" class="btn btn-sm btn-secondary mr-1">
+                        Time-out
+                    </button>
+                @endif
+
+            @endif
         </div>
     </div>
 
@@ -223,7 +238,76 @@
                     <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                         aria-labelledby="custom-tabs-three-profile-tab">
                         <div>
-                            1
+                            <div id="accordion">
+                                <div class="card card-secondary">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100 collapsed" data-toggle="collapse"
+                                                href="#collapseOne" aria-expanded="false">
+                                                {{-- {{ ucwords($project->name) }} --}}
+                                                {{ ucwords($project->name) }}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" data-parent="#accordion"
+                                        style="">
+                                        
+                                  
+                                        @php
+                                            $lastDate = null;
+                                            $counter = 0;
+                                        @endphp
+                                        
+                                            @foreach ($project->attendance as $attendance)
+                                                @if ($lastDate != $attendance->created_at->format('M d, Y'))
+                                                    <div class="card-body">
+                                                        <div class="card-body table-responsive p-0" style="max-height: 200px; overflow-y: auto;">
+                                                            <b>{{ $attendance->created_at->format('M d, Y') }}</b>
+                                                            @php
+                                                                $lastDate = $attendance->created_at->format('M d, Y');
+                                                                $counter = 0;
+                                                            @endphp
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                @php
+                                                    $counter++; 
+                                                @endphp
+                                                <table class="table table-head-fixed text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 10px">#</th>
+                                                            <th>Name</th>
+                                                            <th class="text-center">Time-in</th>
+                                                            <th class="text-center">Time-out</th>
+                                                            <th class="text-center">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ $counter }}</td>
+                                                            <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}</td>
+                                                            <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
+                                                            <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
+
+                                                            @if($attendance->employee->id !== auth()->user()->id)
+                                                            <td class="text-center">
+                                                                <button wire:click="confirmAttendance({{ $attendance->employee->id }})" type="button" class="btn btn-primary">
+                                                                    Confirm
+                                                                </button>
+                                                            </td>
+                                                            @else
+                                                                <td class="text-center"> - </td>
+                                                            @endif
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            @endforeach
+                                        
+                                        {{--  --}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

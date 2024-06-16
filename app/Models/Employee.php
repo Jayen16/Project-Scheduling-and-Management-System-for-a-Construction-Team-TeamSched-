@@ -20,4 +20,9 @@ class Employee extends Model
         return $this->hasOne(AssignedMember::class, 'manpower_id', 'id');
     }
     
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id', 'id');
+    }
+
 }

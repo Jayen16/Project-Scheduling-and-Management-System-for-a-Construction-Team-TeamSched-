@@ -86,7 +86,7 @@
             </div>
     
         @else
-            <p class="text-center"> No Progress Yet</p>
+            <p class="text-center"> No Uploaded Photo</p>
         @endif
         {{-- FOREACH --}}
     </div>
