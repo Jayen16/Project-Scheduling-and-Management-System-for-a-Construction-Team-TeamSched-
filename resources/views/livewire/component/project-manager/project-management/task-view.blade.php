@@ -7,7 +7,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('project-management.index') }}">Project
                                 Management</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('project-summary.index') }}">Project
+                        <li class="breadcrumb-item"><a href="{{ route('project-summary.index',['project'=> $project->id]) }}">Project
                                 Summary</a></li>
                         <li class="breadcrumb-item active">Task</li>
                     </ol>

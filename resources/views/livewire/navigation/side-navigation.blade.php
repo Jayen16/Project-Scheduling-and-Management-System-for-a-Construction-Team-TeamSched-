@@ -31,15 +31,17 @@
                 <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
 
-                <li class="nav-item">
-                    <a href="{{ route('account-management.index') }}"
-                        class="nav-link {{ request()->is('account-management*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Account Management
-                        </p>
-                    </a>
-                </li>
+                {{-- @if (auth()->user()->hasRole('admin')) --}}
+                    <li class="nav-item">
+                        <a href="{{ route('account-management.index') }}"
+                            class="nav-link {{ request()->is('account-management*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Account Management
+                            </p>
+                        </a>
+                    </li>
+               
 
                 {{-- manpower --}}
                 <li class="nav-item">
@@ -97,6 +99,8 @@
                         </p>
                     </a>
                 </li>
+
+                {{-- @endif --}}
 
                 <li class="nav-header">MULTI LEVEL EXAMPLE</li>
 

@@ -2,29 +2,82 @@
 
 namespace App\Livewire\Component\Admin;
 
+use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class AccountManagement extends Component
 {
-    public bool $isActive = false;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public function toggleIsActive()
-    {
-        $this->isActive = !$this->isActive;
+    public $members;
+    public $isActive;
+    public $deleteId;
+    public $search = '';
+
+    public function toggleUpdate($id){
+        
+        $employee = Employee::findOrFail($id);
+
+        $status = $employee->status === 'Active' ? 'Inactive' : 'Active';
+        
+        $employee->update(['status' => $status]);
+
+        $this->dispatch('alert',type:'success', title:'The status has been updated', position:'center');
+
     }
+
+
     public function redirectToAdd()
     {
         return redirect()->route('account.create');
     }
-    public function redirectToProfile()
+    
+    public function redirectToProfile($id)
     {
-        return redirect()->route('profile.index');
+        return redirect()->route('profile.index',['member'=>$id]);
     }
-    public function delete()
+
+    public function deletion($id)
     {
+
+        $this->deleteId = $id;
+        
+        DB::transaction(function () {
+            $employee = Employee::where('id',$this->deleteId)->first();
+
+            $employee->user()->update(['isDeleted'=>1]);
+            $employee->update(['status'=> 'Inactive']);
+            // $employee = Employee::findOrFail($this->deleteId);
+            // $employee->user->delete();
+            // $employee->delete();
+    
+            $this->dispatch('alert',type:'success', title:'The user has been deleted', position:'center');
+        });
+      
     }
+
+
     public function render()
     {
-        return view('livewire.component.admin.account-management');
-    }
+        $query = Employee::query();
+
+        $query->whereHas('user', function ($subQuery) {
+            $subQuery->where('isDeleted', 0);
+        });
+
+        if (!empty($this->search)) {
+            $query->where(function ($subQuery) {
+                $subQuery->where('firstName', 'like', '%' . $this->search . '%')
+                        ->orWhere('lastName', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        $paginate = $query->paginate(10);
+            return view('livewire.component.admin.account-management', ['paginate' => $paginate]);
+        }
 }

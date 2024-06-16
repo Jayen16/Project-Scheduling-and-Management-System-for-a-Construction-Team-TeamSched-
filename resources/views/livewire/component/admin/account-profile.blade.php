@@ -20,7 +20,7 @@
             <div><button wire:click='redirectToAccountManagement()' type="button" class="btn btn-default mr-1">
                     <i class="nav-icon fas fa-arrow-left mr-2"></i>
                     Back</button>
-                <button wire:click='redirectToEdit()' type="button" class="btn btn-warning">
+                <button wire:click='redirectToEdit({{ $member->id }})' type="button" class="btn btn-warning">
                     <i class="nav-icon fas fa-pen mr-2"></i>Edit</button>
             </div>
         </div>
@@ -28,7 +28,7 @@
 
         <div>
             <p class="font-weight-bold">Account ID: <span
-                    class="badge text-sm rounded-pill bg-light border border-width-3 p-2">00121755</span></p>
+                    class="badge text-sm rounded-pill bg-light border border-width-3 p-2">{{ $member->id }}</span></p>
         </div>
         <div class="card card-primary">
             <div class="card-header">
@@ -39,21 +39,21 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>Full Name</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">full name
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->firstName.' '.$member->middleName .' '.$member->lastName }}
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label>Birthday</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">birthday
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ \Carbon\Carbon::parse($member->birthdate)->format('M d, Y') }}
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label>Age</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">43
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ \Carbon\Carbon::parse($member->birthdate)->age }}
                             </div>
                         </div>
                     </div>
@@ -62,14 +62,14 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label>Address</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">address
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->address }}
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">contact
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->contact_number }}
                             </div>
                         </div>
                     </div>
@@ -86,15 +86,16 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Role</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Manpower
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ ucfirst($member->type) }}
                             </div>
                         </div>
                     </div>
 
+                    @if($member->type == 'manpower')
                     <div class="col-3">
                         <div class="form-group">
                             <label>Status of Appointment</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Available
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->employment_status ?? '' }}
                             </div>
                         </div>
                     </div>
@@ -102,7 +103,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Skill Category </label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Skilled
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill_category ?? '' }}
                             </div>
                         </div>
                     </div>
@@ -110,11 +111,11 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Skill </label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">Painter
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">{{ $member->skill ?? '' }}
                             </div>
                         </div>
                     </div>
-
+                    @endif
                 </div>
             </div>
         </div>
@@ -130,14 +131,15 @@
                         <div class="form-group">
                             <label>Username</label>
                             <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">
-                                manpowerteamsched001
+                                {{ $member->user->username ?? '-' }}
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label>Password</label>
-                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">hfe4713d
+                            <div style="background-color: rgb(232, 232, 232);" class="p-2 border rounded">
+                                {{ $member->user->password ? '********' : '-' }}
                             </div>
                         </div>
                     </div>

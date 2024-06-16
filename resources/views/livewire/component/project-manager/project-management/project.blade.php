@@ -28,7 +28,7 @@
                     <h3 class="card-title">Projects</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 275px;">
-                            <input type="text" name="table_search" class="form-control float-right"
+                            <input type="text" wire:model.live='search' name="table_search" class="form-control float-right"
                                 placeholder="Search">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default">
@@ -53,33 +53,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                use Illuminate\Support\Str;
-                            @endphp
-                            <tr>
-                                <td class="align-middle">1</td>
-                                <td class="align-middle">LMC IMUS - 6D BLOWERS</td>
-                                <td class="align-middle">02/13/2024</td>
-                                <td class="align-middle">02/20/2024</td>
-                                <td class="align-middle font-weight-bold">
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar bg-success" style="width: 55%">
-                                        </div>
-                                    </div>
-                                <td class="font-weight-bold">55%</td>
-                                </td>
-                                <td class="text-center align-middle">
-                                    <button wire:click='redirectToProfile()' class="btn btn-sm btn-primary"
-                                        type="button"><i class="nav-icon fas fa-file mr-2"></i>View</button>
-                                    <button data-toggle="modal" data-target="#exampleModal"
-                                        class="btn btn-sm btn-danger" type="button"><i
-                                            class="nav-icon fas fa-minus mr-2"></i> Delete</button>
-                                </td>
-                            </tr>
+                            @if ($paginate->isNotEmpty())
+                                @foreach ($paginate as $project)
+                                    @php
+                                        $dateRange = explode(' - ', $project->date_range);
+                                        $startDate = $dateRange[0];
+                                        $endDate = $dateRange[1];
+                                    @endphp
+                                    <tr>
+                                        <td class="align-middle">
+                                            {{ ($paginate->currentPage() - 1) * $paginate->perPage() + $loop->iteration }}
+                                        </td>
+                                        <td class="align-middle">{{ $project->name }}</td>
+                                        <td class="align-middle">{{ isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('F d, Y') : '-'}}</td>
+                                        <td class="align-middle">{{ isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('F d, Y') : '-'}}</td>
+                                        <td class="align-middle font-weight-bold">
+                                            <div class="progress progress-xs">
+                                                <div class="progress-bar bg-success" style="width: 55%">
+                                                </div>
+                                            </div>
+                                        <td class="font-weight-bold">55%</td>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <button wire:click="redirectToProject({{ $project->id }})" class="btn btn-sm btn-primary"
+                                                type="button"><i class="nav-icon fas fa-file mr-2"></i>View</button>
+                                            <button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-sm btn-danger" type="button"><i
+                                                    class="nav-icon fas fa-minus mr-2"></i> Delete</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan='7' class="text-center">No Available Project</td>
+                                </tr>
+                            @endif
+
+                            
                         </tbody>
                     </table>
                 </div>
-
+                <div class="d-flex justify-content-end mt-2">
+                    {{ $paginate->links() }}
+                </div>
             </div>
         </div>
     </div>
