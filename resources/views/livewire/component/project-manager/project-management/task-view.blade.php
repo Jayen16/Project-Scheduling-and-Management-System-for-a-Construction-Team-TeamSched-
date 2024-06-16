@@ -37,7 +37,8 @@
                 <div>
                     <i class="fa fa-camera bg-purple"></i>
                     <div class="timeline-item">
-                        <span class="time"><span class="text-sm text-left mr-2"> 9:40 a.m. •</span><i class="fas fa-clock"></i> 2 days
+                        <span class="time"><span class="text-sm text-left mr-2"> 9:40 a.m. •</span><i
+                                class="fas fa-clock"></i> 2 days
                             ago</span>
                         <h3 class="timeline-header font-weight-normal"><span class="font-weight-bolder">Mina Lee</span>
                             uploaded new photos</h3>
@@ -49,20 +50,6 @@
                                         src="{{ asset('assets/images/construction.jpg') }}" alt="..."
                                         data-toggle="modal" data-target="#imageModal"
                                         data-image="{{ asset('assets/images/construction.jpg') }}">
-                                </div>
-                                <div class="col-3 border p-2 position-relative">
-                                    <img class="w-100 h-100"
-                                        style="object-fit: cover; cursor: pointer; max-height: 300px;"
-                                        src="{{ asset('assets/images/wall painting.jpg') }}" alt="..."
-                                        data-toggle="modal" data-target="#imageModal"
-                                        data-image="{{ asset('assets/images/wall painting.jpg') }}">
-                                </div>
-                                <div class="col-3 border p-2 position-relative">
-                                    <img class="w-100 h-100"
-                                        style="object-fit: cover; cursor: pointer; max-height: 300px;"
-                                        src="{{ asset('assets/images/teamsched_logo.png') }}" alt="..."
-                                        data-toggle="modal" data-target="#imageModal"
-                                        data-image="{{ asset('assets/images/teamsched_logo.png') }}">
                                 </div>
                             </div>
                         </div>

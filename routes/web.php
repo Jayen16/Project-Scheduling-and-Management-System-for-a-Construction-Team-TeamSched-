@@ -17,6 +17,9 @@ use App\Livewire\Component\ProjectManager\ProjectManagement\ManpowerProfile;
 use App\Livewire\Component\ProjectManager\ProjectManagement\Project;
 use App\Livewire\Component\ProjectManager\ProjectManagement\ProjectSummary;
 use App\Livewire\Component\ProjectManager\ProjectManagement\TaskView;
+use App\Livewire\Component\SiteSupervisor\ProgressReport;
+use App\Livewire\Component\SiteSupervisor\ProjectDetails;
+use App\Livewire\Component\SiteSupervisor\Projects;
 use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -63,7 +66,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/manpower/profile/{employee}', ManpowerProfile::class)->name('manpower-profile.index');
 
 
-
     Route::get('/project-management', Project::class)->name('project-management.index');
     Route::get('/project-management/add', AddProject::class)->name('project.create');
     Route::get('/project/{project}', ProjectSummary::class)->name('project-summary.index');
@@ -71,6 +73,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/task/view/{project}/{task}', TaskView::class)->name('task.index');
     
+
+    // Site Supervisor
+    Route::get('/projects', Projects::class)->name('projects.index');
+    Route::get('/projects/details', ProjectDetails::class)->name('project-details.index');
+    Route::get('/projects/details/progress', ProgressReport::class)->name('progress-report.index');
+
+        
     // sample only
     Route::get('/logbook', Logbook::class)->name('logbook.index');
 

@@ -58,9 +58,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-user mr-2"></i> Profile
-                </a>
+                {{-- <span href="#" class="dropdown-item" disabled>
+                    <i class="fas fa-user mr-2"></i> Juan dela Cruz
+                </span> --}}
 
                 <a wire:click="logoutUser" class="dropdown-item" style="cursor: pointer;">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
