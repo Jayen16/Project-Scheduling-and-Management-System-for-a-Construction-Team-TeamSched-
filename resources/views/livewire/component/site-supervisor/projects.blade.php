@@ -18,17 +18,21 @@
     <hr class="px-3" style="margin-top: 0px; border-width: 2px; border-color: #4a4a4a;">
     <div class="container pt-1">
         <div class="row">
-            <div class="col-12">
-                <div class="card w-full bg-primary">
-                    <div class="card-body mt-1 bg-white">
-                        <h5 class="card-title font-weight-bold">LMC IMUS - 6D BLOWERS</h5>
-                        <p class="card-text font-weight-light">{{ Str::limit('Project description here...', 40) }}</p>
-                        <div class="text-right"><button wire:click='redirectToViewproject()' type="button"
-                                class="btn btn-primary">
-                                </i>View Project</button></div>
+            @foreach ($projects as $assignedProject)
+                <div class="col-12">
+                    <div class="card w-full bg-primary">
+                        <div class="card-body mt-1 bg-white">
+                            <h5 class="card-title font-weight-bold">{{ $assignedProject->project->name }}</h5>
+                            <p class="card-text font-weight-light">{{ Str::limit( $assignedProject->project->description, 40) }}</p>
+                            <div class="text-right"><button wire:click="redirectToViewproject('{{ $assignedProject->project_id }}')" type="button"
+                                    class="btn btn-primary">
+                                    </i>View Project</button></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
+           
+
         </div>
     </div>
 </div>

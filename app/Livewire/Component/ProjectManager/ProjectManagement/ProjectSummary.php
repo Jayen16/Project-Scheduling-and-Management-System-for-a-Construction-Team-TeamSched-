@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\ProjectManager\ProjectManagement;
 
+use App\Enums\Status;
 use App\Models\Project;
 use Livewire\Component;
 
@@ -11,6 +12,10 @@ class ProjectSummary extends Component
     public $project;
     public $scopes;
     public $supervisor;
+
+    public $projectPercent = 0;
+    public $taskStatus = [];
+
 
     public function mount(Project $project){
         $this->project = $project;
@@ -23,13 +28,35 @@ class ProjectSummary extends Component
         }
 
 
-        $countOfScope = $project->scope->count();
-        $percentage = 100/$countOfScope;
+        $week_count = count($project->scope);
+        
+ 
 
-        //in order to get the percantage of each scope(week)
-        //get the count of status completed sa task first  (forexample 3 tasks = 33.33% each )
-        // then get the percentage of each scope for summation ng project percent sa 100%
-        // example week 1 100% , week 2 100% , week 3 50% = project % is 83.33% ..computation is 250% divided by 3 
+        foreach($project->scope as  $week){
+
+            $task_count = 0;
+            $done =0;
+
+            $statuses = $week->task->pluck('status')->toArray(); 
+
+            $task_count += count($week->task);
+            foreach ($statuses as $status) {
+                if ($status == Status::COMPLETED->value) {
+                    $done += 1; 
+                }
+            }
+        
+            $this->taskStatus[] = ($done/$task_count) * 100 ; 
+        }
+        
+        $add = 0;
+        foreach($this->taskStatus as $status){
+            $add +=$status;
+        }
+
+        $finalPercent = ($add/$week_count);
+
+        $this->projectPercent = $finalPercent;
 
     }
 
