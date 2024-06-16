@@ -183,8 +183,37 @@
                     {{-- Attendance --}}
                     <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                         aria-labelledby="custom-tabs-three-profile-tab">
-                        <div>
-                            1
+                        <div class="w-full">
+                            <div class="card w-full">
+                                <div class="card-header">
+                                    <h3 class="card-title font-weight-bold">Attendance Log</h3>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Date</th>
+                                                <th class="text-center">Time-in</th>
+                                                <th class="text-center">Time-out</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for ($i = 0; $i < 6; $i++)
+                                                <tr>
+                                                    <td>1.</td>
+                                                    <td>02/15/24</td>
+                                                    <td class="text-center">7:00 a.m.</td>
+                                                    <td class="text-center">5:00 p.m.</td>
+                                                </tr>
+                                            @endfor
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
