@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->string('assigned_member_id');
-            $table->string('date');
-            $table->string('status');
+            $table->string('project_id');
+            $table->string('employee_id');
+            $table->string('time_in')->nullable();
+            $table->string('time_out')->nullable();
+            $table->string('status')->nullable()->default(0); //confirmation of his presence
             $table->timestamps();
         });
     }
