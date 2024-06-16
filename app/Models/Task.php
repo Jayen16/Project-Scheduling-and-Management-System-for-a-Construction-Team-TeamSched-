@@ -13,5 +13,8 @@ class Task extends Model
     public function week(){
         return $this->belongsTo(Week::class, 'week_id', 'id');
     }
-
+    public function progressReport(){
+        return $this->hasMany(ProgressReport::class, 'task_id', 'id');
+    }
+    
 }

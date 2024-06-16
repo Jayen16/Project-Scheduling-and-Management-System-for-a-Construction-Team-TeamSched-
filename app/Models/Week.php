@@ -22,5 +22,9 @@ class Week extends Model
         return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'week_id', 'id');
+    }
 
 }

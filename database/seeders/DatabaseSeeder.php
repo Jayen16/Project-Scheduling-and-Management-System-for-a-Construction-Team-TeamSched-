@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
         $this->call(LaratrustSeeder::class);
 
 
-        \App\Models\User::factory(1)->hasEmployee(['type'=>'manpower'])->asManpower()->create();
-        \App\Models\User::factory(5)->hasEmployee(['type'=>'admin'])->asAdmin()->create();
-        \App\Models\User::factory(3)->hasEmployee(['type'=>'supervisor'])->asSuperVisor()->create();
+        \App\Models\User::factory(5)->hasEmployee(['type'=>'manpower'])->asManpower()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'admin'])->asAdmin()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'supervisor'])->asSuperVisor()->create();
         \App\Models\User::factory(1)->hasEmployee(['type'=>'manager'])->asManager()->create();
-        \App\Models\User::factory(5)->hasEmployee(['type'=>'manpower'])->create();
+
     }
 }

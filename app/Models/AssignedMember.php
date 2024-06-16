@@ -19,4 +19,10 @@ class AssignedMember extends Model
         return $this->belongsTo(Week::class, 'week_id', 'id');
     }
     
+      
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class, 'manpower_id', 'id');
+    }
+
 }

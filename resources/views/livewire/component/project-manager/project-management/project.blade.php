@@ -59,20 +59,51 @@
                                         $dateRange = explode(' - ', $project->date_range);
                                         $startDate = $dateRange[0];
                                         $endDate = $dateRange[1];
+
+        
+                                        //getting the percentage
+                                        $week_count = count($project->scope);
+                                        $task_count = 0;
+                                        $done =0;
+                                        $add = 0;
+                                        $finalPercent = 0;
+                                        $taskStatus =[];
+                                        foreach($project->scope as  $week){
+                                  
+                                       
+                                            $statuses = $week->task->pluck('status')->toArray(); 
+
+                                            $task_count += count($week->task);
+                                            foreach ($statuses as $status) {
+                                                if ($status == App\Enums\Status::COMPLETED->value) {
+                                                    $done += 1; 
+                                                }
+                                            }
+                                        
+                                            $taskStatus[] = ($done/$task_count) * 100 ; 
+                                        }
+                                        
+                                        
+                                        foreach($taskStatus as $status){
+                                            $add +=$status;
+                                        }
+
+                                        $finalPercent = ($add/$week_count);
+
                                     @endphp
                                     <tr>
                                         <td class="align-middle">
                                             {{ ($paginate->currentPage() - 1) * $paginate->perPage() + $loop->iteration }}
                                         </td>
-                                        <td class="align-middle">{{ $project->name }}</td>
+                                        <td class="align-middle">{{ ucwords($project->name) }}</td>
                                         <td class="align-middle">{{ isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('F d, Y') : '-'}}</td>
                                         <td class="align-middle">{{ isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('F d, Y') : '-'}}</td>
                                         <td class="align-middle font-weight-bold">
                                             <div class="progress progress-xs">
-                                                <div class="progress-bar bg-success" style="width: 55%">
+                                                <div class="progress-bar bg-success" style="width: {{ $finalPercent ?? 0}}%;">
                                                 </div>
                                             </div>
-                                        <td class="font-weight-bold">55%</td>
+                                        <td class="font-weight-bold">{{ $finalPercent ?? 0}}%</td>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button wire:click="redirectToProject({{ $project->id }})" class="btn btn-sm btn-primary"

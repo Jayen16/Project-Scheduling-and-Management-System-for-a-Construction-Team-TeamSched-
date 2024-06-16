@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('progress_reports', function (Blueprint $table) {
             $table->id();
             $table->string('task_id');
-            $table->string('title');
-            $table->string('description');
+            $table->string('remarks');
             $table->string('upload');
             $table->timestamps();
         });

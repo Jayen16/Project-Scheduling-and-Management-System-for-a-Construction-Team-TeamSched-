@@ -56,10 +56,10 @@
                                 <div class="col-3">
                                     <div>
                                         <div class="progress progress-lg progress-striped active">
-                                            <div class="progress-bar bg-success" style="width: 55%"></div>
+                                            <div class="progress-bar bg-success" style="width: {{ number_format($projectPercent, 2) }}%"></div>
                                         </div>
                                         <div>
-                                            <p class="text-right font-weight-bold">Progress: 55%</p>
+                                            <p class="text-right font-weight-bold">Progress: {{ number_format($projectPercent, 2) }}%</p>
                                         </div>
                                     </div>
                                 </div>
@@ -111,6 +111,13 @@
                             {{-- scope  --}}
                             @foreach ($scopes as $week)
                                 
+                            @php
+                                $count = 0;
+                                $done = 0;
+                                $ongoing = 0;
+                            @endphp
+
+
                             <div class="card card-secondary">
                                 <div class="card-header">
                                     <h3 class="card-title">Scope of Work</h3>
@@ -125,13 +132,30 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        @php
+                                         
+                                        $count = count($week->task);
+                             
+                                            foreach($week->task->pluck('status') as $status){
+                                                if($status == App\Enums\Status::COMPLETED->value){
+                                                    $done +=1;
+                                                }elseif($status == App\Enums\Status::ONGOING->value){
+                                                    $ongoing +=1;
+                                                }
+
+                                                $progressOfThisWeek = ($done > 0) ? ($done / $count) * 100 : 0;
+                                            }
+
+                                        @endphp
+
                                         <div class="col-3">
                                             <div>
                                                 <div class="progress progress-lg progress-striped active">
-                                                    <div class="progress-bar bg-success" style="width: 10%"></div>
+                                                    <div class="progress-bar bg-success" style="width: {{ number_format($progressOfThisWeek, 2) }}%"></div>
                                                 </div>
                                                 <div>
-                                                    <p class="text-right font-weight-bold">Progress: 10%</p>
+                                                    <p class="text-right font-weight-bold">Progress: {{ number_format($progressOfThisWeek, 2) }}%</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +183,7 @@
                                                         <tr>
                                                             <td> {{ $loop->index +1 }}</td>
                                                             <td>{{ $task->name }}</td>
-                                                            <td>Ongoing</td>
+                                                            <td>{{ ucwords($task->status) }}</td>
                                                             <td class="text-center">
                                                                 <button wire:click="redirectToViewTask('{{ $task->id }}')"
                                                                     class="btn btn-sm btn-primary" type="button">
@@ -168,7 +192,6 @@
                                                             </td>
                                                         </tr>
                                                         @endforeach
-
                                                     </tbody>
                                                 </table>
                                             </div>

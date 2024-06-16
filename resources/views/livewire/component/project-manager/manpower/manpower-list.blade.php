@@ -84,7 +84,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan='7' class="text-center">No Available Manpower</td>
+                                    <td colspan='8' class="text-center">No Available Manpower</td>
                                 </tr>
                             @endif
                         </tbody>

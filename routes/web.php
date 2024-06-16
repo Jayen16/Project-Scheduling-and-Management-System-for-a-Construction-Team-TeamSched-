@@ -42,8 +42,8 @@ Route::group(['middleware' => ['guest']], function() {
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard.index');
-    // , 'middleware' => ['role:admin']]
-    Route::group(['prefix' => 'account-management'], function() {
+
+    Route::group(['prefix' => 'account-management','middleware' => ['role:admin']], function() {
    
         Route::get('/', AccountManagement::class)->name('account-management.index');
         Route::get('/add', AddAccount::class)->name('account.create');
@@ -52,12 +52,31 @@ Route::group(['middleware' => ['auth']], function () {
         
     });
     
+    Route::group(['prefix' => 'manpower','middleware' => ['role:manager']], function() {
+        Route::get('/', ManpowerList::class)->name('manpower.index');
+        Route::get('/profile/{employee}', ManpowerProfile::class)->name('manpower-profile.index');
+    });
+
+    Route::group(['prefix' => 'project-management','middleware' => ['role:manager']], function() {
+        Route::get('/', Project::class)->name('project-management.index');
+        Route::get('/add', AddProject::class)->name('project.create');
+    });
+
+    Route::group(['prefix' => 'project','middleware' => ['role:manager']], function() {
+        Route::get('/{project}', ProjectSummary::class)->name('project-summary.index');
+        Route::get('/edit/{project}', EditProject::class)->name('project.edit');
+    });
+
+
+    Route::get('/task/view/{project}/{task}', TaskView::class)->middleware(['role:supervisor|manager'])->name('task.index');
     
-    // account management
-    // Route::get('/account-management', AccountManagement::class)->name('account-management.index');
-    // Route::get('/account-management/add', AddAccount::class)->name('account.create');
-    // Route::get('/account-management/profile', AccountProfile::class)->name('profile.index');
-    // Route::get('/account-management/profile/edit', EditProfile::class)->name('profile.edit');
+
+    Route::group(['prefix' => 'projects','middleware' => ['role:supervisor']], function() {
+        Route::get('/', Projects::class)->name('projects.index');
+        Route::get('/details/{project}', ProjectDetails::class)->name('project-details.index');
+        Route::get('/details/progress/{task}', ProgressReport::class)->name('progress-report.index');
+    });
+    // Site Supervisor
 
 
 // Project Manager
@@ -74,22 +93,6 @@ Route::get('/manpower/profile', ManpowerProfile::class)->name('manpower-profile.
 Route::get('/projects', Projects::class)->name('projects.index');
 Route::get('/projects/details', ProjectDetails::class)->name('project-details.index');
 Route::get('/projects/details/progress', ProgressReport::class)->name('progress-report.index');
-
-    // Project Manager
-    Route::get('/manpower', ManpowerList::class)->name('manpower.index');
-    Route::get('/manpower/profile/{employee}', ManpowerProfile::class)->name('manpower-profile.index');
-
-
-
-    Route::get('/project-management', Project::class)->name('project-management.index');
-    Route::get('/project-management/add', AddProject::class)->name('project.create');
-    Route::get('/project/{project}', ProjectSummary::class)->name('project-summary.index');
-    Route::get('/project/edit/{project}', EditProject::class)->name('project.edit');
-
-    Route::get('/task/view/{project}/{task}', TaskView::class)->name('task.index');
-    
-    // sample only
-    Route::get('/logbook', Logbook::class)->name('logbook.index');
 
 });
 

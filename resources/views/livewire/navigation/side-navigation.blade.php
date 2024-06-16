@@ -31,7 +31,7 @@
                 <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
 
-                {{-- @if (auth()->user()->hasRole('admin')) --}}
+                @if (auth()->user()->hasRole(App\Enums\Employee::ADMIN->value))
                     <li class="nav-item">
                         <a href="{{ route('account-management.index') }}"
                             class="nav-link {{ request()->is('account-management*') ? 'active' : '' }}">
@@ -41,8 +41,9 @@
                             </p>
                         </a>
                     </li>
-               
+                @endif
 
+                @if (auth()->user()->hasRole(App\Enums\Employee::MANAGER->value))
                 {{-- manpower --}}
                 <li class="nav-item">
                     <a href="{{ route('manpower.index') }}"
@@ -53,7 +54,9 @@
                         </p>
                     </a>
                 </li>
+                @endif
 
+                @if (auth()->user()->hasRole(App\Enums\Employee::MANAGER->value))
                 <li class="nav-item">
                     <a href="{{ route('project-management.index') }}"
                         class="nav-link {{ request()->is('project-management*') ? 'active' : '' }}">
@@ -64,6 +67,20 @@
                         </p>
                     </a>
                 </li>
+                @endif
+
+                @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                <li class="nav-item">
+                    <a href="{{ route('projects.index') }}"
+                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-briefcase"></i>
+
+                        <p>
+                            Projects
+                        </p>
+                    </a>
+                </li>
+                @endif
 
 
                 <li class="nav-item">
