@@ -56,11 +56,23 @@
 
                 <li class="nav-item">
                     <a href="{{ route('project-management.index') }}"
-                        class="nav-link {{ request()->is('project*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('project-management*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
                             Project Management
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('projects.index') }}"
+                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-briefcase"></i>
+
+                        <p>
+                            Projects (Site Supervisor)
                         </p>
                     </a>
                 </li>
