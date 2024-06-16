@@ -65,8 +65,8 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ route('projects.index') }}"
-                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
+                    <a href="{{ route('projects-site-supervisor.index') }}"
+                        class="nav-link {{ request()->is('projects-site-supervisor*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
@@ -74,31 +74,21 @@
                         </p>
                     </a>
                 </li>
-
-                <li class="nav-header">EXAMPLES</li>
-
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
-                        <i class="nav-icon far fa-calendar-alt"></i>
+                    <a href="{{ route('projects-manpower.index') }}"
+                        class="nav-link {{ request()->is('projects-manpower*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
-                            Calendar
-                            <span class="badge badge-info right">2</span>
+                            Projects (Manpower)
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
 
-                        <p>
-                            Gallery
-                        </p>
-                    </a>
-                </li>
 
-                <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+
+
 
                 {{-- <li class="nav-item {{ request()->routeIs('project.*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs('project.*') ? 'active' : '' }}">
@@ -121,12 +111,7 @@
                 </li> --}}
 
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <p>Level 1</p>
-                    </a>
-                </li>
+
             </ul>
         </nav>
     </div>
