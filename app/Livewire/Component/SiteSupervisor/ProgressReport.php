@@ -72,6 +72,7 @@ class ProgressReport extends Component
     }
 
 
+
     public function redirectToProjectDetails()
     {
         return redirect()->route('project-details.index');
@@ -79,7 +80,9 @@ class ProgressReport extends Component
     public function render()
     {
 
+
         $this->imagePreview =  $this->upload_photo;
+
         return view('livewire.component.site-supervisor.progress-report');
     }
 }

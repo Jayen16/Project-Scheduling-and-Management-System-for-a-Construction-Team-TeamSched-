@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Component\SiteSupervisor;
 
+
 use App\Enums\Status;
 use App\Models\Attendance;
 use App\Models\Project;
 use Carbon\Carbon;
+
 use Livewire\Component;
 
 class ProjectDetails extends Component
 {
+
     public $project;
     public $done = 0;
     public $task_count = 0;
@@ -104,10 +107,12 @@ class ProjectDetails extends Component
         return redirect()->route('projects.index');
     }
 
+
     public function redirectToViewTask($id)
     {
        
         return redirect()->route('progress-report.index',['task'=>$id]);
+
     }
     public function render()
     {

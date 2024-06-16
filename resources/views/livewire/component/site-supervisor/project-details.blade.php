@@ -19,6 +19,7 @@
                 <i class="nav-icon fas fa-arrow-left mr-2"></i>
                 Back
             </button> --}}
+
             @if($project->status !== App\Enums\Status::COMPLETED->value)
 
                 @php
@@ -91,6 +92,7 @@
                                             <label>Title</label>
                                             <div style="background-color: rgb(232, 232, 232);"
                                                 class="p-2 border rounded">{{ $project->name }}
+
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +125,6 @@
                                 </div>
                             </div>
                         </div>
-
                      
 
                         @foreach ($project->scope as $index => $week)
@@ -226,7 +227,6 @@
                                                     {{ $name }}
                                             </div>
                                             @endforeach
-
                                         </div>
                                     </div>
                                 </div>
@@ -237,6 +237,7 @@
                     {{-- Attendance --}}
                     <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                         aria-labelledby="custom-tabs-three-profile-tab">
+
                         <div>
                             <div id="accordion">
                                 <div class="card card-secondary">

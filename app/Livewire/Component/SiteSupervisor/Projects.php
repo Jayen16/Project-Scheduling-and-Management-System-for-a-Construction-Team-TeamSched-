@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Component\SiteSupervisor;
 
+
 use App\Enums\Status;
 use App\Models\AssignedProject;
 use App\Models\Project;
+
 use Livewire\Component;
 
 class Projects extends Component
@@ -28,6 +30,7 @@ class Projects extends Component
         // dd(auth()->user()->id);
 
         $this->projects = AssignedProject::with('project')->where('supervisor_id',7)->get();
+
 
         return view('livewire.component.site-supervisor.projects');
     }

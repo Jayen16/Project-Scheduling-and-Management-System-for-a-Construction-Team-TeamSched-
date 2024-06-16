@@ -82,6 +82,18 @@
                 </li>
                 @endif
 
+
+                <li class="nav-item">
+                    <a href="{{ route('projects.index') }}"
+                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-briefcase"></i>
+
+                        <p>
+                            Projects (Site Supervisor)
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-header">EXAMPLES</li>
 
                 <li class="nav-item">
