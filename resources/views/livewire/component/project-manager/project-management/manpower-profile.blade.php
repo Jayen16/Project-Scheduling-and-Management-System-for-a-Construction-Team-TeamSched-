@@ -173,42 +173,67 @@
 
                                         {{-- start accordion --}}
 
-                                        @if($projects !==null)
-                                            @foreach ($projects as $project)
-                                                
-                                            <div id="accordion">
+                                        @if ($projects !== null)
+                                        @foreach ($projects as $project)
+                                            <div id="accordion{{ $project->id }}">
                                                 <div class="card card-secondary">
                                                     <div class="card-header">
                                                         <h4 class="card-title w-100">
                                                             <a class="d-block w-100 collapsed" data-toggle="collapse"
-                                                                href="#collapseOne" aria-expanded="false">
+                                                               href="#collapseOne{{ $project->id }}" aria-expanded="false">
                                                                 {{ ucwords($project->name) }}
                                                             </a>
                                                         </h4>
                                                     </div>
-                                                    <div id="collapseOne" class="collapse" data-parent="#accordion"
-                                                        style="">
+                                                    <div id="collapseOne{{ $project->id }}" class="collapse" data-parent="#accordion{{ $project->id }}">
+                                                        @php
+                                                            $lastDate = null;
+                                                            $counter = 0;
+                                                            $getAttendance = $project
+                                                                ->attendance()
+                                                                ->where('employee_id', $manpower->id)
+                                                                ->get();
+                                                        @endphp
+                                    
                                                         <div class="card-body">
                                                             <div class="card-body table-responsive p-0"
-                                                                style="max-height: 200px; overflow-y: auto;">
+                                                                 style="max-height: 200px; overflow-y: auto;">
                                                                 <table class="table table-head-fixed text-nowrap">
                                                                     <thead>
-                                                                        <tr>
-                                                                            <th style="width: 10px">#</th>
-                                                                            <th>Date</th>
-                                                                            <th class="text-center">Time-in</th>
-                                                                            <th class="text-center">Time-out</th>
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <th style="width: 10px">#</th>
+                                                                        <th>Date</th>
+                                                                        <th>Name</th>
+                                                                        <th class="text-center">Time-in</th>
+                                                                        <th class="text-center">Time-out</th>
+                                                                    </tr>
                                                                     </thead>
                                                                     <tbody>
-
+                                                                    @if ($getAttendance->isNotEmpty())
+                                                                        @foreach ($getAttendance as $attendance)
+                                                                            @if ($lastDate !== $attendance->created_at->format('M d, Y'))
+                                                                                @php
+                                                                                    $lastDate = $attendance->created_at->format('M d, Y');
+                                                                                    $counter = 0; // Reset the counter for a new date
+                                                                                @endphp
+                                                                            @endif
+                                                                            @php
+                                                                                $counter++; // Increment the counter for each attendance entry
+                                                                            @endphp
+                                    
                                                                             <tr>
-                                                                                <td>{{ $loop->index+1 }}</td>
-                                                                                <td> DATE</td>
-                                                                                <td class="text-center">7:00 a.m.</td>
-                                                                                <td class="text-center">5:00 p.m.</td>
+                                                                                <td>{{ $counter }}</td> <!-- Use the counter instead of $loop->index -->
+                                                                                <td>{{ $attendance->created_at->format('M d, Y') }}</td>
+                                                                                <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}</td>
+                                                                                <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
+                                                                                <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
                                                                             </tr>
-
+                                                                        @endforeach
+                                                                    @else
+                                                                        <tr>
+                                                                            <td colspan="5" class="text-center">No Attendance Yet</td>
+                                                                        </tr>
+                                                                    @endif
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -216,11 +241,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endforeach
-
-                                        @else
-                                            <p class='text-center'> NO PROJECT YET</p>
-                                        @endif
+                                        @endforeach
+                                    @else
+                                        <p class="text-center">No Projects Yet</p>
+                                    @endif
+                                    
                                         {{-- end accordion --}}
                                     </div>
 

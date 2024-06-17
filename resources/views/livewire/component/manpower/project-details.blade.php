@@ -1,6 +1,6 @@
 <div>
     {{-- breadcrumbs --}}
-    <section class="content-header">
+    {{-- <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div>
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <div class="d-flex justify-content-between px-2 align-items-end">
         <h5 class="font-weight-bold">Project</h5>
         <div class="d-flex">

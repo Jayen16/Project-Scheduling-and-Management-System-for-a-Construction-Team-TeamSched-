@@ -1,67 +1,75 @@
 <div>
-    {{-- <div class="my-lg-2"><span
-            class="badge text-md rounded-pill bg-light border border-width-3 p-2">Timeline</span>
-    </div> --}}
-    <div>
-        {{-- FOREACH --}}
-        <div class="timeline">
-            {{-- start of timeline upload --}}
-            <div class="time-label">
-                <span class="bg-green">3 Jan. 2024</span>
+    <div id="accordion">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false">
+                        {{ ucwords($project->name) }}
+                    </a>
+                </h4>
             </div>
-            <div>
-                <i class="fa fa-camera bg-purple"></i>
-                <div class="timeline-item">
-                    <span class="time"><span class="text-sm text-left mr-2"> 9:40 a.m.
-                            •</span><i class="fas fa-clock"></i> 2 days
-                        ago</span>
-                    <h3 class="timeline-header font-weight-normal"><span
-                            class="font-weight-bolder"></span>
-                        uploaded new photos</h3>
-                    <div class="timeline-body">
-                        <div class="row p-2">
-                            <div class="col-3 border p-2 position-relative">
-                                @if ($progress_photo)
-                                    <img class="w-100 h-100"
-                                    style="object-fit: cover; cursor: pointer; max-height: 300px;"
-                                    src="{{ asset('storage/upload_progress/' . $progress_photo) }}"
-                                    alt="..." data-toggle="modal"
-                                    data-target="#imageModal"
-                                    data-image="{{ asset('storage/upload_progress/' . $progress_photo) }}">  
-                                @endif
-                             
-                            </div>
-                            {{-- <div class="col-3 border p-2 position-relative">
-                                <img class="w-100 h-100"
-                                    style="object-fit: cover; cursor: pointer; max-height: 300px;"
-                                    src="{{ asset('assets/images/wall painting.jpg') }}"
-                                    alt="..." data-toggle="modal"
-                                    data-target="#imageModal"
-                                    data-image="{{ asset('assets/images/wall painting.jpg') }}">
-                            </div>
-                            <div class="col-3 border p-2 position-relative">
-                                <img class="w-100 h-100"
-                                    style="object-fit: cover; cursor: pointer; max-height: 300px;"
-                                    src="{{ asset('assets/images/teamsched_logo.png') }}"
-                                    alt="..." data-toggle="modal"
-                                    data-target="#imageModal"
-                                    data-image="{{ asset('assets/images/teamsched_logo.png') }}">
-                            </div> --}}
-                        </div>
-                    </div>
-                    <div class="timeline-body">
-                        <span class="font-weight-bold text-sm">Remarks:</span>
-                        <span>Done Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-                            facilis mollitia.</span>
-                    </div>
-                </div>
-            </div>
-            {{-- end of timeline upload --}}
 
-            <div>
-                <i class="fas fa-clock bg-gray"></i>
+            @php
+                $lastDate = null;
+            @endphp
+
+            <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
+
+                @php
+                    $groupedAttendances = $project->attendance->groupBy(function ($item) {
+                        return $item->created_at->format('M d, Y');
+                    });
+
+                    @endphp
+                @foreach ($groupedAttendances as $date => $attendances)
+                    <div class="card-body">
+                        <div class="card-body table-responsive p-0"
+                            style="max-height: 200px; overflow-y: auto;">
+                            <b>{{ $date }}</b>
+
+                      
+                        </div>
+                        <table class="table table-head-fixed text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">#</th>
+                                    <th style="width: 30%">Name</th>
+                                    <th class="text-center" style="width: 20%">Time-in</th>
+                                    <th class="text-center" style="width: 20%">Time-out</th>
+                                    <th class="text-center" style="width: 20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                                @foreach ($attendances as $attendance)
+                                <tr>
+                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}</td>
+                                    <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
+                                    <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
+                                    <td class="text-center">
+                                        @if(($attendance->employee->id !== auth()->user()->id) && $attendance->status == 0)
+                                        <button wire:click="confirmAttendance({{ $attendance->id }})" type="button" class="btn btn-primary">
+                                            Confirm
+                                        </button>
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
+
+                @if ($project->attendance->isEmpty())
+                    <div class="card-body text-center">
+                        <p>No Attendance Yet</p>
+                    </div>
+                @endif
+
             </div>
-        </div>
-        {{-- FOREACH --}}
-    </div>
+        </div> 
+    </div> 
 </div>

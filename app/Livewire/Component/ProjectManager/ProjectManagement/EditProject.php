@@ -271,7 +271,7 @@ class EditProject extends Component
         }
 
         unset($this->project_scope[$index]);
-        $this->dispatch('alert', type:'success', title:'The scope has removed successfuly', position:'center');
+        $this->dispatch('alert', type:'success', title:'The scope removed successfuly', position:'center');
     }
 
 
@@ -284,12 +284,14 @@ class EditProject extends Component
     {
 
         $this->listedManpower = Employee::where('type', EnumsEmployee::MANPOWER->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })
         ->get();
 
         $this->supervisorList = Employee::where('type', EnumsEmployee::SUPERVISOR->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })

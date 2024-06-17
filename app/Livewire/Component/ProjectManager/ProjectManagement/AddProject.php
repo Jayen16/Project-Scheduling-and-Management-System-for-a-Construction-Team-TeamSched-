@@ -188,12 +188,14 @@ class AddProject extends Component
     public function render()
     {
         $this->manpowerList = Employee::where('type', EnumsEmployee::MANPOWER->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })
         ->get();
 
         $this->supervisorList = Employee::where('type', EnumsEmployee::SUPERVISOR->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })

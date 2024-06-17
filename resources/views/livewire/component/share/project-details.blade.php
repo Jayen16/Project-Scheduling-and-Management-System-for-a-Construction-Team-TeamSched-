@@ -13,7 +13,7 @@
         </div>
     </section>
     <div class="d-flex justify-content-between px-2 align-items-end">
-        <h5 class="font-weight-bold">Project</h5>
+        <h5 class="font-weight-bold">{{ ucwords($project->name) }}</h5>
         <div class="d-flex">
             {{-- <button wire:click='redirectToAssignedProjects()' type="button" class="btn btn-sm btn-default mr-1">
                 <i class="nav-icon fas fa-arrow-left mr-2"></i>
@@ -29,15 +29,59 @@
                     ->first();
                 @endphp
                 {{-- if not yet existing --}}
+
                 @if (!$checkAttendance) 
-                    <button wire:click="timeIn({{ $project->id }})" type="button" class="btn btn-sm btn-success mr-1">
+                    <button data-toggle="modal" data-target="#attendanceModal-{{ $project->id }}-time-in" type="button" class="btn btn-sm btn-success mr-1">
                         Time-in
                     </button>
                 @elseif($checkAttendance->time_out == null)
-                    <button wire:click="timeOut({{ $project->id }})" type="button" class="btn btn-sm btn-secondary mr-1">
+                    <button data-toggle="modal" data-target="#attendanceModal-{{ $project->id }}-time-out" type="button" class="btn btn-sm btn-secondary mr-1">
                         Time-out
                     </button>
                 @endif
+
+
+         <!-- Time In Modal -->
+            <div class="modal fade" id="attendanceModal-{{ $project->id }}-time-in" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel-{{ $project->id }}-time-in" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="attendanceModalLabel-{{ $project->id }}-time-in">Attendance</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Time In at {{ now()->format('h:i A') }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" wire:click="timeIn({{ $project->id }})" data-dismiss="modal">Time In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Out Modal -->
+            <div class="modal fade" id="attendanceModal-{{ $project->id }}-time-out" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel-{{ $project->id }}-time-out" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="attendanceModalLabel-{{ $project->id }}-time-out">Attendance</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Time Out at {{ now()->format('h:i A') }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" wire:click="timeOut({{ $project->id }})" data-dismiss="modal">Time Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             @endif
         </div>
@@ -97,8 +141,11 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Site Supervisor</label>
+                                            @php
+                                                $name = $project->assignedProject->employee->firstName.' '.$project->assignedProject->employee->middleName.' '.$project->assignedProject->employee->lastName
+                                            @endphp
                                             <div style="background-color: rgb(232, 232, 232);"
-                                                class="p-2 border rounded">Supervisor 1
+                                                class="p-2 border rounded"> {{ $name }}
                                             </div>
                                         </div>
                                     </div>
@@ -189,7 +236,9 @@
                                                             <th style="width: 60%">Task</th>
                                                             <!-- Set the width to 50% or any value you prefer -->
                                                             <th>Status</th>
-                                                            <th class="text-center">Action</th>
+                                                            @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                                                                <th class="text-center">Action</th>
+                                                            @endif
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -198,11 +247,13 @@
                                                                 <td class="pl-lg-4"> {{ $loop->index +1 }}</td>
                                                                 <td>{{ $task->name }}</td>
                                                                 <td>{{ ucwords($task->status) }}</td>
-                                                                <td class="text-center">
-                                                                    <button wire:click="redirectToViewTask('{{ $task->id }}')"
-                                                                    class="btn btn-sm btn-primary" type="button">
-                                                                    View
-                                                                </button>
+                                                                @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                                                                    <td class="text-center">
+                                                                        <button wire:click="redirectToViewTask('{{ $task->id }}')"
+                                                                        class="btn btn-sm btn-primary" type="button">
+                                                                        View
+                                                                    </button>
+                                                                @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -238,76 +289,12 @@
                     <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                         aria-labelledby="custom-tabs-three-profile-tab">
                         <div>
-                            <div id="accordion">
-                                <div class="card card-secondary">
-                                    <div class="card-header">
-                                        <h4 class="card-title w-100">
-                                            <a class="d-block w-100 collapsed" data-toggle="collapse"
-                                                href="#collapseOne" aria-expanded="false">
-                                                {{-- {{ ucwords($project->name) }} --}}
-                                                {{ ucwords($project->name) }}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="collapse" data-parent="#accordion"
-                                        style="">
-                                        
-                                  
-                                        @php
-                                            $lastDate = null;
-                                            $counter = 0;
-                                        @endphp
-                                        
-                                            @foreach ($project->attendance as $attendance)
-                                                @if ($lastDate != $attendance->created_at->format('M d, Y'))
-                                                    <div class="card-body">
-                                                        <div class="card-body table-responsive p-0" style="max-height: 200px; overflow-y: auto;">
-                                                            <b>{{ $attendance->created_at->format('M d, Y') }}</b>
-                                                            @php
-                                                                $lastDate = $attendance->created_at->format('M d, Y');
-                                                                $counter = 0;
-                                                            @endphp
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    $counter++; 
-                                                @endphp
-                                                <table class="table table-head-fixed text-nowrap">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 10px">#</th>
-                                                            <th>Name</th>
-                                                            <th class="text-center">Time-in</th>
-                                                            <th class="text-center">Time-out</th>
-                                                            <th class="text-center">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>{{ $counter }}</td>
-                                                            <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}</td>
-                                                            <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
-                                                            <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
-
-                                                            @if($attendance->employee->id !== auth()->user()->id)
-                                                            <td class="text-center">
-                                                                <button wire:click="confirmAttendance({{ $attendance->employee->id }})" type="button" class="btn btn-primary">
-                                                                    Confirm
-                                                                </button>
-                                                            </td>
-                                                            @else
-                                                                <td class="text-center"> - </td>
-                                                            @endif
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            @endforeach
-                                        
-                                        {{--  --}}
-                                    </div>
-                                </div>
-                            </div>
+                            @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                                <livewire:component.site-supervisor.attendance project="{{ $project->id }}"/>
+                                    
+                            @elseif (auth()->user()->hasRole(App\Enums\Employee::MANPOWER->value))
+                                <livewire:component.manpower.attendance project="{{ $project->id }}"/>
+                            @endif
                         </div>
                     </div>
                 </div>

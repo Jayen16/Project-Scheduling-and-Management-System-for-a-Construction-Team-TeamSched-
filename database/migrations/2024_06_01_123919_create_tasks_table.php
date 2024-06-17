@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('week_id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('status')->default('on going');
+            $table->string('status')->default('ongoing');
             $table->timestamps();
         });
     }

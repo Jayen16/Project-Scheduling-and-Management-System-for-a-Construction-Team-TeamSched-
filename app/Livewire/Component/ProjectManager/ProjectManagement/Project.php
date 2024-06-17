@@ -3,12 +3,14 @@
 namespace App\Livewire\Component\ProjectManager\ProjectManagement;
 
 use App\Models\Project as ModelsProject;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Project extends Component
 {
     public bool $isActive = false;
     public $projects;
+    public $project_id;
     public $search ='';
 
     public function redirectToAdd()
@@ -19,8 +21,23 @@ class Project extends Component
     {
         return redirect()->route('project-summary.index',['project'=>$id]);
     }
-    public function delete()
+    public function deleteProject($id)
     {
+
+        $this->project_id = $id;
+
+        DB::transaction(function () {
+
+            $project = ModelsProject::where('id',$this->project_id)->first();
+            $project->assignedProject()->delete();
+            $project->scope->task()->delete();
+            $project->scope()->delete();
+            $project->attendance()->delete();
+            $project->delete();
+            
+            $this->dispatch('alert', type:'success', title:'The project removed successfuly', position:'center');
+        });
+       
     }
     public function render()
     {

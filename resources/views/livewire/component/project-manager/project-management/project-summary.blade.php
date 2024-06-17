@@ -27,7 +27,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill"
                                 href="#custom-tabs-three-profile" role="tab"
-                                aria-controls="custom-tabs-three-profile" aria-selected="false">Calendar</a>
+                                aria-controls="custom-tabs-three-profile" aria-selected="false">Gantt Chart</a>
                         </li>
                     </ul>
                 </div>
@@ -227,11 +227,11 @@
                             {{-- end scope --}}
                         </div>
 
-                        {{-- Calendar --}}
+                        {{-- Gantt --}}
                         <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                             aria-labelledby="custom-tabs-three-profile-tab">
                             <div>
-                                <livewire:component.project-manager.project-management.calendar>
+                                <livewire:component.project-manager.project-management.gantt>
                             </div>
                         </div>
                     </div>

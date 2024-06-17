@@ -12,6 +12,19 @@
         <span class="brand-text font-weight-lighter">TEAMSCHED</span>
     </a>
 
+    @if (Auth::check())
+        <div class="ml-4 mt-3 text-white">
+            <div class="font-weight-bold">
+                {{ Auth::user()->employee->firstName . ' ' . Auth::user()->employee->middleName . ' ' . Auth::user()->employee->lastName }}
+            </div>
+            @if (!empty(Auth::user()->roles))
+                <span class="font-weight-light">{{ ucwords(Auth::user()->roles[0]->name) }}</span>
+            @endif
+        </div>
+    @endif
+
+    <hr style="border-top: 0.5px solid rgb(95, 95, 95);">
+
     <div class="sidebar">
         {{-- Sidebar user panel (optional)  --}}
         {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -46,6 +59,16 @@
                 @if (auth()->user()->hasRole(App\Enums\Employee::MANAGER->value))
                 {{-- manpower --}}
                 <li class="nav-item">
+                    <a href="{{ route('dashboard.index') }}"
+                        class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('manpower.index') }}"
                         class="nav-link {{ request()->is('manpower*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-hammer"></i>
@@ -69,10 +92,10 @@
                 </li>
                 @endif
 
-                @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value))
+                @if (auth()->user()->hasRole(App\Enums\Employee::SUPERVISOR->value)|| auth()->user()->hasRole(App\Enums\Employee::MANPOWER->value))
                 <li class="nav-item">
-                    <a href="{{ route('projects-site-supervisor.index') }}"
-                        class="nav-link {{ request()->is('projects-site-supervisor*') ? 'active' : '' }}">
+                    <a href="{{ route('projects.index') }}"
+                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
@@ -80,6 +103,8 @@
                         </p>
                     </a>
                 </li>
+                @endif
+{{-- 
                 <li class="nav-item">
                     <a href="{{ route('projects-manpower.index') }}"
                         class="nav-link {{ request()->is('projects-manpower*') ? 'active' : '' }}">
@@ -89,8 +114,7 @@
                             Projects (Manpower)
                         </p>
                     </a>
-                </li>
-                @endif
+                </li> --}}
 
 
 

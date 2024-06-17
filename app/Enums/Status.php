@@ -6,14 +6,14 @@ enum Status: string
 {
 
     case COMPLETED = 'completed';
-    case ONGOING = 'on going';
+    case ONGOING = 'ongoing';
  
 
     public function label()
     {
         return match($this) {
             self::COMPLETED => 'Completed',
-            self::ONGOING => 'On Going',
+            self::ONGOING => 'Ongoing',
     
           
         };
