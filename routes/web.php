@@ -76,9 +76,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/details/{project}', ProjectDetails::class)->name('project-details.index');
         Route::get('/details/progress/{task}', ProgressReport::class)->name('progress-report.index');
     });
-    // Site Supervisor
+    
 
-
+    // Manpower
+    Route::get('/projects-manpower', \App\Livewire\Component\Manpower\Projects::class)->name('projects-manpower.index');
+    Route::get('/projects-manpower/details', \App\Livewire\Component\Manpower\ProjectDetails::class)->name('projects-details-manpower.index');
 
 });
 

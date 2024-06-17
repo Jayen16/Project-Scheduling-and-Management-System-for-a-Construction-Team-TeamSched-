@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div>
-                    <ol class="breadcrumb float-sm-right text-sm">
+                    <ol class="breadcrumb float-sm-right text-">
                         {{-- <li class="breadcrumb-item"><a href="{{ route('account-management.index') }}">Projects</a></li> --}}
                         <li class="breadcrumb-item active">Projects</li>
                     </ol>
