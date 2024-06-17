@@ -79,59 +79,31 @@
         </tr>
     </table>
 
+
     <script>
           
+        const listOfTask = {!! json_encode($listofTask) !!};
 
-        const scopesOfWork = [{
-                name: 'Scope of Work 1',
-                tasks: [{
-                        name: 'Task 1',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1,3] // Days with uploads for Task 1
-                    },
-                    {
-                        name: 'Task 2',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1] // Days with uploads for Task 2
-                    }
-                ]
-            },
-            {
-                name: 'Scope of Work 2',
-                tasks: [{
-                        name: 'Task 1',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1] // Days with uploads for Task 1
-                    },
-                    {
-                        name: 'Task 2',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1] // Days with uploads for Task 2
-                    }
-                ]
-            },
-            {
-                name: 'Scope of Work 3',
-                tasks: [{
-                        name: 'Task 1',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1] // Days with uploads for Task 1
-                    },
-                    {
-                        name: 'Task 2',
-                        start: startDate,
-                        end: endDate,
-                        uploads: [1] // Days with uploads for Task 2
-                    }
-                ]
-            }
-        ];
+        const scopesOfWork = listOfTask;
 
+
+        // const scopesOfWork = [{
+        //         name: 'Name ng Week dito or Scope',
+        //         tasks: [{
+        //                 name: 'name ng task',
+        //                 start: startDate,
+        //                 end: endDate,
+        //                 uploads: [0,2] // Days with uploads for Task 1
+        //             },
+        //             {
+        //                 name: 'Task 2',
+        //                 start: startDate,
+        //                 end: endDate,
+        //                 uploads: [1] // Days with uploads for Task 2
+        //             }
+        //         ]
+        //     },
+        // ];
         const table = document.getElementById('ganttChartTable');
 
         // Create scope of work rows

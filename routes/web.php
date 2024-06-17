@@ -61,11 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'project-management','middleware' => ['role:manager']], function() {
         Route::get('/', Project::class)->name('project-management.index');
         Route::get('/add', AddProject::class)->name('project.create');
-    });
-
-    Route::group(['prefix' => 'project','middleware' => ['role:manager']], function() {
-        Route::get('/{project}', ProjectSummary::class)->name('project-summary.index');
-        Route::get('/edit/{project}', EditProject::class)->name('project.edit');
+        Route::get('/project/{project}', ProjectSummary::class)->name('project-summary.index');
+        Route::get('/project/edit/{project}', EditProject::class)->name('project.edit');
     });
 
 

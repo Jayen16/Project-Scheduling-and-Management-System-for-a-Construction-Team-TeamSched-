@@ -231,7 +231,7 @@
                         <div class="tab-pane fade " id="custom-tabs-three-profile" role="tabpanel"
                             aria-labelledby="custom-tabs-three-profile-tab">
                             <div>
-                                <livewire:component.project-manager.project-management.gantt>
+                                <livewire:component.project-manager.project-management.gantt project="{{ $project->id }}">
                             </div>
                         </div>
                     </div>
