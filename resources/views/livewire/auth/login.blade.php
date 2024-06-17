@@ -42,7 +42,7 @@
                     Login
                 </button>
 
-                <a href="{{ route('register') }}" wire:navigate>Don't have an account? Register</a>
+                {{-- <a href="{{ route('register') }}" wire:navigate>Don't have an account? Register</a> --}}
             </form>
         </div>
     </div>
