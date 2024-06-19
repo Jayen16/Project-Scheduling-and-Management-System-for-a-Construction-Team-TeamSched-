@@ -104,62 +104,78 @@
                   <tbody>
                       @php
                           use Illuminate\Support\Str;
+                            $task_count = 0;
+                            $done =0;
+                            $finalPercent=0;
+                            $taskStatus =[];
+
                       @endphp
-                      @foreach ($projects as $project)
-                          <tr>
-                              <td class="align-middle">{{ $loop->index+1 }}</td>
-                              <td class="align-middle">{{ ucwords($project->name) }}</td>
-                              @php
-                              list($startDateStr, $endDateStr) = explode(' - ', $project->date_range);
-                          
-                              $startDate = \DateTime::createFromFormat('m/d/Y', $startDateStr);
-                              $endDate = \DateTime::createFromFormat('m/d/Y', $endDateStr);
-                          @endphp
-                          
-                          <td class="align-middle">{{ $startDate->format('m/d/Y') }}</td>
-                          <td class="align-middle">{{ $endDate->format('m/d/Y') }}</td>
-                          
+                      @if($projects!==null)
+                        @foreach ($projects as $project)
+                            <tr>
+                                <td class="align-middle">{{ $loop->index+1 }}</td>
+                                <td class="align-middle">{{ ucwords($project->name) }}</td>
+                                @php
+                                list($startDateStr, $endDateStr) = explode(' - ', $project->date_range);
+                            
+                                $startDate = \DateTime::createFromFormat('m/d/Y', $startDateStr);
+                                $endDate = \DateTime::createFromFormat('m/d/Y', $endDateStr);
+                            @endphp
+                            
+                            <td class="align-middle">{{ $startDate->format('m/d/Y') }}</td>
+                            <td class="align-middle">{{ $endDate->format('m/d/Y') }}</td>
+                            
 
-                          @php
-                            $week_count = count($project->scope);
-                                foreach($project->scope as  $week){
+                            @php
+                                $week_count = count($project->scope);
+                                    foreach($project->scope as  $week){
 
-                                    $task_count = 0;
-                                    $done =0;
-                                    $finalPercent=0;
-                                    $taskStatus =[];
+                                    
 
-                                    $statuses = $week->task->pluck('status')->toArray(); 
+                                        $statuses = $week->task->pluck('status')->toArray(); 
 
-                                    $task_count += count($week->task);
-                                    foreach ($statuses as $status) {
-                                        if ($status == App\Enums\Status::COMPLETED->value) {
-                                            $done += 1; 
+                                        $task_count += count($week->task);
+                                        foreach ($statuses as $status) {
+                                            if ($status == App\Enums\Status::COMPLETED->value) {
+                                                $done += 1; 
+                                            }
                                         }
+                                    
+                                        $taskStatus[] = ($done/$task_count) * 100 ; 
                                     }
+                                    
+                                    $add = 0;
+                                    foreach($taskStatus as $status){
+                                        $add +=$status;
+                                    }
+
+                                    $finalPercent = ($add/$week_count);
+
+                            @endphp   
+
+                                <td class="align-middle font-weight-bold">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-success" style="width: {{ $finalPercent }}%">
+                                        </div>
+                                    </div>
                                 
-                                    $taskStatus[] = ($done/$task_count) * 100 ; 
-                                }
-                                
-                                $add = 0;
-                                foreach($taskStatus as $status){
-                                    $add +=$status;
-                                }
+                                <td class="font-weight-bold">{{ $finalPercent }}%</td>
+                                </td>
+                            </tr>
 
-                                $finalPercent = ($add/$week_count);
+                            @php
+                                $task_count = 0;
+                                $done =0;
+                                $finalPercent=0;
+                                $taskStatus =[]
+                            @endphp
+                        @endforeach
 
-                          @endphp   
-
-                              <td class="align-middle font-weight-bold">
-                                  <div class="progress progress-xs">
-                                      <div class="progress-bar bg-success" style="width: {{ $finalPercent }}%">
-                                      </div>
-                                  </div>
-                               
-                              <td class="font-weight-bold">{{ $finalPercent }}%</td>
-                              </td>
-                          </tr>
-                      @endforeach
+                    @else
+                            <tr>
+                                <td colspan="6"> No Available Project</td>
+                            </tr>
+                    @endif
                   </tbody>
               </table>
           </div>

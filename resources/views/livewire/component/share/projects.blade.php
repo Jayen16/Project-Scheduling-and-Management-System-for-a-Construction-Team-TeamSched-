@@ -111,7 +111,7 @@
                                         @if($finalPercent == 100 && $assignedProject->project->status !== App\Enums\Status::COMPLETED->value)
                                             <div class="text-right pr-2"><button data-toggle="modal" data-target="#markStatusModal-{{ $assignedProject->project_id }}" type="button"
                                                 class="btn btn-success btn-md rounded-lg text-white">
-                                            <i class="fas fa-check"> </i>  Mark this as completed</button>
+                                            <i class="fas fa-check"> </i>  Mark as completed</button>
                                             </div>
                                         @endif
                                     @endif

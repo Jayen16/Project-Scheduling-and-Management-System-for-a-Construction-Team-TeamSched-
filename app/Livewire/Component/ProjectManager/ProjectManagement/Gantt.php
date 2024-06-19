@@ -14,87 +14,62 @@ class Gantt extends Component
     public $countOfDayWhenMatch = [];
     public function mount(Project $project)
     {
-
-
+        $this->project = $project;
         list($startDateStr, $endDateStr) = explode(' - ', $project->date_range);
-
+    
         $dateRangeStart = Carbon::createFromFormat('m/d/Y', $startDateStr)->startOfDay();
         $dateRangeEnd = Carbon::createFromFormat('m/d/Y', $endDateStr)->endOfDay();
-        
+    
         $projectList = [];
-
+    
         foreach ($project->scope as $scope) {
-            $createdDates = $scope->task()->where('status', 'completed')->get();
-        
-            $countMatches = [];
-        
-            // Calculate count of days with uploads within the date range
-
-            foreach ($createdDates as $date) {
-
-                $currentDate = Carbon::parse($date->created_at)->startOfDay();
-        
-
-                if ($currentDate->between($dateRangeStart, $dateRangeEnd)) {
-
-                    $count = $currentDate->diffInDays($dateRangeStart) + 1;
-                    $countMatches[] = $count;
-
-                }
-
-            }
-        
-            // Prepare task details for each scope
-            $tasks = [];
+            $scopeTasks = [];
+    
             foreach ($scope->task as $task) {
-                
-                // dd($task);
+                $createdDates = [];
+    
+                // Retrieve progress reports for the current task
+                if ($task->progressReport) {
+                    foreach ($task->progressReport as $report) {
+                        $formattedDate = $report->created_at->format('m-d-Y');
+                        $createdDates[] = $formattedDate;
+                    }
+                }
+    
+                // Calculate count of days with uploads within the date range
+                $countMatches = [];
+                foreach ($createdDates as $date) {
+                    $currentDate = Carbon::createFromFormat('m-d-Y', $date)->startOfDay();
+    
+                    if ($currentDate->between($dateRangeStart, $dateRangeEnd)) {
+                        $count = $currentDate->diffInDays($dateRangeStart) + 1;
+                        $countMatches[] = $count;
+                    }
+                }
+    
+                // Store task details including uploads
                 $taskDetails = [
                     'name' => $task->name,
-                    'start' => $dateRangeStart->format('Y-m-d'), // Adjust format if needed
-                    'end' => $dateRangeEnd->format('Y-m-d'), // Adjust format if needed
-                    'uploads' => $countMatches, // Assuming this holds the correct count of uploads per day
+                    'start' => $dateRangeStart->format('Y-m-d'),
+                    'end' => $dateRangeEnd->format('Y-m-d'),
+                    'uploads' => $countMatches,
                 ];
-                $tasks[] = $taskDetails;
+    
+                $scopeTasks[] = $taskDetails;
             }
-        
-            // Build the structure for each scope
+    
+            // Store scope details with its tasks
             $scopeDetails = [
                 'name' => $scope->title,
-                'tasks' => $tasks,
+                'tasks' => $scopeTasks,
             ];
-        
-            // Add scope details to the project list
+    
             $projectList[] = $scopeDetails;
-
-
         }
-                
+    
+        $this->listofTask = $projectList;
+    }
 
-            $this->listofTask = $projectList;
-
-
-            // dd($this->listofTask);
-            
-        }
-  
-        // $scopeList = [
-        //     'name' => 'Scope of Work 1',
-        //     'tasks' => [
-        //         [
-        //             'name' => 'Task 1',
-        //             'start' => '$startDate',
-        //             'end' => '$endDate',
-        //             'uploads' => [1, 3] 
-        //         ],
-        //         [
-        //             'name' => 'Task 2',
-        //             'start' => '$startDate',
-        //             'end' => '$endDate',
-        //             'uploads' => [1] 
-        //         ]
-        //     ]
-        // ];
         
 
 

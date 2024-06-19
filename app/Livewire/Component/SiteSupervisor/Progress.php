@@ -21,7 +21,7 @@ class Progress extends Component
     public function mount(Task $task){
 
         $this->tasks = $task;
-        $this->tasks_progress = $task->progressReport;
+        $this->tasks_progress = $task->progressReport()->orderBy('created_at', 'desc')->get();
         $this->task_status = $task->status;
 
     } 

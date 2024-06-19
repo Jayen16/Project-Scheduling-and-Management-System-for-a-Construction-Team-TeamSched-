@@ -12,13 +12,37 @@
         <span class="brand-text font-weight-lighter">TEAMSCHED</span>
     </a>
 
+    @php
+        $nameOfRole ='';
+        $role ='';
+    @endphp
     @if (Auth::check())
         <div class="ml-4 mt-3 text-white">
             <div class="font-weight-bold">
                 {{ Auth::user()->employee->firstName . ' ' . Auth::user()->employee->middleName . ' ' . Auth::user()->employee->lastName }}
             </div>
             @if (!empty(Auth::user()->roles))
-                <span class="font-weight-light">{{ ucwords(Auth::user()->roles[0]->name) }}</span>
+                <span class="font-weight-light">
+                    
+                    @php
+
+                     $roleName = Auth::user()->roles[0]->name;
+
+                        if($roleName == App\Enums\Employee::MANPOWER->value){
+                            $role = App\Enums\Employee::MANPOWER->label();
+                        }elseif($roleName == App\Enums\Employee::MANAGER->value){
+                            $role = App\Enums\Employee::MANAGER->label();
+                        }elseif($roleName == App\Enums\Employee::SUPERVISOR->value){
+                            $role = App\Enums\Employee::SUPERVISOR->label();
+                        }elseif($roleName == App\Enums\Employee::ADMIN->value){
+                            $role = App\Enums\Employee::ADMIN->label();
+                        }
+                        
+                    @endphp
+                
+                    {{ $role }}
+                  
+                </span>
             @endif
         </div>
     @endif

@@ -32,18 +32,22 @@
         }
     </style>
     
+    @php
+        list($startDateStr, $endDateStr) = explode(' - ', $project->date_range);
+
+        $dateRangeStart = \Carbon\Carbon::createFromFormat('m/d/Y', $startDateStr)->startOfDay();
+        $dateRangeEnd = \Carbon\Carbon::createFromFormat('m/d/Y', $endDateStr)->endOfDay();
+    @endphp
+    
     <div class="font-weight-normal">
-        <p>Start Date: <span class="font-weight-bold">start date</span></p>
-        <p>Completion Date: <span class="font-weight-bold">end date</span></p>
+        <p>Start Date: <span class="font-weight-bold">{{ $dateRangeStart->format('M d, Y') }}</span></p>
+        <p>Completion Date: <span class="font-weight-bold">{{ $dateRangeEnd->format('M d, Y') }}</span></p>
     </div>
 
-    @php
-        $startdate = '2024-06-11';
-        $enddate = '2024-06-13';
-    @endphp
+ 
 
-    <input type="hidden" value="{{ $startdate }}" id="startdate">
-    <input type="hidden" value="{{ $enddate }}" id="enddate">
+    <input type="hidden" value="{{ $dateRangeStart }}" id="startdate">
+    <input type="hidden" value="{{ $dateRangeEnd }}" id="enddate">
 
 
     <table id="ganttChartTable" class="gantt-chart-table">
