@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Component\SiteSupervisor;
+namespace App\Livewire\Component\Share;
 
 
 use App\Enums\Status;
@@ -116,6 +116,6 @@ class ProjectDetails extends Component
     }
     public function render()
     {
-        return view('livewire.component.site-supervisor.project-details');
+        return view('livewire.component.share.project-details');
     }
 }

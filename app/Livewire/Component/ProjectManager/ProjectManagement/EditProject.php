@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Week;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class EditProject extends Component
@@ -102,87 +103,87 @@ class EditProject extends Component
 
     public function update(){
 
-     
-        $project = Project::find($this->project->id);
+        DB::transaction(function () {
+            
+            $project = Project::find($this->project->id);
 
-        $hasChanges = false;
+            $hasChanges = false;
 
-        if ($project->description !== $this->project_description) {
-            $hasChanges = true;
-        }
+            if ($project->description !== $this->project_description) {
+                $hasChanges = true;
+            }
 
-        if ($project->name !== $this->project_name) {
-            $hasChanges = true;
-        }
+            if ($project->name !== $this->project_name) {
+                $hasChanges = true;
+            }
 
-        if ($project->date_range !== $this->project_date_range) {
-            $hasChanges = true;
-        }
+            if ($project->date_range !== $this->project_date_range) {
+                $hasChanges = true;
+            }
 
-        // If there are changes, update the project
-        if ($hasChanges) {
-            $project->update([
-                'name' => $this->project_name,
-                'description' => $this->project_description,
-                'date_range' => $this->project_date_range,
-            ]);
-        }
+            // If there are changes, update the project
+            if ($hasChanges) {
+                $project->update([
+                    'name' => $this->project_name,
+                    'description' => $this->project_description,
+                    'date_range' => $this->project_date_range,
+                ]);
+            }
 
-        if($project->assignedProject->employee->id !== $this->assigned_supervisor ){
-            $project->assignedProject()->update(['supervisor_id'=> $this->assigned_supervisor]);
-        }
+            if($project->assignedProject->employee->id !== $this->assigned_supervisor ){
+                $project->assignedProject()->update(['supervisor_id'=> $this->assigned_supervisor]);
+            }
 
-        foreach ($this->project_scope as $week_id => $scope) {
+            foreach ($this->project_scope as $week_id => $scope) {
 
-            $existingTasks = Task::where('week_id', $week_id)->pluck('name')->toArray();
+                $existingTasks = Task::where('week_id', $week_id)->pluck('name')->toArray();
 
 
-            $existingTasksLookup = array_flip($existingTasks);
-        
-            foreach ($scope['tasks'] as $task) {
-                
-                
-                if (!isset($existingTasksLookup[$task])) {
+                $existingTasksLookup = array_flip($existingTasks);
+            
+                foreach ($scope['tasks'] as $task) {
+                    
+                    
+                    if (!isset($existingTasksLookup[$task])) {
 
-                    Task::create(['week_id' => $week_id, 'name' => $task]);
-                } else {
+                        Task::create(['week_id' => $week_id, 'name' => $task]);
+                    } else {
 
-                    unset($existingTasksLookup[$task]);
+                        unset($existingTasksLookup[$task]);
 
+                    }
                 }
-            }
 
 
-            foreach ($existingTasksLookup as $task => $dummy) {
+                foreach ($existingTasksLookup as $task => $dummy) {
 
 
-                Task::where('week_id', $week_id)->where('name', $task)->delete();
-            }
-
-            $existingManpowers = AssignedMember::where('week_id', $week_id)->pluck('manpower_id')->toArray();
-            $existingManpowersLookup = array_flip($existingManpowers);
-
-            foreach ($scope['manpowers'] as $id) {
-
-                if (!isset($existingManpowersLookup[$id])) {
-                    AssignedMember::create(['week_id' => $week_id, 'manpower_id' => $id]);
-                } else {
-                    unset($existingManpowersLookup[$id]);
+                    Task::where('week_id', $week_id)->where('name', $task)->delete();
                 }
-            }
-    
-            foreach ($existingManpowersLookup as $manpower => $dummy) {
 
-                AssignedMember::where('week_id', $week_id)->where('manpower_id', $manpower)->delete();
-            }
+                $existingManpowers = AssignedMember::where('week_id', $week_id)->pluck('manpower_id')->toArray();
+                $existingManpowersLookup = array_flip($existingManpowers);
 
-        }
+                foreach ($scope['manpowers'] as $id) {
+
+                    if (!isset($existingManpowersLookup[$id])) {
+                        AssignedMember::create(['week_id' => $week_id, 'manpower_id' => $id]);
+                    } else {
+                        unset($existingManpowersLookup[$id]);
+                    }
+                }
         
-        // $this->newUpdate();
+                foreach ($existingManpowersLookup as $manpower => $dummy) {
 
-        // $this->save_project_scope = [];
-        // $this->save_week_title = [];
-        $this->dispatch('alert', type:'success', title:'The scope has been updated.', position:'center');
+                    AssignedMember::where('week_id', $week_id)->where('manpower_id', $manpower)->delete();
+                }
+
+            }
+            
+
+            $this->dispatch('alert', type:'success', title:'The scope has been updated.', position:'center');
+
+        });
 
     }
 
@@ -271,7 +272,7 @@ class EditProject extends Component
         }
 
         unset($this->project_scope[$index]);
-        $this->dispatch('alert', type:'success', title:'The scope has removed successfuly', position:'center');
+        $this->dispatch('alert', type:'success', title:'The scope removed successfuly', position:'center');
     }
 
 
@@ -284,12 +285,14 @@ class EditProject extends Component
     {
 
         $this->listedManpower = Employee::where('type', EnumsEmployee::MANPOWER->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })
         ->get();
 
         $this->supervisorList = Employee::where('type', EnumsEmployee::SUPERVISOR->value) 
+        ->where('status','Active')
         ->whereHas('user', function ($query) {
             $query->where('isDeleted', 0);
         })

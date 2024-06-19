@@ -35,11 +35,12 @@ class ProgressReport extends Component
 
     
     public function save(){
-
+  
         $this->validate();
 
         $extension = $this->upload_photo->getClientOriginalExtension();
-        $filename = 'Task-'.$this->task->name.'-Project'. $this->task->week->project->name. time() . '.' . $extension;
+        $projectName = preg_replace('/[^\w\s]/', '_', $this->task->week->project->name);
+        $filename = 'Task-'.$this->task->name.'-Project'. $projectName. time() . '.' . $extension;
         $uploadedphoto = $this->upload_photo->storeAs('upload_progress', $filename, 'public');
 
         $this->imagePreview = $this->upload_photo->temporaryUrl();

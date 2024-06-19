@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Enums\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -50,7 +51,21 @@ class Login extends Component
         // Login the user
         Auth::login($user);
 
-        return $this->redirect('/dashboard', navigate: true);
+
+        if (Auth::check()) {
+            if (auth()->user()->hasRole(Employee::MANAGER)) {
+                return $this->redirect('/dashboard', navigate: true);
+            } elseif (auth()->user()->hasRole(Employee::SUPERVISOR)) {
+                return $this->redirect('/projects', navigate: true);
+            } elseif (auth()->user()->hasRole(Employee::MANPOWER)) {
+                return $this->redirect('/projects', navigate: true);
+            } elseif (auth()->user()->hasRole(Employee::ADMIN)) {
+                return $this->redirect('/account-management', navigate: true);
+            }
+        }
+
+
+      
     }
 
 
