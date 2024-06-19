@@ -15,15 +15,15 @@ use Livewire\Component;
 #[Layout('components.layouts.guest')]
 class Login extends Component
 {
-    public $email = "";
+    public $username = "";
     public $password = "";
 
     // Log the user in
     public function login()
     {
         $this->validate([
-            'email' => 'required|string|email|exists:users,email',
-            'password' => 'required|string|min:6',
+            'username' => 'required|string|exists:users,username',
+            'password' => 'required|string',
         ]);
 
         // Check if the user has too many login attempts
@@ -33,15 +33,15 @@ class Login extends Component
             throw ValidationException::withMessages(['login_failed' => "Too many login attempts. Please try again in $seconds seconds."]);
         }
 
-        // Get user by email
-        $user = User::where('email', $this->email)->first();
+        // Get user by username
+        $user = User::where('username', $this->username)->first();
 
         // Check if the user exists and the password is correct
         if (!$user || !Hash::check($this->password, $user->password)) {
             RateLimiter::hit(request()->ip());
 
             // Set validation error to be viewed in blade
-            throw ValidationException::withMessages(['login_failed' => 'Invalid email or password. Please try again.']);
+            throw ValidationException::withMessages(['login_failed' => 'Invalid username or password. Please try again.']);
         }
 
         // Clear login attempts

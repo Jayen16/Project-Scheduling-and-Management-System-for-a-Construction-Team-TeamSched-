@@ -36,12 +36,12 @@
                         <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel"
                             aria-labelledby="custom-tabs-three-home-tab">
                             <div class="d-flex justify-content-between">
-                                <h4 class="font-weight-bold">Project Title</h4>
+                                <h4 class="font-weight-bold"> {{ ucwords($project->name) ?? '-' }}</h4>
                                 <div><button wire:click='redirectToProjectManagement()' type="button"
                                         class="btn btn-default mr-1">
                                         <i class="nav-icon fas fa-arrow-left mr-2"></i>
                                         Back</button>
-                                    <button wire:click='redirectToEdit()' type="button" class="btn btn-warning">
+                                    <button wire:click="redirectToEdit('{{ $project->id }}')" type="button" class="btn btn-warning">
                                         <i class="nav-icon fas fa-pen mr-2"></i>Edit</button>
                                 </div>
                             </div>
@@ -50,16 +50,16 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="font-weight-bold">Project ID: <span
-                                            class="badge text-sm rounded-pill bg-light border border-width-3 p-2">00121755</span>
+                                            class="badge text-sm rounded-pill bg-light border border-width-3 p-2">#{{ $project->id }}</span>
                                     </p>
                                 </div>
                                 <div class="col-3">
                                     <div>
                                         <div class="progress progress-lg progress-striped active">
-                                            <div class="progress-bar bg-success" style="width: 55%"></div>
+                                            <div class="progress-bar bg-success" style="width: {{ number_format($projectPercent, 2) }}%"></div>
                                         </div>
                                         <div>
-                                            <p class="text-right font-weight-bold">Progress: 55%</p>
+                                            <p class="text-right font-weight-bold">Progress: {{ number_format($projectPercent, 2) }}%</p>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                             <div class="form-group">
                                                 <label>Site Supervisor</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">Supervisor 1
+                                                    class="p-2 border rounded"> {{ $supervisor ?? '-' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -91,8 +91,7 @@
                                             <div class="form-group">
                                                 <label>Date Started and Completion</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">06/08/2024 -
-                                                    06/08/2024
+                                                    class="p-2 border rounded">{{ $project->date_range ?? '-' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -102,14 +101,22 @@
                                             <div class="form-group">
                                                 <label>Description</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">Project
-                                                    Description
+                                                    class="p-2 border rounded">{{ $project->description ?? '-' }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {{-- scope  --}}
+                            @foreach ($scopes as $week)
+                                
+                            @php
+                                $count = 0;
+                                $done = 0;
+                                $ongoing = 0;
+                            @endphp
+
 
                             <div class="card card-secondary">
                                 <div class="card-header">
@@ -121,17 +128,34 @@
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">Sample
+                                                    class="p-2 border rounded">{{ ucwords($week->title) }}
                                                 </div>
                                             </div>
                                         </div>
+
+                                        @php
+                                         
+                                        $count = count($week->task);
+                             
+                                            foreach($week->task->pluck('status') as $status){
+                                                if($status == App\Enums\Status::COMPLETED->value){
+                                                    $done +=1;
+                                                }elseif($status == App\Enums\Status::ONGOING->value){
+                                                    $ongoing +=1;
+                                                }
+
+                                                $progressOfThisWeek = ($done > 0) ? ($done / $count) * 100 : 0;
+                                            }
+
+                                        @endphp
+
                                         <div class="col-3">
                                             <div>
                                                 <div class="progress progress-lg progress-striped active">
-                                                    <div class="progress-bar bg-success" style="width: 10%"></div>
+                                                    <div class="progress-bar bg-success" style="width: {{ number_format($progressOfThisWeek, 2) }}%"></div>
                                                 </div>
                                                 <div>
-                                                    <p class="text-right font-weight-bold">Progress: 10%</p>
+                                                    <p class="text-right font-weight-bold">Progress: {{ number_format($progressOfThisWeek, 2) }}%</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,17 +179,19 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @foreach ($week->task as $task)
                                                         <tr>
-                                                            <td class="pl-lg-4">1.</td>
-                                                            <td>Painting</td>
-                                                            <td>Ongoing</td>
+                                                            <td> {{ $loop->index +1 }}</td>
+                                                            <td>{{ $task->name }}</td>
+                                                            <td>{{ ucwords($task->status) }}</td>
                                                             <td class="text-center">
-                                                                <button wire:click='redirectToViewTask()'
+                                                                <button wire:click="redirectToViewTask('{{ $task->id }}')"
                                                                     class="btn btn-sm btn-primary" type="button">
                                                                     <i class="nav-icon fas fa-file mr-2"></i>View
                                                                 </button>
                                                             </td>
                                                         </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -175,13 +201,30 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Assigned Manpower:</label>
-                                            <div style="background-color: rgb(232, 232, 232);"
-                                                class="p-2 border rounded mt-1">Manpower 1
-                                            </div>
+                                            
+                                            @php
+                                                $manpowerList = [];
+
+                                            @endphp
+                                            @foreach ($week->assignedmember as $manpower)
+                                                    @if (!in_array($manpower->id, $manpowerList))
+                                                        @php
+                                                            $manpowerList[] = $manpower->id; // Append the ID to the list
+                                                        @endphp
+                                                        <div style="background-color: rgb(232, 232, 232);"
+                                                            class="p-2 border rounded mt-1">
+                                                            {{ $manpower->employee->firstName.' '.$manpower->employee->middleName.' '.$manpower->employee->lastName }}
+                                                        </div>
+                                                    @endif
+                                            @endforeach
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
+                            @endforeach
+
+                            {{-- end scope --}}
                         </div>
 
                         {{-- Calendar --}}
@@ -196,8 +239,6 @@
 
             </div>
         </div>
-
-
     </div>
 
 </div>

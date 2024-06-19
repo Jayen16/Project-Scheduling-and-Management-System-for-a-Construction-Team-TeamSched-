@@ -9,20 +9,20 @@
 
         <form>
             <div class="form-group mb-4">
-                <label for="name" class="text-sm font-weight-bold text-gray-700 mb-1">Name</label>
-                <input type="text" class="form-control" wire:model="name" required>
-                @error('name')
+                <label for="username" class="text-sm font-weight-bold text-gray-700 mb-1">username</label>
+                <input type="text" class="form-control" wire:model="username" required>
+                @error('username')
                     <p class="text-sm text-danger mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="form-group mb-4">
+            {{-- <div class="form-group mb-4">
                 <label for="email" class="text-sm font-weight-bold text-gray-700 mb-1">Email</label>
                 <input wire:model="email" type="email" class="form-control" wire:model="email" required>
                 @error('email')
                     <p class="text-sm text-danger mt-1">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> --}}
 
             <div class="form-group mb-4">
                 <label for="password" class="text-sm font-weight-bold text-gray-700 mb-1">Password</label>
