@@ -90,12 +90,14 @@ Route::get('/manpower/profile', ManpowerProfile::class)->name('manpower-profile.
 
 
 // Site Supervisor
-Route::get('/projects', Projects::class)->name('projects.index');
-Route::get('/projects/details', ProjectDetails::class)->name('project-details.index');
+Route::get('/projects-site-supervisor', Projects::class)->name('projects-site-supervisor.index');
+Route::get('/projects-site-supervisor/details', ProjectDetails::class)->name('project-details.index');
 Route::get('/projects/details/progress', ProgressReport::class)->name('progress-report.index');
 
-});
 
+// Manpower
+Route::get('/projects-manpower', \App\Livewire\Component\Manpower\Projects::class)->name('projects-manpower.index');
+Route::get('/projects-manpower/details', \App\Livewire\Component\Manpower\ProjectDetails::class)->name('projects-details-manpower.index');
 
 
 
