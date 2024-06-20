@@ -64,7 +64,6 @@ class ProgressReport extends Component
     public function changeStatus(){
 
         if($this->task->status == Status::ONGOING->value){
-
             $this->task->update(['status'=> Status::COMPLETED->value]);
             $this->dispatch('alert', type:'success', title:'The task completed successfuly', position:'center');
             $this->hideMarkButton = true;

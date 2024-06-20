@@ -1,5 +1,11 @@
 <div>
     <style id="ganttChartStyles">
+        #ganttChartContainer {
+            max-height: 400px; /* Adjust the height as needed */
+            overflow-y: auto;
+            /* border: 1px solid black; */
+        }
+
         #ganttChartTable {
             border-collapse: collapse;
             width: 100%;
@@ -28,7 +34,6 @@
 
         #ganttChartTable .upload {
             background-color: #669cff;
-            /* Red color for upload */
         }
     </style>
     
@@ -44,70 +49,48 @@
         <p>Completion Date: <span class="font-weight-bold">{{ $dateRangeEnd->format('M d, Y') }}</span></p>
     </div>
 
- 
-
     <input type="hidden" value="{{ $dateRangeStart }}" id="startdate">
     <input type="hidden" value="{{ $dateRangeEnd }}" id="enddate">
 
+    <div id="ganttChartContainer">
+        <table id="ganttChartTable" class="gantt-chart-table">
+            <tr>
+                <th></th>
+                <!-- Dynamic week generation -->
+                <script>
+                    var startdateValue = document.getElementById('startdate').value;
+                    var enddateValue = document.getElementById('enddate').value;
 
-    <table id="ganttChartTable" class="gantt-chart-table">
-        <tr>
-            <th></th>
-            <!-- Dynamic week generation -->
-            <script>
+                    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-                var startdateValue = document.getElementById('startdate').value;
-                var enddateValue = document.getElementById('enddate').value;
-
-                const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-                function generateWeek(startDate, endDate) {
-                    let currentDate = new Date(startDate);
-                    let week = [];
-                    while (currentDate <= endDate) {
-                        week.push(new Date(currentDate));
-                        currentDate.setDate(currentDate.getDate() + 1);
+                    function generateWeek(startDate, endDate) {
+                        let currentDate = new Date(startDate);
+                        let week = [];
+                        while (currentDate <= endDate) {
+                            week.push(new Date(currentDate));
+                            currentDate.setDate(currentDate.getDate() + 1);
+                        }
+                        return week;
                     }
-                    return week;
-                }
 
-                const startDate = new Date(startdateValue); // Example start date
-                const endDate = new Date(enddateValue); // Example end date
+                    const startDate = new Date(startdateValue); // Example start date
+                    const endDate = new Date(enddateValue); // Example end date
 
-                const week = generateWeek(startDate, endDate);
+                    const week = generateWeek(startDate, endDate);
 
-                week.forEach(date => {
-                    document.write(`<th>${daysOfWeek[date.getDay()]} ${date.getDate()}</th>`);
-                });
-            </script>
-        </tr>
-    </table>
-
+                    week.forEach(date => {
+                        document.write(`<th>${daysOfWeek[date.getDay()]} ${date.getDate()}</th>`);
+                    });
+                </script>
+            </tr>
+        </table>
+    </div>
 
     <script>
-          
         const listOfTask = {!! json_encode($listofTask) !!};
 
         const scopesOfWork = listOfTask;
 
-
-        // const scopesOfWork = [{
-        //         name: 'Name ng Week dito or Scope',
-        //         tasks: [{
-        //                 name: 'name ng task',
-        //                 start: startDate,
-        //                 end: endDate,
-        //                 uploads: [0,2] // Days with uploads for Task 1
-        //             },
-        //             {
-        //                 name: 'Task 2',
-        //                 start: startDate,
-        //                 end: endDate,
-        //                 uploads: [1] // Days with uploads for Task 2
-        //             }
-        //         ]
-        //     },
-        // ];
         const table = document.getElementById('ganttChartTable');
 
         // Create scope of work rows

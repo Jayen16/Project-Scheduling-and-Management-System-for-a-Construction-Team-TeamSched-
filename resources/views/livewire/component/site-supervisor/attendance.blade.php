@@ -20,46 +20,58 @@
                         return $item->created_at->format('M d, Y');
                     });
 
-                    @endphp
+                @endphp
                 @foreach ($groupedAttendances as $date => $attendances)
                     <div class="card-body">
-                        <div class="card-body table-responsive p-0"
-                            style="max-height: 200px; overflow-y: auto;">
+                        <div class="card-body table-responsive p-0" style="max-height: 200px; overflow-y: auto;">
                             <b>{{ $date }}</b>
 
-                      
+
                         </div>
-                        <table class="table table-head-fixed text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%">#</th>
-                                    <th style="width: 30%">Name</th>
-                                    <th class="text-center" style="width: 20%">Time-in</th>
-                                    <th class="text-center" style="width: 20%">Time-out</th>
-                                    <th class="text-center" style="width: 20%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                                @foreach ($attendances as $attendance)
-                                <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}</td>
-                                    <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
-                                    <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
-                                    <td class="text-center">
-                                        @if(($attendance->employee->id !== auth()->user()->id) && $attendance->status == 0)
-                                        <button wire:click="confirmAttendance({{ $attendance->id }})" type="button" class="btn btn-primary">
-                                            Confirm
-                                        </button>
-                                        @else
-                                        -
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">#</th>
+                                        <th style="width: 30%">Name</th>
+                                        <th class="text-center" style="width: 20%">Time-in</th>
+                                        <th class="text-center" style="width: 20%">Time-out</th>
+                                        <th class="text-center" style="width: 20%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($attendances as $attendance)
+                                        {{-- @php
+                                            $getDetail = App\Models\Employee::where(
+                                                'id',
+                                                $attendance->employee_id,
+                                            )->first();
+
+                                            // dd($getDetail);
+                                            $name = $query->firstName . ' ' . ($query->lastName ?? '');
+                                        @endphp --}}
+                                        <tr>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}
+                                            </td>
+                                            <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
+                                            <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
+                                            <td class="text-center">
+                                                @if ($attendance->employee->id !== auth()->user()->id && $attendance->status == 0)
+                                                    <button wire:click="confirmAttendance({{ $attendance->id }})"
+                                                        type="button" class="btn btn-primary">
+                                                        Confirm
+                                                    </button>
+                                                @elseif($attendance->status == 1)
+                                                    Confirmed
+                                                @else
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 @endforeach
 
@@ -70,6 +82,6 @@
                 @endif
 
             </div>
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>

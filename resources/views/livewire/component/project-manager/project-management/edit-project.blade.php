@@ -69,8 +69,9 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
                                     </div>
-                                    <input wire:model="project_date_range" type="text" class="form-control float-right" id="project_date"
-                                        name="project_date">
+                                    <input wire:model='project_date_range' type="text" class="form-control float-right" id="reservation"
+                                    name="dates" required>
+                                    <input wire:model='project_date_range' type="hidden" id="hiddenDate">
                                 </div>
                             </div>
                         </div>
@@ -376,10 +377,19 @@
 
 <script>
     $(function() {
-      $('input[name="project_date"]').daterangepicker({
-        opens: 'left'
-      }, function(start, end, label) {
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-      });
-    });
-    </script>
+            $('input[name="dates"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                var formattedStartDate = start.format('MM/DD/YYYY');
+                var formattedEndDate = end.format('MM/DD/YYYY');
+                var dateRange = formattedStartDate + ' - ' + formattedEndDate;
+
+                document.getElementById('hiddenDate').value = dateRange;
+
+                @this.set('project_date_range', dateRange);
+
+            });
+
+        });
+
+</script>
