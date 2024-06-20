@@ -75,7 +75,7 @@
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <div style="background-color: rgb(232, 232, 232);"
-                                                    class="p-2 border rounded">Title
+                                                    class="p-2 border rounded">{{ ucwords($project->name) }}
                                                 </div>
                                             </div>
                                         </div>

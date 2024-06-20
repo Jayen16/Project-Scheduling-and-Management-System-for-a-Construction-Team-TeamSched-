@@ -120,8 +120,6 @@
                 <li class="nav-item">
                     <a href="{{ route('projects.index') }}"
                         class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
-                    <a href="{{ route('projects.index') }}"
-                        class="nav-link {{ request()->is('projects*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-briefcase"></i>
 
                         <p>
