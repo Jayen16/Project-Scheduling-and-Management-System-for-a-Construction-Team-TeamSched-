@@ -21,85 +21,90 @@ class ProjectDetails extends Component
     public $projectPercent = 0;
 
 
-    public function mount(Project $project){
+    public function mount(Project $project)
+    {
         $this->project = $project;
 
         $week_count = count($project->scope);
 
-        foreach($project->scope as  $week){
+        foreach ($project->scope as $week) {
 
             $task_count = 0;
-            $done =0;
+            $done = 0;
 
-            $statuses = $week->task->pluck('status')->toArray(); 
+            $statuses = $week->task->pluck('status')->toArray();
 
             $task_count += count($week->task);
             foreach ($statuses as $status) {
                 if ($status == Status::COMPLETED->value) {
-                    $done += 1; 
+                    $done += 1;
                 }
             }
-        
-            $this->taskStatus[] = ($done/$task_count) * 100 ; 
-        }
-        
-        $add = 0;
-        foreach($this->taskStatus as $status){
-            $add +=$status;
+
+            $this->taskStatus[] = ($done / $task_count) * 100;
         }
 
-        $finalPercent = ($add/$week_count);
+        $add = 0;
+        foreach ($this->taskStatus as $status) {
+            $add += $status;
+        }
+
+        $finalPercent = ($add / $week_count);
 
         $this->projectPercent = $finalPercent;
 
     }
 
 
-    public function timeIn($id){
+    public function timeIn($id)
+    {
 
-        if(!Attendance::where('employee_id',auth()->user()->id)->where('project_id',$id)->whereDate('created_at', Carbon::today('Asia/Manila'))->exists()){
+        if (!Attendance::where('employee_id', auth()->user()->employee->id)->where('project_id', $id)->whereDate('created_at', Carbon::today('Asia/Manila'))->exists()) {
             Attendance::create([
-                'employee_id'=> auth()->user()->id,
+                'employee_id' => auth()->user()->employee->id,
                 'time_in' => Carbon::now()->format('g:i A'),
-                'project_id'=> $id,
+                'project_id' => $id,
                 // 'status'=> 1
             ]);
 
-            $this->dispatch('alert', type:'success', title:'Time in recorded!', position:'center');
-        }else{
-            $this->dispatch('alert', type:'error', title:'Time in might have already been recorded.', position:'center');
+            $this->dispatch('alert', type: 'success', title: 'Time in recorded!', position: 'center');
+        } else {
+            $this->dispatch('alert', type: 'error', title: 'Time in might have already been recorded.', position: 'center');
         }
-    
-    }
-    public function timeOut($id){
 
-        if (Attendance::where('employee_id', auth()->user()->id)
+    }
+    public function timeOut($id)
+    {
+
+        if (
+            Attendance::where('employee_id', auth()->user()->employee->id)
                 ->where('project_id', $id)
                 ->whereNull('time_out')
                 ->whereDate('created_at', Carbon::today('Asia/Manila'))
                 ->whereNotNull('time_in')
-                ->exists()) 
-            {
+                ->exists()
+        ) {
 
-            $timeOut = Attendance::where('employee_id',auth()->user()->id)
-            ->where('project_id', $id)
-            ->whereNull('time_out')
-            ->first();
+            $timeOut = Attendance::where('employee_id', auth()->user()->employee->id)
+                ->where('project_id', $id)
+                ->whereNull('time_out')
+                ->first();
 
-            if($timeOut){
-                $timeOut->update(['time_out' =>Carbon::now()->format('g:i A')]);
-                $this->dispatch('alert', type:'success', title:'Time Out recorded!', position:'center');
+            if ($timeOut) {
+                $timeOut->update(['time_out' => Carbon::now()->format('g:i A')]);
+                $this->dispatch('alert', type: 'success', title: 'Time Out recorded!', position: 'center');
 
-            }else{
-                $this->dispatch('alert', type:'error', title:'Error recording', position:'center');
+            } else {
+                $this->dispatch('alert', type: 'error', title: 'Error recording', position: 'center');
             }
 
         }
 
     }
 
-    public function confirmAttendance($id){
-        dd('burikat',$id);
+    public function confirmAttendance($id)
+    {
+        dd('burikat', $id);
     }
 
     public function redirectToAssignedProjects()
@@ -110,8 +115,8 @@ class ProjectDetails extends Component
 
     public function redirectToViewTask($id)
     {
-       
-        return redirect()->route('progress-report.index',['task'=>$id]);
+
+        return redirect()->route('progress-report.index', ['task' => $id]);
 
     }
     public function render()
