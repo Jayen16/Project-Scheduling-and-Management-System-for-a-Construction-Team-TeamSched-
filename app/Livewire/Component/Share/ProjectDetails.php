@@ -59,9 +59,11 @@ class ProjectDetails extends Component
     public function timeIn($id)
     {
 
-        if (!Attendance::where('employee_id', auth()->user()->employee->id)->where('project_id', $id)->whereDate('created_at', Carbon::today('Asia/Manila'))->exists()) {
+
+        if(!Attendance::where('employee_id',auth()->user()->employee->id)->where('project_id',$id)->whereDate('created_at', Carbon::today('Asia/Manila'))->exists()){
             Attendance::create([
-                'employee_id' => auth()->user()->employee->id,
+                'employee_id'=> auth()->user()->employee->id,
+
                 'time_in' => Carbon::now()->format('g:i A'),
                 'project_id' => $id,
                 // 'status'=> 1
@@ -76,8 +78,9 @@ class ProjectDetails extends Component
     public function timeOut($id)
     {
 
-        if (
-            Attendance::where('employee_id', auth()->user()->employee->id)
+
+        if (Attendance::where('employee_id', auth()->user()->employee->id)
+
                 ->where('project_id', $id)
                 ->whereNull('time_out')
                 ->whereDate('created_at', Carbon::today('Asia/Manila'))
@@ -85,10 +88,12 @@ class ProjectDetails extends Component
                 ->exists()
         ) {
 
-            $timeOut = Attendance::where('employee_id', auth()->user()->employee->id)
-                ->where('project_id', $id)
-                ->whereNull('time_out')
-                ->first();
+
+            $timeOut = Attendance::where('employee_id',auth()->user()->employee->id)
+            ->where('project_id', $id)
+            ->whereNull('time_out')
+            ->first();
+
 
             if ($timeOut) {
                 $timeOut->update(['time_out' => Carbon::now()->format('g:i A')]);
@@ -102,16 +107,11 @@ class ProjectDetails extends Component
 
     }
 
-    public function confirmAttendance($id)
-    {
-        dd('burikat', $id);
-    }
 
     public function redirectToAssignedProjects()
     {
         return redirect()->route('projects.index');
     }
-
 
     public function redirectToViewTask($id)
     {

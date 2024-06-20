@@ -29,8 +29,6 @@ class ProjectSummary extends Component
 
 
         $week_count = count($project->scope);
-        
- 
 
         foreach($project->scope as  $week){
 

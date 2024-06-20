@@ -56,9 +56,32 @@
                             <h5 class="font-weight-bold"> {{ ucwords($task->name) }}</h5>
                             <div class="d-flex">
                                 @if ($hideMarkButton !== true)
-                                    <button wire:click='changeStatus()' type="button" class="btn btn-sm btn-success mr-1">
+             
+                                    <button data-toggle="modal" data-target="#markAsDone-{{$task->id }}" class="btn btn-sm btn-success mr-1" type="button">
                                         <i class="fas fa-check-circle mr-2"></i> Mark as done
                                     </button>
+
+                                     <!-- Mark as Done Modal -->
+                                    <div class="modal fade" id="markAsDone-{{$task->id }}" tabindex="-1" role="dialog" aria-labelledby="markAsDoneLabel={{ $task->id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="markAsDoneLabel={{ $task->id }}">Delete Project</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to mark this as done?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button wire:click='changeStatus()' data-dismiss="modal" class="btn btn-success">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 @else
                                     <p> COMPLETED </p>
                                 @endif

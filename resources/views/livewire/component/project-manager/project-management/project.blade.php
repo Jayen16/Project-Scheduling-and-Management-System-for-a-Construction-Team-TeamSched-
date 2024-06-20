@@ -66,12 +66,15 @@
                                         $done = 0;
                                         $add = 0;
                                         $finalPercent = 0;
-                                        $taskStatus = [];
-                                        foreach ($project->scope as $week) {
-                                            $task_count = 0;
-                                            $done = 0;
 
-                                            $statuses = $week->task->pluck('status')->toArray();
+                                        $taskStatus =[];
+                                        foreach($project->scope as  $week){
+                                  
+                                            $task_count = 0;
+                                            $done =0;
+                                            
+                                            $statuses = $week->task->pluck('status')->toArray(); 
+
 
                                             $task_count += count($week->task);
                                             foreach ($statuses as $status) {
@@ -89,6 +92,8 @@
 
                                         $finalPercent = $add / $week_count;
 
+
+                                        
                                     @endphp
                                     <tr>
                                         <td class="align-middle">
