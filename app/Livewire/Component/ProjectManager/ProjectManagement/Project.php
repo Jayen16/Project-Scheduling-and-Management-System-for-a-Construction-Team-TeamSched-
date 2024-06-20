@@ -30,9 +30,17 @@ class Project extends Component
 
             $project = ModelsProject::where('id',$this->project_id)->first();
             $project->assignedProject()->delete();
-            $project->scope->task()->delete();
-            $project->scope()->delete();
-            $project->attendance()->delete();
+
+            if(isset($project->scope->task)){
+                $project->scope->task()->delete();
+            }
+            if(isset($project->scope)){
+                $project->scope()->delete();
+            }
+            if(isset($project->attendance)){
+                $project->attendance()->delete();
+            }
+            
             $project->delete();
             
             $this->dispatch('alert', type:'success', title:'The project removed successfuly', position:'center');

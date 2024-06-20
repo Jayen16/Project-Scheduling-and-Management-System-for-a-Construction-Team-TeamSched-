@@ -66,7 +66,6 @@ class AddProject extends Component
     public function create()
     {
 
-        $this->resetErrorBag();
         
         if (is_null($this->week_title) || is_null($this->project_name) || is_null($this->project_date_range) || is_null($this->project_description) || is_null($this->manpower) || is_null($this->task)) {
             $this->validate();
@@ -128,6 +127,7 @@ class AddProject extends Component
 
     public function addScopeOfWork()
     {
+        $this->resetErrorBag();
 
         if(!$this->week_title || !$this->manpowers && !$this->task){
             $this->validate();

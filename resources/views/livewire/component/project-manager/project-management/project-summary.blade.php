@@ -41,8 +41,11 @@
                                         class="btn btn-default mr-1">
                                         <i class="nav-icon fas fa-arrow-left mr-2"></i>
                                         Back</button>
-                                    <button wire:click="redirectToEdit('{{ $project->id }}')" type="button" class="btn btn-warning">
-                                        <i class="nav-icon fas fa-pen mr-2"></i>Edit</button>
+                                        @if ($project->status !== 'completed')
+                                            <button wire:click="redirectToEdit('{{ $project->id }}')" type="button" class="btn btn-warning">
+                                            <i class="nav-icon fas fa-pen mr-2"></i>Edit</button>
+                                        @endif
+
                                 </div>
                             </div>
                             <hr style="margin-top: px; border-width: 2px; border-color: #4a4a4a;">
