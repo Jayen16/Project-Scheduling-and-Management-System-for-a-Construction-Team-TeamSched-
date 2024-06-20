@@ -35,7 +35,7 @@ class AddProject extends Component
     public $week_title;
     #[Validate('required|unique:projects,name')]
     public $project_name;
-    #[Validate('required')]
+    #[Validate('required|string')]
     public $project_date_range;
     #[Validate('required|string')]
     public $project_description;
@@ -66,6 +66,8 @@ class AddProject extends Component
     public function create()
     {
 
+        $this->resetErrorBag();
+        
         if (is_null($this->week_title) || is_null($this->project_name) || is_null($this->project_date_range) || is_null($this->project_description) || is_null($this->manpower) || is_null($this->task)) {
             $this->validate();
             $this->dispatch('alert', type:'error', title:'There are incomplete inputs', position:'center');
