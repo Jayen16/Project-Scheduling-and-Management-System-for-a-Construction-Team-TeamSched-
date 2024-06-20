@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Component\Share;
 
+use App\Enums\Employee;
 use App\Enums\Status;
 use App\Models\AssignedProject;
 use App\Models\Project;
@@ -28,8 +29,20 @@ class Projects extends Component
     public function render()
     {
 
-        $query = AssignedProject::with('project')
-        ->where('supervisor_id',auth()->user()->id);
+
+        if(auth()->user()->roles[0]->name == Employee::SUPERVISOR->value){
+            $query = AssignedProject::with('project')
+            ->where('supervisor_id',auth()->user()->id);
+
+        }elseif(auth()->user()->roles[0]->name == Employee::MANPOWER->value){
+            $query = AssignedProject::with('project')
+            ->whereHas('project.scope.assignedmember', function($query) {
+                $query->where('manpower_id', auth()->user()->id);
+            });
+        
+        }
+
+    
 
         if ($this->searchProject !== '') {
             $query->whereHas('project', function ($query) {

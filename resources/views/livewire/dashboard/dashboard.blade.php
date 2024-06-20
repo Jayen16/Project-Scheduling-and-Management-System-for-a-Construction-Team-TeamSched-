@@ -110,7 +110,9 @@
                             $taskStatus =[];
 
                       @endphp
-                      @if($projects!==null)
+
+
+                    @if ($projects !== null && $projects->isNotEmpty())
                         @foreach ($projects as $project)
                             <tr>
                                 <td class="align-middle">{{ $loop->index+1 }}</td>
@@ -171,13 +173,16 @@
                             @endphp
                         @endforeach
 
-                    @else
-                            <tr>
-                                <td colspan="6"> No Available Project</td>
-                            </tr>
+                    @endif
+
+                    @if ($projects === null || $projects->isEmpty())
+                        <tr>
+                            <td colspan="6" class='text-center'> No Available Project</td>
+                        </tr>
                     @endif
                   </tbody>
               </table>
+
           </div>
       </div>
   </div>

@@ -35,14 +35,21 @@ class Login extends Component
         }
 
         // Get user by username
-        $user = User::where('username', $this->username)->first();
+        $user = User::where('username', $this->username)
+        ->where('isDeleted', '0')
+        ->whereHas('employee', function ($query) {
+            $query->where('status', 'Active');
+        })
+        ->first();
 
         // Check if the user exists and the password is correct
-        if (!$user || !Hash::check($this->password, $user->password)) {
-            RateLimiter::hit(request()->ip());
+        if (!$user || !Hash::check($this->password, $user->password) ) {
 
-            // Set validation error to be viewed in blade
-            throw ValidationException::withMessages(['login_failed' => 'Invalid username or password. Please try again.']);
+                RateLimiter::hit(request()->ip());
+                // Set validation error to be viewed in blade
+                throw ValidationException::withMessages(['login_failed' => 'Invalid username or password. Please try again.']);
+      
+        
         }
 
         // Clear login attempts
