@@ -72,6 +72,7 @@
                                     </div>
                                     <input wire:model='project_date_range' type="text" class="form-control float-right" id="reservation"
                                         name="dates" required>
+                                    <input wire:model='project_date_range' type="hidden" id="hiddenDate">
                                 </div>
                             </div>
                         </div>
@@ -338,5 +339,22 @@
 </div>
 
 <script>
-    $('input[name="dates"]').daterangepicker();
+    $(function() {
+            $('input[name="dates"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                var formattedStartDate = start.format('MM/DD/YYYY');
+                var formattedEndDate = end.format('MM/DD/YYYY');
+                var dateRange = formattedStartDate + ' - ' + formattedEndDate;
+
+                // Set the value of the hidden input
+                document.getElementById('hiddenDate').value = dateRange;
+
+                // Trigger Livewire to update the property
+                @this.set('project_date_range', dateRange);
+
+            });
+
+        });
+
 </script>
