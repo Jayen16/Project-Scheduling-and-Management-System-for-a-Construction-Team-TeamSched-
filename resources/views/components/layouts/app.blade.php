@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ $title ?? 'Page Title' }} | {{ env('APP_NAME') }}</title>
-
+    <title>{{ $title ?? 'Team Sched' }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/teamsched_logo.png') }}">
     {{-- FontAwesome --}}
     <link rel="stylesheet" href="{{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}">
     {{-- Bootstrap 4 --}}
@@ -34,17 +34,32 @@
     {{-- General Styles --}}
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
+
+    {{-- date picker --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <livewire:navigation.top-navigation />
+    @if (View::hasSection('noSidebar'))
+        <section class="">
+            <div class="">
+                {{ $slot }}
+            </div>
+        </section>
+    @else
+        <div class="wrapper">
+            <livewire:navigation.top-navigation />
 
-        <livewire:navigation.side-navigation />
+            <livewire:navigation.side-navigation />
 
-        <div class="content-wrapper">
-            {{-- <div class="content-header">
+            <div class="content-wrapper">
+                {{-- <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -61,15 +76,14 @@
                 </div>
             </div> --}}
 
-            <section class="content">
-                <div class="container-fluid">
-                    {{ $slot }}
-                </div>
-            </section>
+                <section class="content">
+                    <div class="container-fluid">
+                        {{ $slot }}
+                    </div>
+                </section>
+            </div>
         </div>
-
-        <livewire:navigation.footer />
-    </div>
+    @endif
 
     {{-- jQuery --}}
     <script src="{{ asset('theme/plugins/jquery/jquery.min.js') }}"></script>

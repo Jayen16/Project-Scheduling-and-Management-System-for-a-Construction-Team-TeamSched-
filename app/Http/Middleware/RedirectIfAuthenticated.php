@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\Employee;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -21,10 +22,19 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                if (auth()->user()->hasRole(Employee::MANAGER)) {
+                    return redirect(RouteServiceProvider::DASHBOARD);
+                } elseif (auth()->user()->hasRole(Employee::SUPERVISOR)) {
+                    return redirect(RouteServiceProvider::PROJECT);
+                } elseif (auth()->user()->hasRole(Employee::MANPOWER)) {
+                    return redirect(RouteServiceProvider::PROJECT);
+                } elseif (auth()->user()->hasRole(Employee::ADMIN)) {
+                    return redirect(RouteServiceProvider::ACCOUNT);
+                }
             }
         }
 
         return $next($request);
     }
+    
 }
