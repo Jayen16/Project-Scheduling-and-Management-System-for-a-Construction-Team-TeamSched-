@@ -9,7 +9,7 @@
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="collapse" data-parent="#accordion" style="">
+            <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
                 @php
                     $lastDate = null;
                     $counter = 0;

@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(1)->hasEmployee(['type' => 'admin', 'status' => 'Active'])->asAdmin()->create();
         \App\Models\User::factory(1)->hasEmployee(['type' => 'supervisor', 'status' => 'Active'])->asSuperVisor()->create();
         \App\Models\User::factory(1)->hasEmployee(['type' => 'manager', 'status' => 'Active'])->asManager()->create();
+        \App\Models\User::factory(5)->hasEmployee(['type'=>'manpower'])->asManpower()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'admin','status'=>'Active'])->asAdmin()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'supervisor'])->asSuperVisor()->create();
+        \App\Models\User::factory(1)->hasEmployee(['type'=>'manager'])->asManager()->create();
 
     }
 }
