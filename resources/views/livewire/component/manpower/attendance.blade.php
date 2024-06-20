@@ -25,7 +25,7 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Date</th>
-                            <th>Name</th>
+                            {{-- <th>Name</th> --}}
                             <th class="text-center">Time-in</th>
                             <th class="text-center">Time-out</th>
                         </tr>
@@ -49,21 +49,22 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $attendance->created_at->format('M d, Y') }}</td>
-                                    <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }}
+                                    {{-- <td>{{ $attendance->employee->firstName . ' ' . $attendance->employee->middleName . ' ' . $attendance->employee->lastName ?? '-' }} --}}
                                     </td>
                                     <td class="text-center">{{ $attendance->time_in ?? '-' }}</td>
                                     <td class="text-center">{{ $attendance->time_out ?? '-' }}</td>
                                 </tr>
                                 
-                            @endforeach
-                        @else
-                            <div class="card-body text-center">
-                                <p>No Attendance Yet</p>
-                            </div>
+                            @endforeach                        
                         @endif
                     </tbody>
                 </table>
-
+                @if ($getAttendance === null || $getAttendance->isEmpty())
+                    <div class="card-body text-center">
+                        <p>No Attendance Yet</p>
+                    </div>
+                @endif
+            
             </div>
         </div>
     </div>

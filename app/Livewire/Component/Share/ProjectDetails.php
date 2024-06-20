@@ -62,7 +62,7 @@ class ProjectDetails extends Component
                 'employee_id'=> auth()->user()->id,
                 'time_in' => Carbon::now()->format('g:i A'),
                 'project_id'=> $id,
-                'status'=> 1
+                // 'status'=> 1
             ]);
 
             $this->dispatch('alert', type:'success', title:'Time in recorded!', position:'center');
